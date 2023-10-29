@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { firestore } from "../firbase";
+import { firestore } from "../firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
 export default function FirebaseTest() {
