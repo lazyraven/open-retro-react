@@ -1,4 +1,5 @@
 import BaseDashBoard from "./BaseDashboard";
+// import FormInput from "./FormInput";
 import BaseNavbar from "./BaseNavbar";
 // import FirebaseTest from "./FirebaseTest";
 
@@ -11,9 +12,10 @@ function HomePage() {
       <div className="bg-[#F1F2F5] px-8 py-8">
         <BaseDashBoard></BaseDashBoard>
       </div>
-      {/* <div>
-        <FirebaseTest></FirebaseTest>
-      </div> */}
+      <div>
+        {/* <FirebaseTest></FirebaseTest> */}
+        {/* <FormInput></FormInput> */}
+      </div>
     </div>
   );
 }
