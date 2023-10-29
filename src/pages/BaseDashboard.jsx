@@ -23,7 +23,7 @@ export default function BaseDashBoard() {
               />
             </svg>
           </div>
-          <h1 className="text-sm">Add board</h1>
+          <h1 className="text-sm">Add boards</h1>
         </button>
       </div>
     </div>
