@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { firestore } from "../firebase";
-import { collection, getDocs, addDoc } from "firebase/firestore";
-import BaseIcon from "../components/BaseIcon";
-import { ICONS } from "../helpers/constant";
+import { useEffect, useState } from "react";
+import BaseIcon from "@/components/BaseIcon";
+import { ICONS } from "@/helpers/constant";
+
+import boardService from "@/services/board.service";
 
 export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [boardModel, setBoardModel] = useState({});
   const openModal = () => {
     setIsOpen(true);
   };
@@ -14,20 +15,24 @@ export default function BaseForm(props) {
   const closeModal = () => {
     setIsOpen(false);
   };
-  const nameRef = useRef();
+
+  const handleChange = (event) => {
+    event.preventDefault();
+
+    const { name, value } = event.target;
+    console.log(value);
+
+    setBoardModel({
+      ...boardModel,
+      [name]: value,
+    });
+  };
 
   const getRetros = async () => {
     try {
-      // addDoc(ref, data);
-      const querySnapshot = await getDocs(collection(firestore, "retros"));
-      console.log(`querySnapshot`);
-      console.log(querySnapshot);
-
-      querySnapshot.forEach((doc) => {
-        console.log("doc", doc);
-        console.log(`${doc.id} =>`);
-        console.log(doc.data());
-      });
+      const boards = await boardService.getBoards();
+      console.log(`boards`);
+      console.log(boards);
     } catch (e) {
       console.log(e);
     }
@@ -39,13 +44,11 @@ export default function BaseForm(props) {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    console.log("e", e);
-    let data = {
-      name: nameRef.current.value,
-    };
-    console.log("data", data);
     try {
-      // addDoc(messageCollection, data);
+      const newBoardId = await boardService.createBoard(boardModel);
+      console.log(`newBoardId`);
+      console.log(newBoardId);
+      closeModal();
     } catch (e) {
       console.log(e);
     }
@@ -87,7 +90,9 @@ export default function BaseForm(props) {
                       </label>
                       <input
                         type="text"
+                        name="boardName"
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="flex gap-2 justify-end">
@@ -99,10 +104,7 @@ export default function BaseForm(props) {
                         Cancel
                       </button>
                       <button
-                        type="button"
-                        onClick={() => {
-                          closeModal();
-                        }}
+                        type="submit"
                         className="hover:text-white hover:bg-blue-500 py-1 px-3 text-blue-500 rounded-sm"
                       >
                         Submit
