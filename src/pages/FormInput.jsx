@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
-
 import boardService from "@/services/board.service";
+import { useNavigate } from "react-router-dom";
 
 export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [boardModel, setBoardModel] = useState({});
+  const navigate = useNavigate();
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -48,6 +50,7 @@ export default function BaseForm(props) {
       const newBoardId = await boardService.createBoard(boardModel);
       console.log(`newBoardId`);
       console.log(newBoardId);
+      navigate(`/${newBoardId}`);
       closeModal();
     } catch (e) {
       console.log(e);
