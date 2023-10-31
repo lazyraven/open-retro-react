@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import BaseIcon from "../components/BaseIcon";
 import { ICONS } from "../helpers/constant";
 import BaseNavbar from "./BaseNavbar";
@@ -6,6 +7,8 @@ import boardService from "@/services/board.service";
 
 export default function OpenRetros() {
   const [retros, setRetros] = useState([]);
+  const params = useParams();
+  console.log("params", params);
   console.log("retros", retros);
 
   const getRetrosDetail = async () => {
@@ -19,6 +22,10 @@ export default function OpenRetros() {
   useEffect(() => {
     getRetrosDetail();
   }, []);
+  const retroClick = (path) => {
+    console.log("retroClick called", path);
+  };
+
   return (
     <div>
       <BaseNavbar></BaseNavbar>
@@ -47,6 +54,9 @@ export default function OpenRetros() {
                 <button
                   type="button"
                   className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md p-2 bg-white"
+                  onClick={() => {
+                    retroClick(retroDetails.path);
+                  }}
                 >
                   <div className="divide-y divide-zinc-300">
                     <div>
