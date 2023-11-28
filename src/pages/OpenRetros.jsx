@@ -7,27 +7,35 @@ import BaseNavbar from "./BaseNavbar";
 import BaseForm from "./BaseForm";
 import { db } from "@/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function OpenRetros() {
   const [retros, setRetros] = useState([]);
   const params = useParams();
+  const navigate = useNavigate();
+
   console.log("params", params);
 
   useEffect(() => {
     const boardRef = collection(db, "retros");
-    const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
+    console.log(`params.boardId`);
+    console.log(params.boardId);
+
+    const q = query(boardRef, where("boardId", "==", params.boardId));
+    // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
 
     return onSnapshot(q, (snapShot) => {
       let retroDetails = [];
       snapShot.docs.forEach((doc) => {
         retroDetails.push({ ...doc.data(), id: doc.id });
       });
-      // console.log("retroDetails", retroDetails);
+      console.log("retroDetails", retroDetails);
       setRetros(retroDetails);
     });
   }, []);
   const retroClick = (path) => {
     console.log("retroClick called", path);
+    navigate(`/${path}`);
   };
 
   return (
@@ -62,7 +70,7 @@ export default function OpenRetros() {
                   type="button"
                   className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md p-2 bg-white"
                   onClick={() => {
-                    retroClick(retroDetails.path);
+                    retroClick(retroDetails.id);
                   }}
                 >
                   <div className="divide-y divide-zinc-300">
@@ -89,31 +97,6 @@ export default function OpenRetros() {
               </div>
             );
           })}
-          <button
-            type="button"
-            className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md p-2 bg-white"
-          >
-            <div className="divide-y divide-zinc-300">
-              <div>
-                <h1 className="text-md text-left text-slate-600">
-                  <strong>Sprint boards</strong>
-                </h1>
-                <div className="flex text-xs text-zinc-500 py-2 gap-2">
-                  <div>31 Oct 2023</div>
-                  <div className="text-right">3 cards</div>
-                </div>
-              </div>
-
-              <div className="flex h-32 py-3 gap-4">
-                <div className="bg-teal-700 text-white w-14"></div>
-                <div className="bg-rose-700 text-white w-14"></div>
-                <div className="bg-fuchsia-700 text-white w-14"></div>
-              </div>
-              <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
-                Share
-              </h6>
-            </div>
-          </button>
         </div>
       </div>
     </div>
