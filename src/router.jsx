@@ -10,9 +10,18 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/OpenRetroId",
+    path: "/:boardId/:OpenRetroId",
     element: <OpenRetroId />,
   },
+  // {
+  //   path: "/:OpenRetroId",
+  //   element: <OpenRetroId />,
+  // },
+  // {
+  //   path: "/boards/:boardId",
+  //   element: <OpenRetros />,
+  // },
+  // {
   {
     path: "/:boardId",
     element: <OpenRetros />,

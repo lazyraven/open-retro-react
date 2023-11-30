@@ -33,9 +33,8 @@ export default function OpenRetros() {
       setRetros(retroDetails);
     });
   }, []);
-  const retroClick = (path) => {
-    console.log("retroClick called", path);
-    navigate(`/${path}`);
+  const retroClick = (retroDetail) => {
+    navigate(`/${retroDetail.boardId}/${retroDetail.id}`);
   };
 
   return (
@@ -70,7 +69,7 @@ export default function OpenRetros() {
                   type="button"
                   className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md p-2 bg-white"
                   onClick={() => {
-                    retroClick(retroDetails.id);
+                    retroClick(retroDetails);
                   }}
                 >
                   <div className="divide-y divide-zinc-300">
@@ -79,7 +78,13 @@ export default function OpenRetros() {
                         <strong>{retroDetails.retroName}</strong>
                       </h1>
                       <div className="flex text-xs text-zinc-500 py-2 gap-2">
-                        <div>{retroDetails.retroName}</div>
+                        <div>
+                          {" "}
+                          {new Date("2020-12-28").toLocaleString("en-us", {
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </div>
                         <div className="text-right">3 cards</div>
                       </div>
                     </div>

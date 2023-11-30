@@ -30,7 +30,7 @@ export default function BaseForm(props) {
     });
   };
 
-  const getRetros = async () => {
+  const getBoards = async () => {
     try {
       const boards = await boardService.getBoards();
       console.log(`boards`);
@@ -41,7 +41,7 @@ export default function BaseForm(props) {
   };
 
   useEffect(() => {
-    getRetros();
+    getBoards();
   });
 
   const handleSave = async (e) => {

@@ -1,9 +1,23 @@
+import { useEffect } from "react";
 import BaseIcon from "../components/BaseIcon";
 import { ICONS } from "../helpers/constant";
-
+import boardService from "@/services/board.service";
 import BaseNavbar from "./BaseNavbar";
 
 export default function OpenRetroId() {
+  const getNotes = async () => {
+    try {
+      const notes = await boardService.getNotes();
+      console.log(`notes`);
+      console.log(notes);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getNotes();
+  });
   return (
     <div>
       <BaseNavbar></BaseNavbar>

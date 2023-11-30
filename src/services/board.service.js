@@ -52,4 +52,13 @@ export default {
     //   return document.data();
     // });
   },
+
+  async getNotes() {
+    const querySnapshot = await getDocs(collection(db, "notes"));
+    const docs = [];
+    querySnapshot.forEach((doc) => {
+      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+    });
+    return docs;
+  },
 };
