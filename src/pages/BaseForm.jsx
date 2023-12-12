@@ -7,8 +7,12 @@ import { useNavigate } from "react-router-dom";
 export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [boardModel, setBoardModel] = useState({});
-  const navigate = useNavigate();
+  const [retroModel, setRetroModel] = useState({
+    boardId: "",
+    date: "",
+    retroName: "",
+  });
+  // const navigate = useNavigate();
 
   const openModal = () => {
     setIsOpen(true);
@@ -20,37 +24,37 @@ export default function BaseForm(props) {
 
   const handleChange = (event) => {
     event.preventDefault();
-
     const { name, value } = event.target;
     console.log(value);
 
-    setBoardModel({
-      ...boardModel,
+    setRetroModel({
+      ...retroModel,
       [name]: value,
     });
   };
 
-  const getBoards = async () => {
-    try {
-      const boards = await boardService.getBoards();
-      console.log(`boards`);
-      console.log(boards);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getRetros = async () => {
+  //   try {
+  //     const boards = await boardService.getBoards();
+  //     // console.log(`boards`);
+  //     console.log(boards);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   useEffect(() => {
-    getBoards();
+    // getRetros();
   });
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const newBoardId = await boardService.createBoard(boardModel);
-      console.log(`newBoardId`);
-      console.log(newBoardId);
-      navigate(`/${newBoardId}`);
+      console.log("retroModel", retroModel);
+      const newRetroId = await boardService.createRetro(retroModel);
+      console.log(`newRetroId`);
+      console.log(newRetroId);
+      // navigate(`/${newRetroId}`);
       closeModal();
     } catch (e) {
       console.log(e);
@@ -89,15 +93,45 @@ export default function BaseForm(props) {
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
                         {" "}
-                        Name :
+                        Retro Name :
                       </label>
                       <input
                         type="text"
-                        name="boardName"
+                        name="retroName"
+                        value={retroModel.retroName}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
+
+                    <div className="flex gap-2 justify-center items-center">
+                      <label htmlFor="" className="font-semibold">
+                        {" "}
+                        Date :
+                      </label>
+                      <input
+                        type="text"
+                        name="date"
+                        value={retroModel.date}
+                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="flex gap-2 justify-center items-center">
+                      <label htmlFor="" className="font-semibold">
+                        {" "}
+                        Board Id :
+                      </label>
+                      <input
+                        type="text"
+                        name="boardId"
+                        value={retroModel.boardId}
+                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        onChange={handleChange}
+                      />
+                    </div>
+
                     <div className="flex gap-2 justify-end">
                       <button
                         type="button"
