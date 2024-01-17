@@ -17,6 +17,10 @@ export default function OpenRetroId() {
     }
   };
 
+  const addRetroDescription = () => {
+    console.log("addRetroDescription called");
+  };
+
   useEffect(() => {
     getNotes();
   }, []);
@@ -39,12 +43,35 @@ export default function OpenRetroId() {
               <button
                 type="button"
                 className="flex justify-center bg-[#E5E6EB] py-2 rounded-sm"
+                onClick={() => {
+                  addRetroDescription();
+                }}
               >
                 <BaseIcon
                   iconName={ICONS.Plus}
                   className=" h-4 w-4 text-gray-500"
                 ></BaseIcon>
               </button>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  name="boardName"
+                  className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                />
+                <button
+                  type="button"
+                  className="flex justify-center bg-[#E5E6EB] rounded-md border-blue-100 text-sm px-1 rounded-sm bg-blue-400"
+                  onClick={() => {
+                    addRetroDescription();
+                  }}
+                >
+                  Save
+                </button>
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </div>
               <div className="bg-teal-600 px-4 py-1 h-16  flex flex-auto justify-between rounded-sm text-white">
                 <h1 className="font-semibold">{note.description}</h1>
                 <button type="button">
