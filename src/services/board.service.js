@@ -53,10 +53,13 @@ export default {
     // });
   },
 
-  async getNotes() {
-    const querySnapshot = await getDocs(collection(db, "notes"));
+  async getNotes({ retroId }) {
+    const q = query(collection(db, "notes"), where("retroId", "==", retroId));
     const docs = [];
+
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
       docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
     });
     return docs;

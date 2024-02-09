@@ -1,18 +1,32 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "./pages/home";
-import OpenRetroId from "./pages/OpenRetroId";
-import OpenRetros from "./pages/OpenRetros";
+import Root from "@/pages/root";
+import Home from "@/pages/home";
+import RetroId from "@/pages/boards/boardId/retros/retroId";
+import BoardId from "@/pages/boards/boardId/index";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/boards/:boardId",
+        element: <BoardId />,
+        children: [
+          {
+            path: ":retroId",
+            element: <RetroId />,
+          },
+        ],
+      },
+    ],
   },
-  {
-    path: "/:boardId/:OpenRetroId",
-    element: <OpenRetroId />,
-  },
+
   // {
   //   path: "/:OpenRetroId",
   //   element: <OpenRetroId />,
@@ -22,10 +36,6 @@ const router = createBrowserRouter([
   //   element: <OpenRetros />,
   // },
   // {
-  {
-    path: "/:boardId",
-    element: <OpenRetros />,
-  },
 ]);
 
 export default router;

@@ -4,7 +4,7 @@ import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
 import { useNavigate } from "react-router-dom";
 
-export default function BaseForm(props) {
+export default function NewBoardModal(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [boardModel, setBoardModel] = useState({});

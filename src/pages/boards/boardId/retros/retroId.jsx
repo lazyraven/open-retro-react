@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import BaseIcon from "../components/BaseIcon";
-import { ICONS } from "../helpers/constant";
+import BaseIcon from "@/components/BaseIcon";
+import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
-import BaseNavbar from "./BaseNavbar";
+import BaseNavbar from "@/components/BaseNavbar";
+import { useParams } from "react-router-dom";
 
-export default function OpenRetroId() {
+export default function RetroId() {
   const [notes, setNotes] = useState([]);
+  const params = useParams();
+
   const getNotes = async () => {
     try {
-      const notes = await boardService.getNotes();
+      console.log(`params`);
+      console.log(params);
+      const notes = await boardService.getNotes({
+        retroId: params.OpenRetroId,
+      });
       console.log(`notes`);
       console.log(notes);
       setNotes(notes);
@@ -22,11 +29,12 @@ export default function OpenRetroId() {
   };
 
   useEffect(() => {
-    getNotes();
+    getNotes({ retroId: params.OpenRetroId });
   }, []);
   return (
     <div>
       <BaseNavbar></BaseNavbar>
+      <h3>Notes section</h3>
       <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
         {notes.map((note, index) => {
           return (
