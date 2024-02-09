@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "@/pages/root";
 import Home from "@/pages/home";
+import Retros from "@/pages/boards/boardId/retros/index";
 import RetroId from "@/pages/boards/boardId/retros/retroId";
 import BoardId from "@/pages/boards/boardId/index";
 
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
         path: "/boards/:boardId",
         element: <BoardId />,
         children: [
+          {
+            path: "members",
+            element: <h1>Memebrs</h1>,
+          },
+          {
+            path: "retros",
+            element: <Retros />,
+          },
           {
             path: ":retroId",
             element: <RetroId />,
