@@ -22,7 +22,6 @@ export default {
   },
 
   createRetro(formBody) {
-    console.log("formBody", formBody);
     return addDoc(collection(db, "retros"), formBody);
   },
 
@@ -37,27 +36,21 @@ export default {
 
   async getRetrosDetail({ boardId }) {
     const boardRef = collection(db, "retros");
-    // const q = query(boardRef, where("boardId", "==", "wR5rbH19gJQVxV2O60F7"));
     const q = query(boardRef, where("boardId", "==", boardId));
     const docs = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
       docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
     });
     return docs;
 
+    // need to check why this (onSnapshot) is not working
     // return onSnapshot(q, (snapShot) => {
     //   let retroDetails = [];
     //   snapShot.docs.forEach((doc) => {
     //     retroDetails.push({ ...doc.data(), id: doc.id });
     //   });
-    //   console.log("retroDetails", retroDetails);
     //   return retroDetails;
-    // });
-
-    // return onSnapshot(q, (document) => {
-    //   return document.data();
     // });
   },
 
@@ -67,7 +60,6 @@ export default {
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
       docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
     });
     return docs;

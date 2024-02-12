@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
-import BaseNavbar from "@/components/BaseNavbar";
 import { useParams } from "react-router-dom";
 
 export default function RetroId() {
@@ -12,14 +11,10 @@ export default function RetroId() {
 
   const getNotes = async () => {
     try {
-      console.log(`params`);
-      console.log(params);
       const notes = await boardService.getNotes({
         retroId: params.retroId,
         // retroId: params.OpenRetroId,
       });
-      console.log(`notes`);
-      console.log(notes);
       setNotes(notes);
     } catch (e) {
       console.log(e);
@@ -27,7 +22,6 @@ export default function RetroId() {
   };
 
   const addRetroDescription = () => {
-    console.log("addRetroDescription called");
     setIsOpen(true);
   };
 
@@ -38,7 +32,6 @@ export default function RetroId() {
   useEffect(() => {
     getNotes({ retroId: params.OpenRetroId });
   }, []);
-  console.log(notes);
 
   const renderBoardRow = (note) => {
     switch (note.tag) {
