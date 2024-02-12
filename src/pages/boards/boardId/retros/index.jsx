@@ -6,31 +6,46 @@ import NewRetroModal from "@/page-components/retros/NewRetroModal";
 import { db } from "@/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import boardService from "@/services/board.service";
 
 export default function Retros() {
   const [retros, setRetros] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
-
   console.log("params", params);
 
-  useEffect(() => {
-    const boardRef = collection(db, "retros");
-    console.log(`params.boardId`);
-    console.log(params.boardId);
-
-    const q = query(boardRef, where("boardId", "==", params.boardId));
-    // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
-
-    return onSnapshot(q, (snapShot) => {
-      let retroDetails = [];
-      snapShot.docs.forEach((doc) => {
-        retroDetails.push({ ...doc.data(), id: doc.id });
+  const getRetroDetails = async () => {
+    try {
+      const retroDetails = await boardService.getRetrosDetail({
+        boardId: params.boardId,
       });
       console.log("retroDetails", retroDetails);
       setRetros(retroDetails);
-    });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getRetroDetails();
   }, []);
+
+  // useEffect(() => {
+  //   const boardRef = collection(db, "retros");
+  //   console.log(`params.boardId`);
+  //   console.log(params);
+  //   const q = query(boardRef, where("boardId", "==", params.boardId));
+  //   // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
+  //   return onSnapshot(q, (snapShot) => {
+  //     let retroDetails = [];
+  //     snapShot.docs.forEach((doc) => {
+  //       retroDetails.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     console.log("retroDetails", retroDetails);
+  //     setRetros(retroDetails);
+  //   });
+  // }, []);
+
   const retroClick = (retroDetail) => {
     navigate(`/boards/${retroDetail.boardId}/${retroDetail.id}`);
   };
@@ -38,6 +53,10 @@ export default function Retros() {
   return (
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
+        <div>
+          {/* <h1>{retros[1].boardName}</h1>
+          <h1>{retros[1].createdBy}</h1> */}
+        </div>
         <div className=" flex py-4 gap-4">
           <NewRetroModal>
             <button
