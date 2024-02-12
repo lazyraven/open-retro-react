@@ -32,7 +32,7 @@ export default function Retros() {
     });
   }, []);
   const retroClick = (retroDetail) => {
-    navigate(`/${retroDetail.boardId}/${retroDetail.id}`);
+    navigate(`/boards/${retroDetail.boardId}/${retroDetail.id}`);
   };
 
   return (

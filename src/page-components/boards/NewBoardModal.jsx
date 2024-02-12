@@ -33,7 +33,7 @@ export default function NewBoardModal(props) {
   const getBoards = async () => {
     try {
       const boards = await boardService.getBoards();
-      console.log(`boards`);
+      console.log(`boards called`);
       console.log(boards);
     } catch (e) {
       console.log(e);
@@ -94,6 +94,30 @@ export default function NewBoardModal(props) {
                       <input
                         type="text"
                         name="boardName"
+                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="flex gap-2 justify-center items-center">
+                      <label htmlFor="" className="font-semibold">
+                        {" "}
+                        Created By :
+                      </label>
+                      <input
+                        type="text"
+                        name="createdBy"
+                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="flex gap-2 justify-center items-center">
+                      <label htmlFor="" className="font-semibold">
+                        {" "}
+                        Created Date :
+                      </label>
+                      <input
+                        type="date"
+                        name="createdDate"
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
