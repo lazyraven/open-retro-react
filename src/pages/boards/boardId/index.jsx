@@ -11,21 +11,21 @@ export default function BoardId() {
 
   console.log("params", params);
 
-  useEffect(() => {
-    // const boardRef = collection(db, "retros");
-    // console.log(`params.boardId`);
-    // console.log(params.boardId);
-    // const q = query(boardRef, where("boardId", "==", params.boardId));
-    // // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
-    // return onSnapshot(q, (snapShot) => {
-    //   let retroDetails = [];
-    //   snapShot.docs.forEach((doc) => {
-    //     retroDetails.push({ ...doc.data(), id: doc.id });
-    //   });
-    //   console.log("retroDetails", retroDetails);
-    //   setBoard(retroDetails);
-    // });
-  }, []);
+  // useEffect(() => {
+  //   const boardRef = collection(db, "retros");
+  //   console.log(`params.boardId`);
+  //   console.log(params.boardId);
+  //   const q = query(boardRef, where("boardId", "==", params.boardId));
+  //   // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
+  //   return onSnapshot(q, (snapShot) => {
+  //     let retroDetails = [];
+  //     snapShot.docs.forEach((doc) => {
+  //       retroDetails.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     console.log("retroDetailsxxx", retroDetails);
+  //     setBoard(retroDetails);
+  //   });
+  // }, []);
 
   return (
     <div className="flex flex-col gap-5">
