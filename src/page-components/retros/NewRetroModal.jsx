@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
-import { useNavigate } from "react-router-dom";
 
 export default function BaseForm(props) {
   const { children } = props;

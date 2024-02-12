@@ -10,7 +10,7 @@ export default function BoardId() {
   return (
     <div className="flex flex-col gap-5">
       <div className="px-3 pt-5">
-        <h1 className="text-xl">{board.boardName}Hello' Lakshya</h1>
+        <h1 className="text-xl">{board.boardName}Hello&#39; Lakshya</h1>
       </div>
       <div className="flex px-3">
         <ul className="flex gap-3">

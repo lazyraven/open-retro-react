@@ -5,7 +5,7 @@ import {
   addDoc,
   query,
   where,
-  onSnapshot,
+  // onSnapshot,
 } from "firebase/firestore";
 
 export default {
