@@ -38,7 +38,7 @@ export default function Retros() {
   return (
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
-        <div className=" flex py-4 gap-4">
+        <div className=" flex gap-8 items-center py-4">
           <NewRetroModal>
             <button
               type="button"
@@ -63,12 +63,12 @@ export default function Retros() {
               <div key={retroDetails.retroName + index}>
                 <button
                   type="button"
-                  className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md p-2 bg-white"
+                  className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-white"
                   onClick={() => {
                     retroClick(retroDetails);
                   }}
                 >
-                  <div className="divide-y divide-zinc-300">
+                  <div className="divide-y divide-zinc-300 m-auto">
                     <div>
                       <h1 className="text-md text-left text-slate-600">
                         <strong>{retroDetails.retroName}</strong>

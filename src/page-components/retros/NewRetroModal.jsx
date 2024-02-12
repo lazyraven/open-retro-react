@@ -92,7 +92,6 @@ export default function BaseForm(props) {
                     </div>
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
-                        {" "}
                         Retro Name :
                       </label>
                       <input
@@ -106,7 +105,6 @@ export default function BaseForm(props) {
 
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
-                        {" "}
                         Date :
                       </label>
                       <input
@@ -120,7 +118,6 @@ export default function BaseForm(props) {
 
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
-                        {" "}
                         Board Id :
                       </label>
                       <input
