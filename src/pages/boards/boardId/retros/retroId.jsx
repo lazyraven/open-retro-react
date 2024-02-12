@@ -14,7 +14,8 @@ export default function RetroId() {
       console.log(`params`);
       console.log(params);
       const notes = await boardService.getNotes({
-        retroId: params.OpenRetroId,
+        retroId: params.retroId,
+        // retroId: params.OpenRetroId,
       });
       console.log(`notes`);
       console.log(notes);
