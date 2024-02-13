@@ -19,6 +19,7 @@ export default function RetroId() {
     tag: "",
     title: "",
   });
+  console.log("notesmodel", notesModel);
 
   const getNotes = async () => {
     try {
@@ -41,10 +42,8 @@ export default function RetroId() {
   };
 
   const handleChange = (event) => {
-    event.preventDefault();
-
+    // event.preventDefault();
     const { name, value } = event.target;
-
     setNotesModel({
       ...notesModel,
       [name]: value,
@@ -165,32 +164,33 @@ export default function RetroId() {
     switch (note.tag) {
       case "went-well":
         return (
-          <div className="flex gap-2 relative">
-            <input
-              type="text"
-              name="description"
-              value={note.description}
-              className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
-              onChange={handleChange}
-            />
+          <div className="flex gap-2 ">
+            <form onSubmit={handleSave} className="relative w-full">
+              <input
+                type="text"
+                name="description"
+                value={notesModel.description}
+                onChange={handleChange}
+                className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+              />
 
-            <button
-              type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="absolute right-2 top-2"
-            >
-              <BaseIcon
-                iconName={ICONS.Close}
-                className=" flex h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
+              <button
+                type="submit"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={toggleMenu}
+                className="absolute right-2 top-2"
+              >
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+            </form>
           </div>
         );
       case "to-improve":
@@ -247,6 +247,7 @@ export default function RetroId() {
         );
     }
   };
+  console.log("notes", notes);
   return (
     <div>
       <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
