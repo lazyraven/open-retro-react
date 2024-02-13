@@ -3,34 +3,29 @@ import { useParams } from "react-router-dom";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import NewRetroModal from "@/page-components/retros/NewRetroModal";
-import { db } from "@/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import boardService from "@/services/board.service";
 
 export default function Retros() {
   const [retros, setRetros] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
 
-  console.log("params", params);
+  const getRetroDetails = async () => {
+    try {
+      const retroDetails = await boardService.getRetrosDetail({
+        boardId: params.boardId,
+      });
+      setRetros(retroDetails);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-    const boardRef = collection(db, "retros");
-    console.log(`params.boardId`);
-    console.log(params.boardId);
-
-    const q = query(boardRef, where("boardId", "==", params.boardId));
-    // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
-
-    return onSnapshot(q, (snapShot) => {
-      let retroDetails = [];
-      snapShot.docs.forEach((doc) => {
-        retroDetails.push({ ...doc.data(), id: doc.id });
-      });
-      console.log("retroDetails", retroDetails);
-      setRetros(retroDetails);
-    });
+    getRetroDetails();
   }, []);
+
   const retroClick = (retroDetail) => {
     navigate(`/boards/${retroDetail.boardId}/${retroDetail.id}`);
   };
