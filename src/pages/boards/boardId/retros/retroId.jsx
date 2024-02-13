@@ -8,6 +8,17 @@ export default function RetroId() {
   const [notes, setNotes] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
+  console.log("params called", params);
+
+  const [notesModel, setNotesModel] = useState({
+    boardId: params.boardId,
+    retroId: params.retroId,
+    createdBy: "",
+    createdDate: "",
+    description: "",
+    tag: "",
+    title: "",
+  });
 
   const getNotes = async () => {
     try {
@@ -27,6 +38,28 @@ export default function RetroId() {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleChange = (event) => {
+    event.preventDefault();
+
+    const { name, value } = event.target;
+
+    setNotesModel({
+      ...notesModel,
+      [name]: value,
+    });
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const newNotes = await boardService.createNotes(notesModel);
+      console.log(newNotes);
+      // navigate(`/${newRetroId}`);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -135,16 +168,16 @@ export default function RetroId() {
           <div className="flex gap-2 relative">
             <input
               type="text"
-              name="boardName"
+              name="description"
+              value={note.description}
               className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+              onChange={handleChange}
             />
 
             <button
               type="button"
               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#145CF2] rounded-sm border-blue-100 text-sm px-1"
-              onClick={() => {
-                addRetroDescription();
-              }}
+              onClick={handleSave}
             >
               Save
             </button>

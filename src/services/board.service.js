@@ -64,4 +64,8 @@ export default {
     });
     return docs;
   },
+
+  createNotes(formBody) {
+    return addDoc(collection(db, "notes"), formBody);
+  },
 };
