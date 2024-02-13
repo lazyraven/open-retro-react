@@ -70,7 +70,7 @@ export default function Retros() {
                 >
                   <div className="divide-y divide-zinc-300 m-auto">
                     <div>
-                      <h1 className="text-md text-left text-slate-600">
+                      <h1 className="text-md text-left capitalize text-slate-600">
                         <strong>{retroDetails.retroName}</strong>
                       </h1>
                       <div className="flex text-xs text-zinc-500 py-2 gap-2">

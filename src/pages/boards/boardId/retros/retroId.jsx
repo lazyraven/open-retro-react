@@ -148,7 +148,7 @@ export default function RetroId() {
 
             <button
               type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#145CF2] rounded-sm border-blue-100 text-sm px-1"
+              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
               onClick={() => {
                 addRetroDescription();
               }}
@@ -178,7 +178,7 @@ export default function RetroId() {
 
             <button
               type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#145CF2] rounded-sm border-blue-100 text-sm px-1"
+              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
               onClick={() => {
                 addRetroDescription();
               }}
@@ -204,7 +204,7 @@ export default function RetroId() {
 
             <button
               type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#145CF2] rounded-sm border-blue-100 text-sm px-1"
+              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
               onClick={() => {
                 addRetroDescription();
               }}
