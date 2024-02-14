@@ -29,24 +29,13 @@ export default function NewBoardModal(props) {
     });
   };
 
-  const getBoards = async () => {
-    try {
-      const boards = await boardService.getBoards();
-      console.log(boards);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    getBoards();
-  });
+  useEffect(() => {});
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const newBoardId = await boardService.createBoard(boardModel);
-      navigate(`/${newBoardId}`);
+      const newBoard = await boardService.createBoard(boardModel);
+      navigate(`/boards/${newBoard.id}`);
       closeModal();
     } catch (e) {
       console.log(e);

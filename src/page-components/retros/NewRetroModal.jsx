@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
+import { useParams } from "react-router-dom";
 
 export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const params = useParams();
   const [retroModel, setRetroModel] = useState({
-    boardId: "",
+    boardId: params.boardId,
     date: "",
     retroName: "",
   });
@@ -95,20 +97,6 @@ export default function BaseForm(props) {
                         onChange={handleChange}
                       />
                     </div>
-
-                    <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        Board Id :
-                      </label>
-                      <input
-                        type="text"
-                        name="boardId"
-                        value={retroModel.boardId}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
-                        onChange={handleChange}
-                      />
-                    </div>
-
                     <div className="flex gap-2 justify-end">
                       <button
                         type="button"

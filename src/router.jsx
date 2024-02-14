@@ -24,6 +24,10 @@ const router = createBrowserRouter([
             element: <h1>Memebrs</h1>,
           },
           {
+            path: "reports",
+            element: <h1>Reports</h1>,
+          },
+          {
             path: "retros",
             element: <Retros />,
           },
