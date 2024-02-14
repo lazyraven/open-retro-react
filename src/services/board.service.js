@@ -9,28 +9,28 @@ import {
 } from "firebase/firestore";
 
 export default {
-  async getBoards({ boardId }) {
-    console.log("getBoards boardId", boardId);
-    const q = query(collection(db, "boards"), where("boardId", "==", boardId));
-    const docs = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-    });
-    console.log("docs board", docs);
-    return docs;
-  },
-  // async getBoards() {
-  //   const querySnapshot = await getDocs(collection(db, "boards"));
+  // async getBoards({ boardId }) {
+  //   console.log("getBoards boardId", boardId);
+  //   const q = query(collection(db, "boards"), where("boardId", "==", boardId));
   //   const docs = [];
+  //   const querySnapshot = await getDocs(q);
   //   querySnapshot.forEach((doc) => {
   //     docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
   //   });
+  //   console.log("docs board", docs);
   //   return docs;
   // },
-  // createBoard(formBody) {
-  //   return addDoc(collection(db, "boards"), formBody);
-  // },
+  async getBoards() {
+    const querySnapshot = await getDocs(collection(db, "boards"));
+    const docs = [];
+    querySnapshot.forEach((doc) => {
+      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+    });
+    return docs;
+  },
+  createBoard(formBody) {
+    return addDoc(collection(db, "boards"), formBody);
+  },
 
   createRetro(formBody) {
     return addDoc(collection(db, "retros"), formBody);
@@ -73,7 +73,6 @@ export default {
     querySnapshot.forEach((doc) => {
       docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
     });
-    // console.log("docs notes", docs);
     return docs;
   },
 

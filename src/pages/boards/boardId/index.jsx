@@ -6,27 +6,31 @@ import { useParams } from "react-router-dom";
 export default function BoardId() {
   const [board, setBoard] = useState({});
   const params = useParams();
-  console.log("params", params);
 
   const getBoard = async () => {
     try {
-      const board = await boardService.getBoards({
-        boardId: params.boardId,
+      // { boardId: params.boardId }
+      const boards = await boardService.getBoards();
+      boards.forEach((board) => {
+        if (board.id == params.boardId) {
+          // const date = new Date(board.createdDate);
+          // console.log(date);
+          setBoard(board);
+        }
       });
-      console.log(board);
-      setBoard(board);
     } catch (e) {
       console.log(e);
     }
   };
   useEffect(() => {
-    // setBoard(`hey`);
-    getBoard({ boardId: params.boardId });
-  }, {});
+    getBoard();
+  }, []);
   return (
     <div className="flex flex-col gap-5">
-      <div className="px-3 pt-5">
-        <h1 className="text-xl">{board.boardName}Hello&#39; Lakshya</h1>
+      <div className="px-3 pt-5 gap-3">
+        <div className="text-xl">{board.boardName}</div>
+        <div className="text-xl">{board.createdBy}</div>
+        {/* <h1 className="text-xl">{new Date(board.createdDate)}</h1> */}
       </div>
       <div className="flex px-3">
         <ul className="flex gap-3">
@@ -48,7 +52,7 @@ export default function BoardId() {
           </li>
           <li>
             <Link
-              to="members"
+              to="reports"
               className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
             >
               Reports
