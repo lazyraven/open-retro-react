@@ -32,9 +32,17 @@ export default function RetroId() {
     }
   };
 
-  const addRetroDescription = (tagName) => {
+  const addRetroDescription = (tagName, note) => {
     notesModel.tag = tagName;
-    setIsOpen(true);
+
+    switch (note.tag) {
+      case "went-well":
+        return setIsOpen(true);
+      case "to-improve":
+        return setIsOpen(true);
+      case "action-item":
+        return setIsOpen(true);
+    }
   };
 
   const toggleMenu = () => {
@@ -70,7 +78,7 @@ export default function RetroId() {
     switch (note.tag) {
       case "went-well":
         return (
-          <div className="bg-[#009886] px-4 py-1 h-16 flex flex-col  w-full justify-between rounded-sm text-white">
+          <div className="bg-[#009886] px-4 py-1  flex flex-col  w-full justify-between rounded-sm text-white">
             <div className="flex justify-between">
               <h1 className="font-semibold">{note.description}</h1>
               <button type="button">
@@ -100,7 +108,7 @@ export default function RetroId() {
         );
       case "to-improve":
         return (
-          <div className="bg-[#E92C64] px-4 py-1 h-16  flex flex-col justify-between rounded-sm text-white">
+          <div className="bg-[#E92C64] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
             <div className="flex justify-between">
               <h1 className="font-semibold">{note.description}</h1>
               <button type="button">
@@ -130,7 +138,7 @@ export default function RetroId() {
         );
       case "action-item":
         return (
-          <div className="bg-[#A63EB9] px-4 py-1 h-16  flex flex-col justify-between rounded-sm text-white">
+          <div className="bg-[#A63EB9] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
             <div className="flex justify-between">
               <h1 className="font-semibold">{note.description}</h1>
               <button type="button">
@@ -197,54 +205,58 @@ export default function RetroId() {
         );
       case "to-improve":
         return (
-          <div className="flex gap-2 relative">
-            <input
-              type="text"
-              name="description"
-              className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
-              value={notesModel.description}
-              onChange={handleChange}
-            />
+          <>
+            <div className="flex gap-2 relative">
+              <input
+                type="text"
+                name="description"
+                className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+                value={notesModel.description}
+                onChange={handleChange}
+              />
 
-            <button
-              type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button className="absolute right-2 top-2" onClick={toggleMenu}>
-              <BaseIcon
-                iconName={ICONS.Close}
-                className=" flex h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-          </div>
+              <button
+                type="button"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+              <button className="absolute right-2 top-2" onClick={toggleMenu}>
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+            </div>
+          </>
         );
       case "action-item":
         return (
-          <div className="flex gap-2 relative">
-            <input
-              type="text"
-              name="description"
-              className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
-              value={notesModel.description}
-              onChange={handleChange}
-            />
-            <button
-              type="button"
-              className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button className="absolute right-2 top-2" onClick={toggleMenu}>
-              <BaseIcon
-                iconName={ICONS.Close}
-                className=" flex h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-          </div>
+          <>
+            <div className="flex gap-2 relative">
+              <input
+                type="text"
+                name="description"
+                className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+                value={notesModel.description}
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+              <button className="absolute right-2 top-2" onClick={toggleMenu}>
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+            </div>
+          </>
         );
     }
   };
@@ -270,7 +282,7 @@ export default function RetroId() {
                 type="button"
                 className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm"
                 onClick={() => {
-                  addRetroDescription(note.tag);
+                  addRetroDescription(note.tag, note);
                 }}
               >
                 <BaseIcon
@@ -278,6 +290,7 @@ export default function RetroId() {
                   className=" h-4 w-4 text-gray-500"
                 ></BaseIcon>
               </button>
+              {/* {isOpen && <div>{renderTextBox(note)}</div>} */}
               {isOpen && <div>{renderTextBox(note)}</div>}
               <div>{renderBoardRow(note)}</div>
             </div>
