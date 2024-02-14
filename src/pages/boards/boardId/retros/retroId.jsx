@@ -19,7 +19,6 @@ export default function RetroId() {
     tag: "",
     title: "",
   });
-  console.log("notesmodel", notesModel);
 
   const getNotes = async () => {
     try {
@@ -33,7 +32,8 @@ export default function RetroId() {
     }
   };
 
-  const addRetroDescription = () => {
+  const addRetroDescription = (tagName) => {
+    notesModel.tag = tagName;
     setIsOpen(true);
   };
 
@@ -65,6 +65,7 @@ export default function RetroId() {
     getNotes({ retroId: params.OpenRetroId });
   }, []);
 
+  // for list rendering
   const renderBoardRow = (note) => {
     switch (note.tag) {
       case "went-well":
@@ -160,6 +161,7 @@ export default function RetroId() {
     }
   };
 
+  // for post new data
   const renderTextBox = (note) => {
     switch (note.tag) {
       case "went-well":
@@ -198,16 +200,16 @@ export default function RetroId() {
           <div className="flex gap-2 relative">
             <input
               type="text"
-              name="boardName"
+              name="description"
               className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+              value={notesModel.description}
+              onChange={handleChange}
             />
 
             <button
               type="button"
               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-              onClick={() => {
-                addRetroDescription();
-              }}
+              onClick={handleSave}
             >
               Save
             </button>
@@ -224,16 +226,15 @@ export default function RetroId() {
           <div className="flex gap-2 relative">
             <input
               type="text"
-              name="boardName"
+              name="description"
               className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+              value={notesModel.description}
+              onChange={handleChange}
             />
-
             <button
               type="button"
               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
-              onClick={() => {
-                addRetroDescription();
-              }}
+              onClick={handleSave}
             >
               Save
             </button>
@@ -248,6 +249,8 @@ export default function RetroId() {
     }
   };
   console.log("notes", notes);
+
+  // description modal box
   return (
     <div>
       <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
@@ -267,7 +270,7 @@ export default function RetroId() {
                 type="button"
                 className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm"
                 onClick={() => {
-                  addRetroDescription();
+                  addRetroDescription(note.tag);
                 }}
               >
                 <BaseIcon
@@ -280,97 +283,6 @@ export default function RetroId() {
             </div>
           );
         })}
-        {/* <div className="flex flex-col gap-3">
-          <div className="flex justify-between py-2">
-            <h1 className="font-semibold text-lg">Went Well</h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
-            </button>
-          </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] py-2 rounded-sm"
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className=" h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-          <div className="bg-teal-600 px-4 py-1 h-16  flex flex-auto justify-between rounded-sm text-white">
-            <h1 className="font-semibold">I released code to production</h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-200"
-              ></BaseIcon>
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex justify-between py-2">
-            <h1 className="font-semibold text-lg">To Improve</h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
-            </button>
-          </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] py-2 rounded-sm"
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className=" h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-          <div className="bg-rose-600 px-4 py-1 h-16  flex flex-auto justify-between rounded-sm text-white">
-            <h1 className="font-semibold">
-              Need to improve testing, bug found
-            </h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-200"
-              ></BaseIcon>
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex justify-between py-2">
-            <h1 className="font-semibold text-lg">Action Items</h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
-            </button>
-          </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] py-2 rounded-sm"
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className=" h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-          <div className="bg-fuchsia-600 px-4 py-1 h-16  flex flex-auto justify-between rounded-sm text-white">
-            <h1 className="font-semibold">
-              We finished 10 stories. some more details{" "}
-            </h1>
-            <button type="button">
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-200"
-              ></BaseIcon>
-            </button>
-          </div>
-        </div> */}
       </div>
     </div>
   );
