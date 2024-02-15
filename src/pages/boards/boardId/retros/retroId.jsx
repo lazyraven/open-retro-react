@@ -7,6 +7,10 @@ import { useParams } from "react-router-dom";
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenWentWell, setisOpenWentWell] = useState(false);
+  const [isOpenToImprove, setIsOpenToImprove] = useState(false);
+  const [isOpenActionItem, setisOpenActionItem] = useState(false);
+
   const params = useParams();
   console.log("params called", params);
 
@@ -37,11 +41,11 @@ export default function RetroId() {
 
     switch (note.tag) {
       case "went-well":
-        return setIsOpen(true);
+        return setisOpenWentWell(true);
       case "to-improve":
-        return setIsOpen(true);
+        return setIsOpenToImprove(true);
       case "action-item":
-        return setIsOpen(true);
+        return setisOpenActionItem(true);
     }
   };
 
@@ -169,97 +173,104 @@ export default function RetroId() {
     }
   };
 
+  // const renderTextBoxCopy = (note) => {
+  // let isOpenWentWell = note.tag == "went-well" ? true : false;
+  // let isOpenToImprove = note.tag == "to-improve" ? true : false;
+  // let isOpenActionItem = note.tag == "action-item" ? true : false;
+  // console.log("", isOpenWentWell, isOpenToImprove, isOpenActionItem);
+  // };
+
   // for post new data
-  const renderTextBox = (note) => {
-    switch (note.tag) {
-      case "went-well":
-        return (
-          <div className="flex gap-2 ">
-            <form onSubmit={handleSave} className="relative w-full">
-              <input
-                type="text"
-                name="description"
-                value={notesModel.description}
-                onChange={handleChange}
-                className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
-              />
+  // const renderTextBox = (note) => {
+  //   switch (note.tag) {
+  //     case "went-well":
+  //       return (
+  //         <div className="flex gap-2 ">
+  //           <form onSubmit={handleSave} className="relative w-full">
+  //             <input
+  //               type="text"
+  //               name="description"
+  //               value={notesModel.description}
+  //               onChange={handleChange}
+  //               className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+  //             />
 
-              <button
-                type="submit"
-                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                onClick={toggleMenu}
-                className="absolute right-2 top-2"
-              >
-                <BaseIcon
-                  iconName={ICONS.Close}
-                  className=" flex h-4 w-4 text-gray-500"
-                ></BaseIcon>
-              </button>
-            </form>
-          </div>
-        );
-      case "to-improve":
-        return (
-          <>
-            <div className="flex gap-2 relative">
-              <input
-                type="text"
-                name="description"
-                className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
-                value={notesModel.description}
-                onChange={handleChange}
-              />
+  //             <button
+  //               type="submit"
+  //               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+  //             >
+  //               Save
+  //             </button>
+  //             <button
+  //               type="button"
+  //               onClick={toggleMenu}
+  //               className="absolute right-2 top-2"
+  //             >
+  //               <BaseIcon
+  //                 iconName={ICONS.Close}
+  //                 className=" flex h-4 w-4 text-gray-500"
+  //               ></BaseIcon>
+  //             </button>
+  //           </form>
+  //         </div>
+  //       );
+  //     case "to-improve":
+  //       return (
+  //         <>
+  //           <div className="flex gap-2 relative">
+  //             <input
+  //               type="text"
+  //               name="description"
+  //               className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+  //               value={notesModel.description}
+  //               onChange={handleChange}
+  //             />
 
-              <button
-                type="button"
-                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button className="absolute right-2 top-2" onClick={toggleMenu}>
-                <BaseIcon
-                  iconName={ICONS.Close}
-                  className=" flex h-4 w-4 text-gray-500"
-                ></BaseIcon>
-              </button>
-            </div>
-          </>
-        );
-      case "action-item":
-        return (
-          <>
-            <div className="flex gap-2 relative">
-              <input
-                type="text"
-                name="description"
-                className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
-                value={notesModel.description}
-                onChange={handleChange}
-              />
-              <button
-                type="button"
-                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button className="absolute right-2 top-2" onClick={toggleMenu}>
-                <BaseIcon
-                  iconName={ICONS.Close}
-                  className=" flex h-4 w-4 text-gray-500"
-                ></BaseIcon>
-              </button>
-            </div>
-          </>
-        );
-    }
-  };
+  //             <button
+  //               type="button"
+  //               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+  //               onClick={handleSave}
+  //             >
+  //               Save
+  //             </button>
+  //             <button className="absolute right-2 top-2" onClick={toggleMenu}>
+  //               <BaseIcon
+  //                 iconName={ICONS.Close}
+  //                 className=" flex h-4 w-4 text-gray-500"
+  //               ></BaseIcon>
+  //             </button>
+  //           </div>
+  //         </>
+  //       );
+  //     case "action-item":
+  //       return (
+  //         <>
+  //           <div className="flex gap-2 relative">
+  //             <input
+  //               type="text"
+  //               name="description"
+  //               className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+  //               value={notesModel.description}
+  //               onChange={handleChange}
+  //             />
+  //             <button
+  //               type="button"
+  //               className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
+  //               onClick={handleSave}
+  //             >
+  //               Save
+  //             </button>
+  //             <button className="absolute right-2 top-2" onClick={toggleMenu}>
+  //               <BaseIcon
+  //                 iconName={ICONS.Close}
+  //                 className=" flex h-4 w-4 text-gray-500"
+  //               ></BaseIcon>
+  //             </button>
+  //           </div>
+  //         </>
+  //       );
+  //   }
+  // };
   console.log("notes", notes);
 
   // description modal box
@@ -291,7 +302,94 @@ export default function RetroId() {
                 ></BaseIcon>
               </button>
               {/* {isOpen && <div>{renderTextBox(note)}</div>} */}
-              {isOpen && <div>{renderTextBox(note)}</div>}
+              {/* {isOpenWentWell && <div>{renderTextBox(note)}</div>} */}
+
+              {isOpenWentWell && note.tag == "went-well" ? (
+                <div className="flex gap-2 ">
+                  <form onSubmit={handleSave} className="relative w-full">
+                    <input
+                      type="text"
+                      name="description"
+                      value={notesModel.description}
+                      onChange={handleChange}
+                      className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+                    />
+
+                    <button
+                      type="submit"
+                      className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleMenu}
+                      className="absolute right-2 top-2"
+                    >
+                      <BaseIcon
+                        iconName={ICONS.Close}
+                        className=" flex h-4 w-4 text-gray-500"
+                      ></BaseIcon>
+                    </button>
+                  </form>
+                </div>
+              ) : isOpenToImprove && note.tag == "to-improve" ? (
+                <div className="flex gap-2 relative">
+                  <input
+                    type="text"
+                    name="description"
+                    className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+                    value={notesModel.description}
+                    onChange={handleChange}
+                  />
+
+                  <button
+                    type="button"
+                    className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                    onClick={handleSave}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="absolute right-2 top-2"
+                    onClick={toggleMenu}
+                  >
+                    <BaseIcon
+                      iconName={ICONS.Close}
+                      className=" flex h-4 w-4 text-gray-500"
+                    ></BaseIcon>
+                  </button>
+                </div>
+              ) : isOpenActionItem && note.tag == "action-item" ? (
+                <div className="flex gap-2 relative">
+                  <input
+                    type="text"
+                    name="description"
+                    className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+                    value={notesModel.description}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
+                    onClick={handleSave}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="absolute right-2 top-2"
+                    onClick={toggleMenu}
+                  >
+                    <BaseIcon
+                      iconName={ICONS.Close}
+                      className=" flex h-4 w-4 text-gray-500"
+                    ></BaseIcon>
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+
               <div>{renderBoardRow(note)}</div>
             </div>
           );

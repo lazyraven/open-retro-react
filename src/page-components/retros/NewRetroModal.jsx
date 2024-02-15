@@ -90,7 +90,7 @@ export default function BaseForm(props) {
                         Date :
                       </label>
                       <input
-                        type="text"
+                        type="date"
                         name="date"
                         value={retroModel.date}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
