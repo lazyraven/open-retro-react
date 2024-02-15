@@ -12,7 +12,6 @@ export default function RetroId() {
   const [isOpenActionItem, setisOpenActionItem] = useState(false);
 
   const params = useParams();
-  console.log("params called", params);
 
   const [notesModel, setNotesModel] = useState({
     boardId: params.boardId,
@@ -52,12 +51,22 @@ export default function RetroId() {
   const closeWentWell = () => {
     setisOpenWentWell(false);
   };
-
   const closeToImprove = () => {
     setIsOpenToImprove(false);
   };
   const closeActionItem = () => {
     setisOpenActionItem(false);
+  };
+
+  const toggleMenu = (tagName) => {
+    tagName == "went-well"
+      ? setisOpenWentWell(!isOpenWentWell)
+      : tagName == "to-improve"
+      ? setIsOpenToImprove(!isOpenToImprove)
+      : tagName == "action-item"
+      ? setisOpenActionItem(!isOpenActionItem)
+      : "";
+    // setisOpenWentWell(!isOpenWentWell);
   };
 
   const handleChange = (event) => {
@@ -278,7 +287,6 @@ export default function RetroId() {
   //       );
   //   }
   // };
-  console.log("notes", notes);
 
   // description modal box
   return (
@@ -316,6 +324,7 @@ export default function RetroId() {
                   <form onSubmit={handleSave} className="relative w-full">
                     <input
                       type="text"
+                      id="went-well"
                       name="description"
                       value={notesModel.description}
                       onChange={handleChange}
@@ -330,7 +339,9 @@ export default function RetroId() {
                     </button>
                     <button
                       type="button"
-                      onClick={closeWentWell}
+                      onClick={() => {
+                        toggleMenu(note.tag);
+                      }}
                       className="absolute right-2 top-2"
                     >
                       <BaseIcon
@@ -344,6 +355,7 @@ export default function RetroId() {
                 <div className="flex gap-2 relative">
                   <input
                     type="text"
+                    id="to-improve"
                     name="description"
                     className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
                     value={notesModel.description}
@@ -359,7 +371,9 @@ export default function RetroId() {
                   </button>
                   <button
                     className="absolute right-2 top-2"
-                    onClick={closeToImprove}
+                    onClick={() => {
+                      toggleMenu(note.tag);
+                    }}
                   >
                     <BaseIcon
                       iconName={ICONS.Close}
@@ -371,6 +385,7 @@ export default function RetroId() {
                 <div className="flex gap-2 relative">
                   <input
                     type="text"
+                    id="action-item"
                     name="description"
                     className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
                     value={notesModel.description}
@@ -385,7 +400,9 @@ export default function RetroId() {
                   </button>
                   <button
                     className="absolute right-2 top-2"
-                    onClick={closeActionItem}
+                    onClick={() => {
+                      toggleMenu(note.tag);
+                    }}
                   >
                     <BaseIcon
                       iconName={ICONS.Close}
