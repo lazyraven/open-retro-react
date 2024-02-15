@@ -49,8 +49,15 @@ export default function RetroId() {
     }
   };
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const closeWentWell = () => {
+    setisOpenWentWell(false);
+  };
+
+  const closeToImprove = () => {
+    setIsOpenToImprove(false);
+  };
+  const closeActionItem = () => {
+    setisOpenActionItem(false);
   };
 
   const handleChange = (event) => {
@@ -323,7 +330,7 @@ export default function RetroId() {
                     </button>
                     <button
                       type="button"
-                      onClick={toggleMenu}
+                      onClick={closeWentWell}
                       className="absolute right-2 top-2"
                     >
                       <BaseIcon
@@ -352,7 +359,7 @@ export default function RetroId() {
                   </button>
                   <button
                     className="absolute right-2 top-2"
-                    onClick={toggleMenu}
+                    onClick={closeToImprove}
                   >
                     <BaseIcon
                       iconName={ICONS.Close}
@@ -378,7 +385,7 @@ export default function RetroId() {
                   </button>
                   <button
                     className="absolute right-2 top-2"
-                    onClick={toggleMenu}
+                    onClick={closeActionItem}
                   >
                     <BaseIcon
                       iconName={ICONS.Close}
@@ -386,14 +393,121 @@ export default function RetroId() {
                     ></BaseIcon>
                   </button>
                 </div>
-              ) : (
-                ""
-              )}
+              ) : null}
 
               <div>{renderBoardRow(note)}</div>
             </div>
           );
         })}
+      </div>
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
+        <div>
+          <div className="flex justify-between py-2">
+            <h1 className="font-semibold text-xl capitalize">lakshya</h1>
+            <button type="button">
+              <BaseIcon
+                iconName={ICONS.ellipsisvertical}
+                className=" flex h-5 w-5 text-gray-400"
+              ></BaseIcon>
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm"
+              // onClick={() => {
+              //   addRetroDescription(note.tag, note);
+              // }}
+            >
+              <BaseIcon
+                iconName={ICONS.Plus}
+                className=" h-4 w-4 text-gray-500"
+              ></BaseIcon>
+            </button>
+          </div>
+
+          {isOpenWentWell && (
+            <div className="flex gap-2 ">
+              <form onSubmit={handleSave} className="relative w-full">
+                <input
+                  type="text"
+                  name="description"
+                  value={notesModel.description}
+                  onChange={handleChange}
+                  className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+                />
+
+                <button
+                  type="submit"
+                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={closeWentWell}
+                  className="absolute right-2 top-2"
+                >
+                  <BaseIcon
+                    iconName={ICONS.Close}
+                    className=" flex h-4 w-4 text-gray-500"
+                  ></BaseIcon>
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+
+        <div className="flex gap-2 relative">
+          <input
+            type="text"
+            name="description"
+            className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+            value={notesModel.description}
+            onChange={handleChange}
+          />
+
+          <button
+            type="button"
+            className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <button className="absolute right-2 top-2" onClick={closeToImprove}>
+            <BaseIcon
+              iconName={ICONS.Close}
+              className=" flex h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+        </div>
+
+        <div className="flex gap-2 relative">
+          <input
+            type="text"
+            name="description"
+            className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+            value={notesModel.description}
+            onChange={handleChange}
+          />
+          <button
+            type="button"
+            className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <button className="absolute right-2 top-2" onClick={closeActionItem}>
+            <BaseIcon
+              iconName={ICONS.Close}
+              className=" flex h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+        </div>
+
+        {/* <div>{renderBoardRow(note)}</div> */}
       </div>
     </div>
   );
