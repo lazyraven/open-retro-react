@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function BaseNavbar() {
   return (
-    <div className="flex items-center gap-3 px-5 py-4">
+    <div className="flex items-center bg-zinc-100 gap-3 px-5 py-4">
       <Link to="/" className="flex gap-2 items-center">
         <BaseIcon
           iconName={ICONS.rocket}

@@ -1,49 +1,62 @@
 import { useEffect, useState } from "react";
-import { useParams, Outlet, Link } from "react-router-dom";
-import { db } from "@/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+import boardService from "@/services/board.service";
+import { useParams } from "react-router-dom";
 
 export default function BoardId() {
   const [board, setBoard] = useState({});
   const params = useParams();
-  const navigate = useNavigate();
 
-  console.log("params", params);
-
-  // useEffect(() => {
-  //   const boardRef = collection(db, "retros");
-  //   console.log(`params.boardId`);
-  //   console.log(params.boardId);
-  //   const q = query(boardRef, where("boardId", "==", params.boardId));
-  //   // const q = query(boardRef, where("boardId", "==", "HYHe9hVonGIwRxSGFjLm"));
-  //   return onSnapshot(q, (snapShot) => {
-  //     let retroDetails = [];
-  //     snapShot.docs.forEach((doc) => {
-  //       retroDetails.push({ ...doc.data(), id: doc.id });
-  //     });
-  //     console.log("retroDetailsxxx", retroDetails);
-  //     setBoard(retroDetails);
-  //   });
-  // }, []);
-
+  const getBoard = async () => {
+    try {
+      // { boardId: params.boardId }
+      const boards = await boardService.getBoards();
+      boards.forEach((board) => {
+        if (board.id == params.boardId) {
+          // const date = new Date(board.createdDate);
+          // console.log(date);
+          setBoard(board);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getBoard();
+  }, []);
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-3">
-        <h1>boards details</h1>
-        <h1>{board.boardName}</h1>
-        {/* <h1>{board.createdBy}</h1>
-        <h1>{board.createdDate}</h1> */}
+    <div className="flex flex-col gap-5">
+      <div className="px-3 pt-5 gap-3">
+        <div className="text-xl">{board.boardName}</div>
+        <div className="text-xl">{board.createdBy}</div>
+        {/* <h1 className="text-xl">{new Date(board.createdDate)}</h1> */}
       </div>
-      <div className="flex">
+      <div className="flex px-3">
         <ul className="flex gap-3">
           <li>
-            <Link to="retros" className="p-2">
+            <Link
+              to="retros"
+              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
+            >
               Retros
             </Link>
           </li>
           <li>
-            <Link to="members">Members</Link>
+            <Link
+              to="members"
+              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
+            >
+              Members
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="reports"
+              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
+            >
+              Reports
+            </Link>
           </li>
         </ul>
       </div>

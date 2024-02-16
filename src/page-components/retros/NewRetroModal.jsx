@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const params = useParams();
   const [retroModel, setRetroModel] = useState({
-    boardId: "",
+    boardId: params.boardId,
     date: "",
     retroName: "",
   });
@@ -25,7 +26,6 @@ export default function BaseForm(props) {
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(value);
 
     setRetroModel({
       ...retroModel,
@@ -33,36 +33,18 @@ export default function BaseForm(props) {
     });
   };
 
-  // const getRetros = async () => {
-  //   try {
-  //     const boards = await boardService.getBoards();
-  //     // console.log(`boards`);
-  //     console.log(boards);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  useEffect(() => {
-    // getRetros();
-  });
+  useEffect(() => {});
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      console.log("retroModel", retroModel);
       const newRetroId = await boardService.createRetro(retroModel);
-      console.log(`newRetroId`);
       console.log(newRetroId);
       // navigate(`/${newRetroId}`);
       closeModal();
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const cancelEvent = (e) => {
-    console.log("event", e);
   };
 
   return (
@@ -92,7 +74,6 @@ export default function BaseForm(props) {
                     </div>
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
-                        {" "}
                         Retro Name :
                       </label>
                       <input
@@ -106,32 +87,16 @@ export default function BaseForm(props) {
 
                     <div className="flex gap-2 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
-                        {" "}
                         Date :
                       </label>
                       <input
-                        type="text"
+                        type="date"
                         name="date"
                         value={retroModel.date}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
-
-                    <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        {" "}
-                        Board Id :
-                      </label>
-                      <input
-                        type="text"
-                        name="boardId"
-                        value={retroModel.boardId}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
-                        onChange={handleChange}
-                      />
-                    </div>
-
                     <div className="flex gap-2 justify-end">
                       <button
                         type="button"

@@ -22,7 +22,6 @@ export default function NewBoardModal(props) {
     event.preventDefault();
 
     const { name, value } = event.target;
-    console.log(value);
 
     setBoardModel({
       ...boardModel,
@@ -30,35 +29,17 @@ export default function NewBoardModal(props) {
     });
   };
 
-  const getBoards = async () => {
-    try {
-      const boards = await boardService.getBoards();
-      console.log(`boards called`);
-      console.log(boards);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    getBoards();
-  });
+  useEffect(() => {});
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const newBoardId = await boardService.createBoard(boardModel);
-      console.log(`newBoardId`);
-      console.log(newBoardId);
-      navigate(`/${newBoardId}`);
+      const newBoard = await boardService.createBoard(boardModel);
+      navigate(`/boards/${newBoard.id}`);
       closeModal();
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const cancelEvent = (e) => {
-    console.log("event", e);
   };
 
   return (
