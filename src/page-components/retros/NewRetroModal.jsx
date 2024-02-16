@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 export default function BaseForm(props) {
   const { children } = props;
+  const [retros, setRetros] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const [retroModel, setRetroModel] = useState({
@@ -33,19 +34,36 @@ export default function BaseForm(props) {
     });
   };
 
-  useEffect(() => {});
-
   const handleSave = async (e) => {
+    console.log("handlesave called");
     e.preventDefault();
     try {
       const newRetroId = await boardService.createRetro(retroModel);
       console.log(newRetroId);
       // navigate(`/${newRetroId}`);
       closeModal();
+      window.location.reload(false);
+      getRetroDetails();
     } catch (e) {
       console.log(e);
     }
   };
+
+  const getRetroDetails = async () => {
+    try {
+      const retroDetails = await boardService.getRetrosDetail({
+        boardId: params.boardId,
+      });
+      setRetros(retroDetails);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  console.log("retros", retros);
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <>

@@ -20,6 +20,7 @@ export default function Retros() {
     } catch (e) {
       console.log(e);
     }
+    // getRetroDetails();
   };
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function Retros() {
   return (
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
-        <div className=" flex gap-8 items-center py-4">
+        <div className=" flex gap-8 flex-wrap items-center py-4">
           <NewRetroModal>
             <button
               type="button"
