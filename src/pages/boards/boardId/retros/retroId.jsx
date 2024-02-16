@@ -67,6 +67,7 @@ export default function RetroId() {
 
   const handleSave = async (tagName) => {
     notesModel.tag = tagName;
+    // console.log("handleSave called", tagName, notesModel);
     // e.preventDefault();
     try {
       const newNotes = await boardService.createNotes(notesModel);
@@ -203,39 +204,39 @@ export default function RetroId() {
               ></BaseIcon>
             </button>
             {isOpenWentWell && (
-              <div className="flex gap-2">
-                <form className="relative w-full">
-                  <input
-                    type="text"
-                    id="went-well"
-                    name="description"
-                    value={notesModel.description}
-                    onChange={handleChange}
-                    className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
-                  />
+              <div className="flex gap-2 relative">
+                {/* <form className="relative w-full"> */}
+                <input
+                  type="text"
+                  id="went-well"
+                  name="description"
+                  value={notesModel.description}
+                  onChange={handleChange}
+                  className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+                />
 
-                  <button
-                    type="submit"
-                    className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                    onClick={() => {
-                      handleSave("went-well");
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      toggleMenu("went-well");
-                    }}
-                    className="absolute right-2 top-2"
-                  >
-                    <BaseIcon
-                      iconName={ICONS.Close}
-                      className=" flex h-4 w-4 text-gray-500"
-                    ></BaseIcon>
-                  </button>
-                </form>
+                <button
+                  type="submit"
+                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                  onClick={() => {
+                    handleSave("went-well");
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleMenu("went-well");
+                  }}
+                  className="absolute right-2 top-2"
+                >
+                  <BaseIcon
+                    iconName={ICONS.Close}
+                    className=" flex h-4 w-4 text-gray-500"
+                  ></BaseIcon>
+                </button>
+                {/* </form> */}
               </div>
             )}
           </div>
