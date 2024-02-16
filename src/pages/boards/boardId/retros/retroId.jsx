@@ -87,7 +87,7 @@ export default function RetroId() {
     switch (note.tag) {
       case "went-well":
         return (
-          <div className="bg-[#009886] px-4 py-1  flex flex-col  w-full justify-between rounded-sm text-white">
+          <div className="bg-[#009886] px-4 py-1 flex flex-col w-full justify-between rounded-sm text-white">
             <div className="flex justify-between">
               <h1 className="font-semibold">{note.description}</h1>
               <button type="button">
@@ -117,7 +117,7 @@ export default function RetroId() {
         );
       case "to-improve":
         return (
-          <div className="bg-[#E92C64] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
+          <div className="bg-[#E92C64] px-4 py-1 flex flex-col justify-between rounded-sm text-white">
             <div className="flex justify-between">
               <h1 className="font-semibold">{note.description}</h1>
               <button type="button">
@@ -180,186 +180,204 @@ export default function RetroId() {
 
   // description modal box
   return (
-    <div>
-      <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">Went-Well</h1>
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
-            </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("went-well");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-            {isOpenWentWell && (
-              <div className="flex gap-2 relative">
-                {/* <form className="relative w-full"> */}
-                <input
-                  type="text"
-                  id="went-well"
-                  name="description"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                  className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
-                />
-
-                <button
-                  type="submit"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("went-well");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    toggleMenu("went-well");
-                  }}
-                  className="absolute right-2 top-2"
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-                {/* </form> */}
-              </div>
-            )}
+    <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
+      <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-xl capitalize">Went-Well</h1>
+            <BaseIcon
+              iconName={ICONS.ellipsisvertical}
+              className=" flex h-5 w-5 text-gray-400"
+            ></BaseIcon>
           </div>
-        </div>
+          <button
+            type="button"
+            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
+            onClick={() => {
+              addRetroDescription("went-well");
+            }}
+          >
+            <BaseIcon
+              iconName={ICONS.Plus}
+              className=" h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+          {isOpenWentWell && (
+            <div className="flex gap-2 relative">
+              {/* <form className="relative w-full"> */}
+              <input
+                type="text"
+                id="went-well"
+                name="description"
+                value={notesModel.description}
+                onChange={handleChange}
+                className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
+              />
 
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">Action-Item</h1>
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              <button
+                type="submit"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                onClick={() => {
+                  handleSave("went-well");
+                }}
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  toggleMenu("went-well");
+                }}
+                className="absolute right-2 top-2"
+              >
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+              {/* </form> */}
             </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("action-item");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-
-            {isOpenActionItem && (
-              <div className="flex gap-2 relative">
-                <input
-                  type="text"
-                  id="action-item"
-                  name="description"
-                  className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("action-item");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  className="absolute right-2 top-2"
-                  onClick={() => {
-                    toggleMenu("action-item");
-                  }}
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">To-Improve</h1>
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
-            </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("to-improve");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-
-            {isOpenToImprove && (
-              <div className="flex gap-2 relative">
-                <input
-                  type="text"
-                  id="to-improve"
-                  name="description"
-                  className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                />
-
-                <button
-                  type="button"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("to-improve");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  className="absolute right-2 top-2"
-                  onClick={() => {
-                    toggleMenu("to-improve");
-                  }}
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-              </div>
-            )}
-          </div>
+          )}
         </div>
         {notes.map((note, index) => {
           return (
             <div className="flex flex-col gap-3" key={note.tag + index}>
-              <div>{renderBoardRow(note)}</div>
+              {note.tag === "went-well" ? (
+                <div>{renderBoardRow(note)}</div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-xl capitalize">To-Improve</h1>
+            <BaseIcon
+              iconName={ICONS.ellipsisvertical}
+              className=" flex h-5 w-5 text-gray-400"
+            ></BaseIcon>
+          </div>
+          <button
+            type="button"
+            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
+            onClick={() => {
+              addRetroDescription("to-improve");
+            }}
+          >
+            <BaseIcon
+              iconName={ICONS.Plus}
+              className=" h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+
+          {isOpenToImprove && (
+            <div className="flex gap-2 relative">
+              <input
+                type="text"
+                id="to-improve"
+                name="description"
+                className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
+                value={notesModel.description}
+                onChange={handleChange}
+              />
+
+              <button
+                type="button"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
+                onClick={() => {
+                  handleSave("to-improve");
+                }}
+              >
+                Save
+              </button>
+              <button
+                className="absolute right-2 top-2"
+                onClick={() => {
+                  toggleMenu("to-improve");
+                }}
+              >
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+            </div>
+          )}
+        </div>
+        {notes.map((note, index) => {
+          return (
+            <div className="flex flex-col gap-3" key={note.tag + index}>
+              {note.tag === "to-improve" ? (
+                <div>{renderBoardRow(note)}</div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col gap-3 py-2">
+        <div className=" flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-xl capitalize">Action-Item</h1>
+            <BaseIcon
+              iconName={ICONS.ellipsisvertical}
+              className=" flex h-5 w-5 text-gray-400"
+            ></BaseIcon>
+          </div>
+          <button
+            type="button"
+            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
+            onClick={() => {
+              addRetroDescription("action-item");
+            }}
+          >
+            <BaseIcon
+              iconName={ICONS.Plus}
+              className=" h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+
+          {isOpenActionItem && (
+            <div className="flex gap-2 relative">
+              <input
+                type="text"
+                id="action-item"
+                name="description"
+                className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
+                value={notesModel.description}
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
+                onClick={() => {
+                  handleSave("action-item");
+                }}
+              >
+                Save
+              </button>
+              <button
+                className="absolute right-2 top-2"
+                onClick={() => {
+                  toggleMenu("action-item");
+                }}
+              >
+                <BaseIcon
+                  iconName={ICONS.Close}
+                  className=" flex h-4 w-4 text-gray-500"
+                ></BaseIcon>
+              </button>
+            </div>
+          )}
+        </div>
+        {notes.map((note, index) => {
+          return (
+            <div className="flex flex-col gap-3" key={note.tag + index}>
+              {note.tag === "action-item" ? (
+                <div>{renderBoardRow(note)}</div>
+              ) : null}
             </div>
           );
         })}
