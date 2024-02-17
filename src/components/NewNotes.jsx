@@ -79,10 +79,10 @@ export default function NewNotes(props) {
   useEffect(() => {});
 
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <button
         type="button"
-        className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
+        className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-2 rounded-sm w-full"
         onClick={(event) => {
           addRetroDescription(event);
         }}
@@ -104,12 +104,12 @@ export default function NewNotes(props) {
             name="description"
             value={notesModel.description}
             onChange={handleChange}
-            className={`border-4 py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
+            className={`border-[3.5px] py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
           />
 
           <button
             type="submit"
-            className={`flex justify-center absolute right-2 bottom-2 text-white items-centerfont-semibold rounded-sm border-blue-100 text-sm px-1 ${getButtonClass()}`}
+            className={`flex justify-center absolute right-2 bottom-2 text-white items-center  rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
           >
             Save
           </button>
@@ -122,7 +122,7 @@ export default function NewNotes(props) {
           >
             <BaseIcon
               iconName={ICONS.Close}
-              className=" flex h-4 w-4 text-gray-500"
+              className=" flex h-3 w-3 text-gray-600"
             ></BaseIcon>
           </button>
         </form>

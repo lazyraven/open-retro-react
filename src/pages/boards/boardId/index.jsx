@@ -23,11 +23,11 @@ export default function BoardId() {
     }
   };
 
-  // const nanoseconds = board.createdDate.nanoseconds;
-  // const seconds = board.createdDate.seconds;
-  // const milliseconds = seconds * 1000 + Math.floor(nanoseconds / 1000000);
-  // const date = new Date(milliseconds);
-  // const formattedDate = date.toDateString();
+  const nanoseconds = board.createdDate.nanoseconds;
+  const seconds = board.createdDate.seconds;
+  const milliseconds = seconds * 1000 + Math.floor(nanoseconds / 1000000);
+  const date = new Date(milliseconds);
+  const formattedDate = date.toDateString();
 
   useEffect(() => {
     getBoard();
@@ -37,7 +37,7 @@ export default function BoardId() {
       <div className="flex justify-between mt-2 items-center py-1 px-3 gap-3">
         <div className="flex flex-col">
           <h1 className="text-2xl">{board.boardName}</h1>
-          {/* <h1 className="text-sm ">{formattedDate}</h1> */}
+          <h1 className="text-sm ">{formattedDate}</h1>
         </div>
         <div>
           <span className="text-sm text-gray-500">created by :</span>
