@@ -5,6 +5,9 @@ import {
   addDoc,
   query,
   where,
+  deleteDoc,
+  doc,
+  updateDoc,
   // onSnapshot,
 } from "firebase/firestore";
 
@@ -78,5 +81,26 @@ export default {
 
   createNotes(formBody) {
     return addDoc(collection(db, "notes"), formBody);
+  },
+
+  deleteRetro(deleteRetroId) {
+    deleteDoc(doc(db, "retros", deleteRetroId));
+  },
+
+  deleteNote(deleteNoteId) {
+    deleteDoc(doc(db, "notes", deleteNoteId));
+  },
+
+  updateNote() {
+    const docRef = doc(db, "notes", this.checkBookId);
+    updateDoc(docRef, {
+      description: this.description,
+      noteId: this.checkBookId,
+    });
+    //  .then(()=>{
+    //    this.author = "";
+    //    this.title = "";
+    //    this.checkBookId = ""
+    //  })
   },
 };
