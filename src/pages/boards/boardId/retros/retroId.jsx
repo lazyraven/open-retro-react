@@ -7,9 +7,6 @@ import NewNotes from "../../../../components/NewNotes";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
-  const [isOpenWentWell, setisOpenWentWell] = useState(false);
-  const [isOpenToImprove, setIsOpenToImprove] = useState(false);
-  const [isOpenActionItem, setisOpenActionItem] = useState(false);
 
   const params = useParams();
 
@@ -23,16 +20,6 @@ export default function RetroId() {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const addRetroDescription = (tagName) => {
-    tagName == "went-well"
-      ? setisOpenWentWell(true)
-      : tagName == "to-improve"
-      ? setIsOpenToImprove(true)
-      : tagName == "action-item"
-      ? setisOpenActionItem(true)
-      : "";
   };
 
   useEffect(() => {
@@ -147,25 +134,7 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-            onClick={() => {
-              addRetroDescription("went-well");
-            }}
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className=" h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-          {isOpenWentWell && (
-            <NewNotes
-              tagName="went-well"
-              handleClose={isOpenWentWell}
-              onNoteCreate="getNotes()"
-            ></NewNotes>
-          )}
+          <NewNotes tagName="went-well" onNoteCreate="getNotes()"></NewNotes>
         </div>
         {notes.map((note, index) => {
           return (
@@ -187,27 +156,12 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-            onClick={() => {
-              addRetroDescription("action-item");
-            }}
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className="h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-
-          {isOpenActionItem && (
-            <NewNotes
-              tagName="action-item"
-              onNoteCreate="()=>{
+          <NewNotes
+            tagName="action-item"
+            onNoteCreate="()=>{
                 this.getNotes()
               }"
-            ></NewNotes>
-          )}
+          ></NewNotes>
         </div>
         {notes.map((note, index) => {
           return (
@@ -229,20 +183,7 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <button
-            type="button"
-            className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-            onClick={() => {
-              addRetroDescription("to-improve");
-            }}
-          >
-            <BaseIcon
-              iconName={ICONS.Plus}
-              className=" h-4 w-4 text-gray-500"
-            ></BaseIcon>
-          </button>
-
-          {isOpenToImprove && <NewNotes tagName="to-improve"></NewNotes>}
+          <NewNotes tagName="to-improve"></NewNotes>
         </div>
         {notes.map((note, index) => {
           return (

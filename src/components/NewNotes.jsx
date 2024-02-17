@@ -19,12 +19,7 @@ export default function NewNotes(props) {
     tag: "",
     title: "",
   });
-
-  const toggleMenu = (event) => {
-    console.log("toggleMenu called", event);
-    // setInClose(false);
-    // props.handleClose = false;
-  };
+  const [isOpenTextbox, setisOpenTextbox] = useState(false);
 
   const handleChange = (event) => {
     // event.preventDefault();
@@ -61,7 +56,6 @@ export default function NewNotes(props) {
   };
 
   const handleSubmit = async (e, tagOption) => {
-    console.log("handleSubmit called", tagOption);
     notesModel.tag = tagOption;
     e.preventDefault();
     try {
@@ -72,41 +66,67 @@ export default function NewNotes(props) {
     }
   };
 
+  const addRetroDescription = (e) => {
+    e.preventDefault();
+    setisOpenTextbox(true);
+  };
+
+  const toggleMenu = (e) => {
+    e.preventDefault();
+    setisOpenTextbox(false);
+  };
+
   useEffect(() => {});
 
   return (
-    <form
-      onSubmit={(event) => {
-        handleSubmit(event, props.tagName);
-      }}
-      className="relative w-full"
-    >
-      <input
-        type="text"
-        name="description"
-        value={notesModel.description}
-        onChange={handleChange}
-        className={`border-4 py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
-      />
-
-      <button
-        type="submit"
-        className={`flex justify-center absolute right-2 bottom-2 text-white items-centerfont-semibold rounded-sm border-blue-100 text-sm px-1 ${getButtonClass()}`}
-      >
-        Save
-      </button>
+    <div>
       <button
         type="button"
+        className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
         onClick={(event) => {
-          toggleMenu(event, false);
+          addRetroDescription(event);
         }}
-        className="absolute right-2 top-2"
       >
         <BaseIcon
-          iconName={ICONS.Close}
-          className=" flex h-4 w-4 text-gray-500"
+          iconName={ICONS.Plus}
+          className=" h-4 w-4 text-gray-500"
         ></BaseIcon>
       </button>
-    </form>
+      {isOpenTextbox && (
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event, props.tagName);
+          }}
+          className="relative w-full"
+        >
+          <input
+            type="text"
+            name="description"
+            value={notesModel.description}
+            onChange={handleChange}
+            className={`border-4 py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
+          />
+
+          <button
+            type="submit"
+            className={`flex justify-center absolute right-2 bottom-2 text-white items-centerfont-semibold rounded-sm border-blue-100 text-sm px-1 ${getButtonClass()}`}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={(event) => {
+              toggleMenu(event);
+            }}
+            className="absolute right-2 top-2"
+          >
+            <BaseIcon
+              iconName={ICONS.Close}
+              className=" flex h-4 w-4 text-gray-500"
+            ></BaseIcon>
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
