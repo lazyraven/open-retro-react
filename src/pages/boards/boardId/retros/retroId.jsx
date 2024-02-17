@@ -33,7 +33,7 @@ export default function RetroId() {
         return (
           <div className="bg-[#009886] px-4 py-1 flex flex-col w-full justify-between rounded-sm text-white">
             <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
+              <h1 className="font-medium text-sm ">{note.description}</h1>
               <button type="button">
                 <BaseIcon
                   iconName={ICONS.ellipsisvertical}
@@ -42,17 +42,17 @@ export default function RetroId() {
               </button>
             </div>
             <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
+                <p className="text-sm font-normal">0</p>
               </button>
-              <button type="button" className="flex gap-1">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
                 <p className="text-sm font-semibold">0</p>
               </button>
@@ -63,7 +63,9 @@ export default function RetroId() {
         return (
           <div className="bg-[#E92C64] px-4 py-1 flex flex-col justify-between rounded-sm text-white">
             <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
+              <h1 className="font-medium text-sm text-[#FEFFFF]">
+                {note.description}
+              </h1>
               <button type="button">
                 <BaseIcon
                   iconName={ICONS.ellipsisvertical}
@@ -71,18 +73,18 @@ export default function RetroId() {
                 ></BaseIcon>
               </button>
             </div>
-            <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
+            <div className="flex gap-1 justify-end ">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
                 <p className="text-sm font-semibold">0</p>
               </button>
-              <button type="button" className="flex gap-1">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
                 <p className="text-sm font-semibold">0</p>
               </button>
@@ -93,7 +95,7 @@ export default function RetroId() {
         return (
           <div className="bg-[#A63EB9] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
             <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
+              <h1 className="font-medium text-sm">{note.description}</h1>
               <button type="button">
                 <BaseIcon
                   iconName={ICONS.ellipsisvertical}
@@ -101,18 +103,18 @@ export default function RetroId() {
                 ></BaseIcon>
               </button>
             </div>
-            <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
+            <div className="flex gap-1 justify-end items-center">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
                 <p className="text-sm font-semibold">0</p>
               </button>
-              <button type="button" className="flex gap-1">
+              <button type="button" className="flex gap-1 items-center">
                 <BaseIcon
                   iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
+                  className="flex h-4 w-4"
                 ></BaseIcon>
                 <p className="text-sm font-semibold">0</p>
               </button>
@@ -124,11 +126,13 @@ export default function RetroId() {
 
   // description modal box
   return (
-    <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
+    <div className="grid grid-cols-3 px-5 gap-5 bg-[#F1F2F5] min-h-screen">
       <div className="flex flex-col gap-3 py-2">
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
-            <h1 className="font-semibold text-xl capitalize">Went-Well</h1>
+            <h1 className="font-semibold text-[#3E3E52] text-lg capitalize">
+              Went Well
+            </h1>
             <BaseIcon
               iconName={ICONS.ellipsisvertical}
               className=" flex h-5 w-5 text-gray-400"
@@ -150,7 +154,9 @@ export default function RetroId() {
       <div className="flex flex-col gap-3 py-2">
         <div className=" flex flex-col gap-3">
           <div className="flex justify-between items-center">
-            <h1 className="font-semibold text-xl capitalize">Action-Item</h1>
+            <h1 className="font-semibold text-lg text-[#3E3E52] capitalize">
+              Action Item
+            </h1>
             <BaseIcon
               iconName={ICONS.ellipsisvertical}
               className=" flex h-5 w-5 text-gray-400"
