@@ -91,11 +91,12 @@ export default {
     deleteDoc(doc(db, "notes", deleteNoteId));
   },
 
-  updateNote() {
-    const docRef = doc(db, "notes", this.checkBookId);
+  updateNote(noteUpdateDetail) {
+    // console.log("noteUpdateDetail", noteUpdateDetail);
+    const docRef = doc(db, "notes", noteUpdateDetail.noteId);
     updateDoc(docRef, {
-      description: this.description,
-      noteId: this.checkBookId,
+      description: noteUpdateDetail.description,
+      noteId: noteUpdateDetail.noteId,
     });
     //  .then(()=>{
     //    this.author = "";
