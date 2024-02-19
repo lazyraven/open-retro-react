@@ -56,44 +56,40 @@ export default function RetroDescription(props) {
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    setEditedDescription({
-      ...editedDescription,
-      [name]: value,
-    });
+    setEditedDescription(value);
   };
+
   const editDescriptionModal = () => {
     setEditDescription(true);
-    // setEditedDescription(editedDescription);
     setIsEditing(false);
   };
 
   const closeEditDescription = () => {
     setEditDescription(false);
   };
-  console.log("description ", editedDescription);
 
-  // const handleSubmit = async (e) => {
-  //   // notesModel.tag = tagOption;
-  //   e.preventDefault();
-  //   try {
-  //     const editNotes = await boardService.updateNote(editedDescription);
-  //     console.log(editNotes);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  // console.log("description", editedDescription);
+
+  const handleSubmit = async (e) => {
+    // console.log("editesdescription", editedDescription);
+    // note.tag = tagOption;
+    e.preventDefault();
+    try {
+      const editNotes = boardService.updateNote(editedDescription);
+      console.log(editNotes);
+      console.log("lakshya");
+      setEditDescription(false);
+    } catch (e) {
+      console.log("hello error is coming");
+    }
+  };
   return (
     <>
       {editDescription ? (
-        <form
-          // onSubmit={(event) => {
-          //   handleSubmit(event, note.tag);
-          // }}
-          className="relative w-full"
-        >
+        <form onSubmit={handleSubmit} className="relative w-full">
           <input
             type="text"
-            name="description"
+            name="editedDescription"
             value={editedDescription}
             onChange={handleChange}
             className={`border-[3.5px] py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
