@@ -3,7 +3,7 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
-import NewNotes from "../../../../components/NewNotes";
+import NewNotes from "@/components/NewNotes";
 import RetroDescription from "@/components/RetroDescription";
 
 export default function RetroId() {
@@ -141,19 +141,44 @@ export default function RetroId() {
           </div>
           <NewNotes tagName="went-well" onNoteCreate="getNotes()"></NewNotes>
         </div>
-        {/* <RetroDescription note={notes}></RetroDescription> */}
-        {notes.map((note, index) => {
-          return (
-            <div className="flex flex-col gap-3" key={note.tag + index}>
-              {note.tag === "went-well" ? (
-                <RetroDescription note={note}></RetroDescription>
-              ) : // <div>{renderBoardRow(note)}</div>
-              null}
-            </div>
-          );
-        })}
+        <div>
+          {notes.map((note, index) => {
+            if (!note || note.tag !== "went-well") return null;
+            return (
+              <div className="mb-2" key={"note" + index}>
+                {note.tag === "went-well" && (
+                  <RetroDescription note={note}></RetroDescription>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
+      <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-lg capitalize">To-Improve</h1>
+            <BaseIcon
+              iconName={ICONS.ellipsisvertical}
+              className=" flex h-5 w-5 text-gray-400"
+            ></BaseIcon>
+          </div>
+          <NewNotes tagName="to-improve"></NewNotes>
+        </div>
+        <div>
+          {notes.map((note, index) => {
+            if (!note || note.tag !== "to-improve") return null;
+            return (
+              <div className="mb-2" key={"note" + index}>
+                {note.tag === "to-improve" && (
+                  <RetroDescription note={note}></RetroDescription>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <div className="flex flex-col gap-3 py-2">
         <div className=" flex flex-col gap-3">
           <div className="flex justify-between items-center">
@@ -170,39 +195,14 @@ export default function RetroId() {
               }"
           ></NewNotes>
         </div>
-        {notes.map((note, index) => {
-          return (
-            <div className="flex flex-col gap-3" key={note.tag + index}>
-              {note.tag === "action-item" ? (
-                <RetroDescription
-                  note={note}
-                  // tagName="action-item"
-                ></RetroDescription>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="flex flex-col gap-3 py-2">
-        <div className="flex flex-col gap-3">
-          <div className="flex justify-between items-center">
-            <h1 className="font-semibold text-lg capitalize">To-Improve</h1>
-            <BaseIcon
-              iconName={ICONS.ellipsisvertical}
-              className=" flex h-5 w-5 text-gray-400"
-            ></BaseIcon>
-          </div>
-          <NewNotes tagName="to-improve"></NewNotes>
-        </div>
         <div>
           {notes.map((note, index) => {
-            // if (!note) return null;
+            if (!note || note.tag !== "action-item") return null;
             return (
-              <div className="" key={note.tag + index}>
-                {note.tag === "to-improve" ? (
+              <div className="mb-2" key={"note" + index}>
+                {note.tag === "action-item" && (
                   <RetroDescription note={note}></RetroDescription>
-                ) : null}
+                )}
               </div>
             );
           })}

@@ -16,6 +16,7 @@ export default function BoardId() {
           // const date = new Date(board.createdDate);
           // console.log(date);
           setBoard(board);
+          console.log("boards", board);
         }
       });
     } catch (e) {
