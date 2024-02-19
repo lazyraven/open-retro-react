@@ -9,7 +9,6 @@ export default function NewNotes(props) {
 
   let inputClsName = "";
   let buttonClsName = "";
-
   const [notesModel, setNotesModel] = useState({
     boardId: params.boardId,
     retroId: params.retroId,
@@ -61,6 +60,8 @@ export default function NewNotes(props) {
     try {
       const newNotes = await boardService.createNotes(notesModel);
       console.log(newNotes);
+      // console.log("props", props);
+      setisOpenTextbox(false);
     } catch (e) {
       console.log(e);
     }
