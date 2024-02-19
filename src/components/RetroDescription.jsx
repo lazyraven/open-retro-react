@@ -92,13 +92,7 @@ export default function RetroDescription(props) {
   return (
     <>
       {editDescription ? (
-        // <form
-        //   onSubmit={(event) => {
-        //     handleSubmit(event);
-        //   }}
-        //   className="relative w-full"
-        // >
-        <div className="relative w-full">
+        <form onSubmit={handleSubmit} className="relative w-full">
           <input
             type="text"
             name="editedDescription"
@@ -110,7 +104,6 @@ export default function RetroDescription(props) {
           <button
             type="submit"
             className={`flex justify-center absolute right-2 bottom-2 text-white items-center  rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
-            onClick={handleSubmit}
           >
             Save
           </button>
@@ -124,9 +117,8 @@ export default function RetroDescription(props) {
               className=" flex h-3 w-3 text-gray-600"
             ></BaseIcon>
           </button>
-        </div>
+        </form>
       ) : (
-        // </form>
         <div
           className={`${descriptionClasses()} px-4 py-1 flex flex-col w-full  justify-between rounded-sm text-white`}
         >
