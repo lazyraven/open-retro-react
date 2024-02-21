@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 export default function NewBoardModal(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [boardModel, setBoardModel] = useState({});
+  const [boardModel, setBoardModel] = useState({
+    boardName: "",
+    createdBy: "",
+    createdDate: new Date(),
+  });
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -75,6 +79,7 @@ export default function NewBoardModal(props) {
                       <input
                         type="text"
                         name="boardName"
+                        value={boardModel.boardName}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
@@ -87,18 +92,7 @@ export default function NewBoardModal(props) {
                       <input
                         type="text"
                         name="createdBy"
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        {" "}
-                        Created Date :
-                      </label>
-                      <input
-                        type="date"
-                        name="createdDate"
+                        value={boardModel.createdBy}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
