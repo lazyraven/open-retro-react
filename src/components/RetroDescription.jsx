@@ -105,41 +105,40 @@ export default function RetroDescription(props) {
     <>
       {editDescription ? (
         <form onSubmit={handleSubmit} className="relative w-full">
-          <input
+          <textarea
             type="text"
+            rows="2"
+            cols="7"
             name="editedDescription"
             value={editedDescription}
             onChange={handleChange}
-            className={`border-[3.5px] py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
+            className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
           />
-
-          <button
-            type="submit"
-            className={`flex justify-center absolute right-2 bottom-2 text-white items-center  rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={closeEditDescription}
-            className="absolute right-2 top-2"
-          >
-            <BaseIcon
-              iconName={ICONS.Close}
-              className=" flex h-3 w-3 text-gray-600"
-            ></BaseIcon>
-          </button>
+          <div className="absolute right-2 bottom-3 flex gap-1">
+            <button
+              type="submit"
+              className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
+            >
+              Save
+            </button>
+            <button type="button" onClick={closeEditDescription}>
+              <BaseIcon
+                iconName={ICONS.Close}
+                className=" flex h-3 w-3 text-gray-600"
+              ></BaseIcon>
+            </button>
+          </div>
         </form>
       ) : (
         <div
-          className={`${descriptionClasses()} px-4 py-1 flex flex-col w-full  justify-between rounded-sm text-white`}
+          className={`${descriptionClasses()} px-2 py-1 flex flex-col w-full  justify-between rounded-sm text-white`}
         >
           <div className="flex justify-between relative">
             <h1 className="font-normal text-sm ">{note.description}</h1>
-            <button type="button" onClick={editModalOpen} className=" ">
+            <button type="button" onClick={editModalOpen} className="">
               <BaseIcon
                 iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-200 "
+                className="flex h-5 w-5 text-gray-200 "
               ></BaseIcon>
             </button>
             {isEditing && (
@@ -147,7 +146,7 @@ export default function RetroDescription(props) {
                 <li>
                   <button
                     onClick={editDescriptionModal}
-                    className="text-black text-sm px-8 py-1 rounded-md hover:bg-slate-300"
+                    className="text-black text-xs w-full px-6 py-1 rounded-tr-md rounded-tl-md hover:bg-slate-300"
                   >
                     edit
                   </button>
@@ -157,7 +156,7 @@ export default function RetroDescription(props) {
                     onClick={(event) => {
                       deleteDescriptionModal(event, note.id);
                     }}
-                    className="text-black text-sm px-6 py-1 rounded-md hover:bg-slate-300"
+                    className="text-black text-xs px-2 py-1 w-full rounded-br-md rounded-bl-md hover:bg-slate-300"
                   >
                     delete
                   </button>

@@ -5,6 +5,7 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 
 export default function NewNotes(props) {
+  // const { notes } = props;
   const params = useParams();
 
   let inputClsName = "";
@@ -19,7 +20,6 @@ export default function NewNotes(props) {
     title: "",
   });
   const [isOpenTextbox, setisOpenTextbox] = useState(false);
-
   const handleChange = (event) => {
     // event.preventDefault();
     const { name, value } = event.target;
@@ -60,6 +60,7 @@ export default function NewNotes(props) {
     try {
       const newNotes = await boardService.createNotes(notesModel);
       console.log(newNotes);
+
       // console.log("props", props);
       setisOpenTextbox(false);
     } catch (e) {
@@ -100,32 +101,37 @@ export default function NewNotes(props) {
           }}
           className="relative w-full"
         >
-          <input
+          <textarea
             type="text"
             name="description"
             value={notesModel.description}
             onChange={handleChange}
-            className={`border-[3.5px] py-1 px-2 w-full h-16 rounded-sm outline-none ${getInputClasses()}`}
+            placeholder="Type something..."
+            rows="2"
+            cols="7"
+            className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
           />
 
-          <button
-            type="submit"
-            className={`flex justify-center absolute right-2 bottom-2 text-white items-center  rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              toggleMenu(event);
-            }}
-            className="absolute right-2 top-2"
-          >
-            <BaseIcon
-              iconName={ICONS.Close}
-              className=" flex h-3 w-3 text-gray-600"
-            ></BaseIcon>
-          </button>
+          <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
+            <button
+              type="button"
+              onClick={(event) => {
+                toggleMenu(event);
+              }}
+              className=" top-2"
+            >
+              <BaseIcon
+                iconName={ICONS.Close}
+                className=" flex h-3 w-3 text-gray-600"
+              ></BaseIcon>
+            </button>
+            <button
+              type="submit"
+              className={`flex justify-center  bottom-3 text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
+            >
+              Save
+            </button>
+          </div>
         </form>
       )}
     </div>

@@ -27,105 +27,6 @@ export default function RetroId() {
     getNotes({ retroId: params.OpenRetroId });
   }, []);
 
-  // for list rendering
-  // const renderBoardRow = (note) => {
-  //   switch (note.tag) {
-  //     case "went-well":
-  //       return (
-  //         <div className="bg-[#009886] px-4 py-1 flex flex-col w-full justify-between rounded-sm text-white">
-  //           <div className="flex justify-between">
-  //             <h1 className="font-medium text-sm ">{note.description}</h1>
-  //             <button type="button">
-  //               <BaseIcon
-  //                 iconName={ICONS.ellipsisvertical}
-  //                 className=" flex h-5 w-5 text-gray-200"
-  //               ></BaseIcon>
-  //             </button>
-  //           </div>
-  //           <div className="flex gap-1 justify-end">
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.LikeThumb}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-normal">0</p>
-  //             </button>
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.Comment}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-semibold">0</p>
-  //             </button>
-  //           </div>
-  //         </div>
-  //       );
-  //     case "to-improve":
-  //       return (
-  //         <div className="bg-[#E92C64] px-4 py-1 flex flex-col justify-between rounded-sm text-white">
-  //           <div className="flex justify-between">
-  //             <h1 className="font-medium text-sm text-[#FEFFFF]">
-  //               {note.description}
-  //             </h1>
-  //             <button type="button">
-  //               <BaseIcon
-  //                 iconName={ICONS.ellipsisvertical}
-  //                 className=" flex h-5 w-5 text-gray-200"
-  //               ></BaseIcon>
-  //             </button>
-  //           </div>
-  //           <div className="flex gap-1 justify-end ">
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.LikeThumb}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-semibold">0</p>
-  //             </button>
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.Comment}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-semibold">0</p>
-  //             </button>
-  //           </div>
-  //         </div>
-  //       );
-  //     case "action-item":
-  //       return (
-  //         <div className="bg-[#A63EB9] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
-  //           <div className="flex justify-between">
-  //             <h1 className="font-medium text-sm">{note.description}</h1>
-  //             <button type="button">
-  //               <BaseIcon
-  //                 iconName={ICONS.ellipsisvertical}
-  //                 className=" flex h-5 w-5 text-gray-200"
-  //               ></BaseIcon>
-  //             </button>
-  //           </div>
-  //           <div className="flex gap-1 justify-end items-center">
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.LikeThumb}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-semibold">0</p>
-  //             </button>
-  //             <button type="button" className="flex gap-1 items-center">
-  //               <BaseIcon
-  //                 iconName={ICONS.Comment}
-  //                 className="flex h-4 w-4"
-  //               ></BaseIcon>
-  //               <p className="text-sm font-semibold">0</p>
-  //             </button>
-  //           </div>
-  //         </div>
-  //       );
-  //   }
-  // };
-
-  // description modal box
   return (
     <div className="grid grid-cols-3 px-5 gap-5 bg-[#F1F2F5] min-h-screen">
       <div className="flex flex-col gap-3 py-2">
@@ -140,16 +41,14 @@ export default function RetroId() {
             ></BaseIcon>
           </div>
           {/* onNoteCreate={getNotes()} */}
-          <NewNotes tagName="went-well"></NewNotes>
+          <NewNotes tagName="went-well" notes={notes}></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
             if (!note || note.tag !== "went-well") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                {note.tag === "went-well" && (
-                  <RetroDescription note={note}></RetroDescription>
-                )}
+                <RetroDescription note={note}></RetroDescription>
               </div>
             );
           })}
@@ -173,12 +72,10 @@ export default function RetroId() {
             if (!note || note.tag !== "to-improve") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                {note.tag === "to-improve" && (
-                  <RetroDescription
-                    note={note}
-                    // getNotes={getNotes()}
-                  ></RetroDescription>
-                )}
+                <RetroDescription
+                  note={note}
+                  // getNotes={getNotes()}
+                ></RetroDescription>
               </div>
             );
           })}
@@ -201,9 +98,7 @@ export default function RetroId() {
             if (!note || note.tag !== "action-item") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                {note.tag === "action-item" && (
-                  <RetroDescription note={note}></RetroDescription>
-                )}
+                <RetroDescription note={note}></RetroDescription>
               </div>
             );
           })}
