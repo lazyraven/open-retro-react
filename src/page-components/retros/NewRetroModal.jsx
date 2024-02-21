@@ -13,6 +13,7 @@ export default function BaseForm(props) {
     boardId: params.boardId,
     date: "",
     retroName: "",
+    createdDate: new Date(),
   });
   // const navigate = useNavigate();
 
@@ -98,19 +99,6 @@ export default function BaseForm(props) {
                         type="text"
                         name="retroName"
                         value={retroModel.retroName}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        Date :
-                      </label>
-                      <input
-                        type="date"
-                        name="date"
-                        value={retroModel.date}
                         className="border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
