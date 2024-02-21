@@ -139,7 +139,8 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <NewNotes tagName="went-well" onNoteCreate={getNotes()}></NewNotes>
+          {/* onNoteCreate={getNotes()} */}
+          <NewNotes tagName="went-well"></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
@@ -164,7 +165,8 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <NewNotes tagName="to-improve" onNoteCreate={getNotes()}></NewNotes>
+          {/* onNoteCreate={getNotes()} */}
+          <NewNotes tagName="to-improve"></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
@@ -172,7 +174,10 @@ export default function RetroId() {
             return (
               <div className="mb-2" key={"note" + index}>
                 {note.tag === "to-improve" && (
-                  <RetroDescription note={note}></RetroDescription>
+                  <RetroDescription
+                    note={note}
+                    // getNotes={getNotes()}
+                  ></RetroDescription>
                 )}
               </div>
             );
@@ -188,7 +193,8 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <NewNotes tagName="action-item" onNoteCreate={getNotes()}></NewNotes>
+          {/* onNoteCreate={getNotes()} */}
+          <NewNotes tagName="action-item"></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {

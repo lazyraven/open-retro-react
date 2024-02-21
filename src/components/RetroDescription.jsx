@@ -2,6 +2,8 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useState } from "react";
 import boardService from "../services/board.service";
+import { db } from "@/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
 
 export default function RetroDescription(props) {
   const { note } = props;
@@ -55,7 +57,7 @@ export default function RetroDescription(props) {
 
   const handleChange = (event) => {
     event.preventDefault();
-    const { name, value } = event.target;
+    const { value } = event.target;
     setEditedDescription(value);
   };
 
@@ -71,14 +73,10 @@ export default function RetroDescription(props) {
   // console.log("description", editedDescription);
 
   const handleSubmit = async (e) => {
-    // console.log("editesdescription", editedDescription);
-    // console.log("note", note);
     const noteDetail = {
       description: editedDescription,
       noteId: note.id,
     };
-    // console.log("noteDetail", noteDetail);
-
     e.preventDefault();
     try {
       const editNotes = boardService.updateNote(noteDetail);
@@ -88,6 +86,20 @@ export default function RetroDescription(props) {
     } catch (e) {
       console.log("hello error is coming");
     }
+  };
+
+  const deleteDescriptionModal = async (e, id) => {
+    e.preventDefault();
+    try {
+      console.log("delete");
+      // await boardService.deleteRetro({ retroId: id });
+      await deleteDoc(doc(db, "notes", id));
+      // getRetroDetails();
+      // getNotes();
+    } catch (e) {
+      console.log(e);
+    }
+    setIsEditing(false);
   };
   return (
     <>
@@ -135,9 +147,19 @@ export default function RetroDescription(props) {
                 <li>
                   <button
                     onClick={editDescriptionModal}
-                    className="text-black text-sm px-6 py-1 rounded-md hover:bg-slate-300"
+                    className="text-black text-sm px-8 py-1 rounded-md hover:bg-slate-300"
                   >
                     edit
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={(event) => {
+                      deleteDescriptionModal(event, note.id);
+                    }}
+                    className="text-black text-sm px-6 py-1 rounded-md hover:bg-slate-300"
+                  >
+                    delete
                   </button>
                 </li>
               </ul>

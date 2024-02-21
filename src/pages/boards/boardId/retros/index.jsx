@@ -81,15 +81,6 @@ export default function Retros() {
                       <h1 className="text-md text-left capitalize text-slate-600">
                         <strong>{retroDetails.retroName}</strong>
                       </h1>
-                      <button
-                        type="button"
-                        onClick={(event) => {
-                          deleteRetro(event, retroDetails.id);
-                        }}
-                        className=" hover:bg-red-700 py-1 px-3 text-red-500 hover:text-white rounded-sm"
-                      >
-                        Delete
-                      </button>
                       <div className="flex text-xs text-zinc-500 py-2 gap-2">
                         <div>
                           {" "}
@@ -113,10 +104,23 @@ export default function Retros() {
                         <div className="bg-fuchsia-700 text-white w-14"></div>
                       </div>
                     </button>
-
-                    <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
-                      Share
-                    </h6>
+                    <div className="flex justify-between items-center">
+                      <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
+                        Share
+                      </h6>
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          deleteRetro(event, retroDetails.id);
+                        }}
+                        className="  text-red-500 hover:text-red-800 rounded-sm"
+                      >
+                        <BaseIcon
+                          className="flex h-4 w-4"
+                          iconName={ICONS.Delete}
+                        ></BaseIcon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

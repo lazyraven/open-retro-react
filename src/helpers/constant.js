@@ -4,4 +4,5 @@ export const ICONS = {
   rocket: "rocket",
   LikeThumb: "hand-thumb-up",
   Comment: "chat-bubble-oval-left",
+  Delete: "trash",
 };
