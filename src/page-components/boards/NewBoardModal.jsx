@@ -10,7 +10,7 @@ export default function NewBoardModal(props) {
   const [boardModel, setBoardModel] = useState({
     boardName: "",
     createdBy: "",
-    createdDate: new Date(),
+    createdDate: new Date().toDateString(),
   });
   const navigate = useNavigate();
 

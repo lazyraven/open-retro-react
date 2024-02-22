@@ -14,7 +14,7 @@ export default function NewNotes(props) {
     boardId: params.boardId,
     retroId: params.retroId,
     createdBy: "",
-    createdDate: "",
+    createdDate: new Date().toDateString(),
     description: "",
     tag: "",
     title: "",

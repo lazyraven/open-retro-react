@@ -13,7 +13,7 @@ export default function BaseForm(props) {
     boardId: params.boardId,
     date: "",
     retroName: "",
-    createdDate: new Date(),
+    createdDate: new Date().toDateString(),
   });
   // const navigate = useNavigate();
 

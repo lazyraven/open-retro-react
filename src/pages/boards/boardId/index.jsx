@@ -13,10 +13,9 @@ export default function BoardId() {
       const boards = await boardService.getBoards();
       boards.forEach((board) => {
         if (board.id == params.boardId) {
-          // const date = new Date(board.createdDate);
-          // console.log(date);
+          const date = new Date(board.createdDate).toDateString();
+          console.log(date);
           setBoard(board);
-          console.log("boards", board);
         }
       });
     } catch (e) {
@@ -44,6 +43,12 @@ export default function BoardId() {
           <span className="text-sm text-gray-500">created by :</span>
           <h1 className="text-lg font-medium text-gray-500">
             {board.createdBy}
+          </h1>
+        </div>
+        <div>
+          <span className="text-sm text-gray-500">created date :</span>
+          <h1 className="text-lg font-medium text-gray-500">
+            {board.createdDate}
           </h1>
         </div>
       </div>
