@@ -80,13 +80,7 @@ export default function Retros() {
                         <strong>{retroDetails.retroName}</strong>
                       </h1>
                       <div className="flex text-xs text-zinc-500 py-2 gap-2">
-                        <div>
-                          {" "}
-                          {new Date("2020-12-28").toLocaleString("en-us", {
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </div>
+                        <div> {retroDetails.createdDate}</div>
                         <div className="text-right">3 cards</div>
                       </div>
                     </div>
