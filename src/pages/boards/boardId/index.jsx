@@ -13,8 +13,7 @@ export default function BoardId() {
       const boards = await boardService.getBoards();
       boards.forEach((board) => {
         if (board.id == params.boardId) {
-          const date = new Date(board.createdDate).toDateString();
-          console.log(date);
+          new Date(board.createdDate).toDateString();
           setBoard(board);
         }
       });

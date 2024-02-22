@@ -18,7 +18,6 @@ export default function Retros() {
       const retroDetails = await boardService.getRetrosDetail({
         boardId: params.boardId,
       });
-      console.log("retroDetails", retroDetails);
       setRetros(retroDetails);
     } catch (e) {
       console.log(e);
@@ -35,7 +34,6 @@ export default function Retros() {
   };
 
   const deleteRetro = async (e, id) => {
-    // console.log("deleteRetro", id);
     e.preventDefault();
     try {
       // await boardService.deleteRetro({ retroId: id });
@@ -50,7 +48,7 @@ export default function Retros() {
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
         <div className=" flex gap-8 flex-wrap items-center py-4">
-          <NewRetroModal>
+          <NewRetroModal getRetroDetails={getRetroDetails}>
             <button
               type="button"
               className="border-2 border-neutral-600 hover:border-blue-500 hover:text-blue-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"

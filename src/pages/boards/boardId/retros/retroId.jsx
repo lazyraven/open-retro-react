@@ -41,14 +41,21 @@ export default function RetroId() {
             ></BaseIcon>
           </div>
           {/* onNoteCreate={getNotes()} */}
-          <NewNotes tagName="went-well" notes={notes}></NewNotes>
+          <NewNotes
+            tagName="went-well"
+            notes={notes}
+            onNoteCreate={getNotes}
+          ></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
             if (!note || note.tag !== "went-well") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                <RetroDescription note={note}></RetroDescription>
+                <RetroDescription
+                  note={note}
+                  getNotes={getNotes}
+                ></RetroDescription>
               </div>
             );
           })}
@@ -64,8 +71,7 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          {/* onNoteCreate={getNotes()} */}
-          <NewNotes tagName="to-improve"></NewNotes>
+          <NewNotes tagName="to-improve" onNoteCreate={getNotes}></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
@@ -74,7 +80,7 @@ export default function RetroId() {
               <div className="mb-2" key={"note" + index}>
                 <RetroDescription
                   note={note}
-                  // getNotes={getNotes()}
+                  getNotes={getNotes}
                 ></RetroDescription>
               </div>
             );
@@ -91,14 +97,17 @@ export default function RetroId() {
             ></BaseIcon>
           </div>
           {/* onNoteCreate={getNotes()} */}
-          <NewNotes tagName="action-item"></NewNotes>
+          <NewNotes tagName="action-item" onNoteCreate={getNotes}></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
             if (!note || note.tag !== "action-item") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                <RetroDescription note={note}></RetroDescription>
+                <RetroDescription
+                  note={note}
+                  getNotes={getNotes}
+                ></RetroDescription>
               </div>
             );
           })}

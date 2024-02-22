@@ -35,7 +35,6 @@ export default function RetroDescription(props) {
         : note.tag === "to-improve"
         ? "border-[#E92C64]"
         : "border-[#009886]";
-    // console.log("classes", inputClsName);
     return inputClsName;
   };
 
@@ -68,9 +67,8 @@ export default function RetroDescription(props) {
 
   const closeEditDescription = () => {
     setEditDescription(false);
+    props.getNotes();
   };
-
-  // console.log("description", editedDescription);
 
   const handleSubmit = async (e) => {
     const noteDetail = {
@@ -79,23 +77,21 @@ export default function RetroDescription(props) {
     };
     e.preventDefault();
     try {
-      const editNotes = boardService.updateNote(noteDetail);
-      console.log(editNotes);
-      console.log("lakshya");
+      boardService.updateNote(noteDetail);
       setEditDescription(false);
+      props.getNotes();
     } catch (e) {
-      console.log("hello error is coming");
+      console.log(e);
     }
   };
 
   const deleteDescriptionModal = async (e, id) => {
     e.preventDefault();
     try {
-      console.log("delete");
       // await boardService.deleteRetro({ retroId: id });
       await deleteDoc(doc(db, "notes", id));
       // getRetroDetails();
-      // getNotes();
+      props.getNotes();
     } catch (e) {
       console.log(e);
     }

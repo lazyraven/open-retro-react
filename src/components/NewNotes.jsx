@@ -38,7 +38,6 @@ export default function NewNotes(props) {
         : props.tagName === "to-improve"
         ? "border-[#E92C64]"
         : "border-[#009886]";
-    console.log("classes", inputClsName);
     return inputClsName;
   };
 
@@ -58,11 +57,9 @@ export default function NewNotes(props) {
     notesModel.tag = tagOption;
     e.preventDefault();
     try {
-      const newNotes = await boardService.createNotes(notesModel);
-      console.log(newNotes);
-
-      // console.log("props", props);
+      await boardService.createNotes(notesModel);
       setisOpenTextbox(false);
+      props.onNoteCreate();
     } catch (e) {
       console.log(e);
     }
