@@ -19,6 +19,7 @@ export default function Retros() {
         boardId: params.boardId,
       });
       setRetros(retroDetails);
+      console.log("retroDetails", retroDetails);
     } catch (e) {
       console.log(e);
     }
@@ -30,7 +31,7 @@ export default function Retros() {
   }, []);
 
   const retroClick = (retroDetail) => {
-    navigate(`/boards/${retroDetail.boardId}/${retroDetail.id}`);
+    navigate(`/boards/${retroDetail.boardId}/retros/${retroDetail.id}`);
   };
 
   const deleteRetro = async (e, id) => {

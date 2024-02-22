@@ -32,7 +32,7 @@ const router = createBrowserRouter([
             element: <Retros />,
           },
           {
-            path: ":retroId",
+            path: "retros/:retroId",
             element: <RetroId />,
           },
         ],
