@@ -11,7 +11,6 @@ export default function BaseForm(props) {
   const params = useParams();
   const [retroModel, setRetroModel] = useState({
     boardId: params.boardId,
-    date: "",
     retroName: "",
     createdDate: new Date().toDateString(),
   });
