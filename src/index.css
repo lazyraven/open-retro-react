@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bullet-points li {
+    margin: 12px 42px;
+    font-size: 18px;
+    color: #333;
+}
+
+.img {
+ box-shadow:  0 4px 20px 0 rgba(0,0,0,.1);
+}
