@@ -52,7 +52,6 @@ export default function RetroId() {
             if (!note || note.tagName !== "went-well") return null;
             return (
               <div className="mb-2" key={"note" + index}>
-                <h1>went well</h1>
                 <RetroDescription
                   note={note}
                   getRetroNotes={getRetroNotes}
