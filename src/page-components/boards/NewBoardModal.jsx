@@ -39,7 +39,7 @@ export default function NewBoardModal(props) {
     e.preventDefault();
     try {
       const newBoard = await boardService.createBoard(boardModel);
-      navigate(`/boards/${newBoard.id}`);
+      navigate(`/addRetroBoard/boards/${newBoard.id}`);
       closeModal();
     } catch (e) {
       console.log(e);

@@ -33,7 +33,9 @@ export default function Retros() {
   }, []);
 
   const retroClick = (retroDetail) => {
-    navigate(`/boards/${retroDetail.boardId}/retros/${retroDetail.id}`);
+    navigate(
+      `/addRetroBoard/boards/${retroDetail.boardId}/retros/${retroDetail.id}`
+    );
   };
 
   const deleteRetro = async (e, id) => {
@@ -51,7 +53,7 @@ export default function Retros() {
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
         <div className=" flex gap-8 flex-wrap items-center py-4">
-          <NewRetroModal getBoardRetros={getBoardRetros}>
+          <NewRetroModal getRetroDetails={getBoardRetros}>
             <button
               type="button"
               className="border-2 border-neutral-600 hover:border-blue-500 hover:text-blue-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"

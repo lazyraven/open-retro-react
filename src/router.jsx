@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element: <AddRetroBoard />,
       },
       {
-        path: "/boards/:boardId",
+        path: "/addRetroBoard/boards/:boardId",
         element: <BoardId />,
         children: [
           {
