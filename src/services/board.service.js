@@ -13,6 +13,10 @@ import {
 } from "firebase/firestore";
 
 export default {
+  createBoard(formBody) {
+    return addDoc(collection(db, "boards"), formBody);
+  },
+
   async getBoard({ boardId }) {
     const record = await getDoc(doc(db, "boards", boardId));
     return {
@@ -21,6 +25,11 @@ export default {
       ...record.data(),
     };
   },
+
+  createRetro({ boardId }, formBody) {
+    return addDoc(collection(db, "boards", boardId, "retros"), formBody);
+  },
+
   async getBoardRetros({ boardId }) {
     const querySnapshot = await getDocs(
       collection(db, "boards", boardId, "retros")
@@ -32,48 +41,49 @@ export default {
     return docs;
   },
 
-  createBoard(formBody) {
-    return addDoc(collection(db, "boards"), formBody);
+  deleteRetro(boardId, deleteRetroId) {
+    deleteDoc(doc(db, "boards", boardId, "retros", deleteRetroId));
   },
 
-  createRetro({ boardId }, formBody) {
-    return addDoc(collection(db, "boards", boardId, "retros"), formBody);
+  createNotes({ boardId, retroId }, formBody) {
+    console.log("notesModel formBody", formBody);
+    return addDoc(
+      collection(db, "boards", boardId, "retros", retroId, "notes"),
+      formBody
+    );
   },
 
-  async getNotes({ retroId }) {
-    const q = query(collection(db, "notes"), where("retroId", "==", retroId));
+  async getRetroNotes({ boardId, retroId }) {
+    const querySnapshot = await getDocs(
+      collection(db, "boards", boardId, "retros", retroId, "notes")
+    );
     const docs = [];
-
-    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+      docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
     });
     return docs;
   },
 
-  createNotes(formBody) {
-    return addDoc(collection(db, "notes"), formBody);
+  deleteNote(boardId, retroId, deleteNoteId) {
+    // deleteDoc(doc(db, "notes", deleteNoteId));
+    deleteDoc(
+      doc(db, "boards", boardId, "retros", retroId, "notes", deleteNoteId)
+    );
   },
 
-  deleteRetro(deleteRetroId) {
-    deleteDoc(doc(db, "retros", deleteRetroId));
-  },
-
-  deleteNote(deleteNoteId) {
-    deleteDoc(doc(db, "notes", deleteNoteId));
-  },
-
-  updateNote(noteUpdateDetail) {
-    // console.log("noteUpdateDetail", noteUpdateDetail);
-    const docRef = doc(db, "notes", noteUpdateDetail.noteId);
+  updateNote(boardId, retroId, noteId, noteUpdateDetail) {
+    const docRef = doc(
+      db,
+      "boards",
+      boardId,
+      "retros",
+      retroId,
+      "notes",
+      noteId
+    );
     updateDoc(docRef, {
       description: noteUpdateDetail.description,
-      noteId: noteUpdateDetail.noteId,
+      noteId: noteId,
     });
-    //  .then(()=>{
-    //    this.author = "";
-    //    this.title = "";
-    //    this.checkBookId = ""
-    //  })
   },
 };

@@ -11,9 +11,10 @@ export default function RetroId() {
 
   const params = useParams();
 
-  const getNotes = async () => {
+  const getRetroNotes = async () => {
     try {
-      const notes = await boardService.getNotes({
+      const notes = await boardService.getRetroNotes({
+        boardId: params.boardId,
         retroId: params.retroId,
         // retroId: params.OpenRetroId,
       });
@@ -24,7 +25,7 @@ export default function RetroId() {
   };
 
   useEffect(() => {
-    getNotes({ retroId: params.OpenRetroId });
+    getRetroNotes({ boardId: params.boardId, retroId: params.OpenRetroId });
   }, []);
 
   return (
@@ -40,21 +41,21 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          {/* onNoteCreate={getNotes()} */}
           <NewNotes
             tagName="went-well"
             notes={notes}
-            onNoteCreate={getNotes}
+            getRetroNotes={getRetroNotes}
           ></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
-            if (!note || note.tag !== "went-well") return null;
+            if (!note || note.tagName !== "went-well") return null;
             return (
               <div className="mb-2" key={"note" + index}>
+                <h1>went well</h1>
                 <RetroDescription
                   note={note}
-                  getNotes={getNotes}
+                  getRetroNotes={getRetroNotes}
                 ></RetroDescription>
               </div>
             );
@@ -71,16 +72,19 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          <NewNotes tagName="to-improve" onNoteCreate={getNotes}></NewNotes>
+          <NewNotes
+            tagName="to-improve"
+            getRetroNotes={getRetroNotes}
+          ></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
-            if (!note || note.tag !== "to-improve") return null;
+            if (!note || note.tagName !== "to-improve") return null;
             return (
               <div className="mb-2" key={"note" + index}>
                 <RetroDescription
                   note={note}
-                  getNotes={getNotes}
+                  getRetroNotes={getRetroNotes}
                 ></RetroDescription>
               </div>
             );
@@ -96,17 +100,19 @@ export default function RetroId() {
               className=" flex h-5 w-5 text-gray-400"
             ></BaseIcon>
           </div>
-          {/* onNoteCreate={getNotes()} */}
-          <NewNotes tagName="action-item" onNoteCreate={getNotes}></NewNotes>
+          <NewNotes
+            tagName="action-item"
+            getRetroNotes={getRetroNotes}
+          ></NewNotes>
         </div>
         <div>
           {notes.map((note, index) => {
-            if (!note || note.tag !== "action-item") return null;
+            if (!note || note.tagName !== "action-item") return null;
             return (
               <div className="mb-2" key={"note" + index}>
                 <RetroDescription
                   note={note}
-                  getNotes={getNotes}
+                  getRetroNotes={getRetroNotes}
                 ></RetroDescription>
               </div>
             );

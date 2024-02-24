@@ -11,12 +11,10 @@ export default function NewNotes(props) {
   let inputClsName = "";
   let buttonClsName = "";
   const [notesModel, setNotesModel] = useState({
-    boardId: params.boardId,
-    retroId: params.retroId,
-    createdBy: "",
+    // createdBy: "",
     createdDate: new Date().toDateString(),
     description: "",
-    tag: "",
+    tagName: "",
   });
   const [isOpenTextbox, setisOpenTextbox] = useState(false);
   const handleChange = (event) => {
@@ -53,12 +51,15 @@ export default function NewNotes(props) {
   };
 
   const handleSubmit = async (e, tagOption) => {
-    notesModel.tag = tagOption;
+    notesModel.tagName = tagOption;
     e.preventDefault();
     try {
-      await boardService.createNotes(notesModel);
+      await boardService.createNotes(
+        { boardId: params.boardId, retroId: params.retroId },
+        notesModel
+      );
       setisOpenTextbox(false);
-      props.onNoteCreate();
+      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }

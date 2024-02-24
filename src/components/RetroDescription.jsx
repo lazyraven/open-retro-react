@@ -4,23 +4,24 @@ import { useState } from "react";
 import boardService from "../services/board.service";
 import { db } from "@/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 
 export default function RetroDescription(props) {
   const { note } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
-
+  const params = useParams();
   let descriptionClsName = "";
   let inputClsName = "";
   let buttonClsName = "";
   const descriptionClasses = () => {
     descriptionClsName =
-      note.tag === "went-well"
+      note.tagName === "went-well"
         ? "bg-[#009886]"
-        : note.tag === "action-item"
+        : note.tagName === "action-item"
         ? "bg-[#A63EB9]"
-        : note.tag === "to-improve"
+        : note.tagName === "to-improve"
         ? "bg-[#E92C64]"
         : null;
     return descriptionClsName;
@@ -28,11 +29,11 @@ export default function RetroDescription(props) {
 
   const getInputClasses = () => {
     inputClsName =
-      note.tag === "went-well"
+      note.tagName === "went-well"
         ? "border-[#009886]"
-        : note.tag === "action-item"
+        : note.tagName === "action-item"
         ? "border-[#A63EB9]"
-        : note.tag === "to-improve"
+        : note.tagName === "to-improve"
         ? "border-[#E92C64]"
         : "border-[#009886]";
     return inputClsName;
@@ -40,11 +41,11 @@ export default function RetroDescription(props) {
 
   const getButtonClass = () => {
     buttonClsName =
-      note.tag === "went-well"
+      note.tagName === "went-well"
         ? "bg-[#009886] hover:bg-emerald-700"
-        : note.tag === "action-item"
+        : note.tagName === "action-item"
         ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-        : note.tag === "to-improve"
+        : note.tagName === "to-improve"
         ? "bg-[#E92C64] hover:bg-red-700"
         : "border-[#009886]";
     return buttonClsName;
@@ -67,7 +68,7 @@ export default function RetroDescription(props) {
 
   const closeEditDescription = () => {
     setEditDescription(false);
-    props.getNotes();
+    props.getRetroNotes();
   };
 
   const handleSubmit = async (e) => {
@@ -77,9 +78,12 @@ export default function RetroDescription(props) {
     };
     e.preventDefault();
     try {
-      boardService.updateNote(noteDetail);
+      await boardService.updateNote(
+        { boardId: params.boardId, retroId: params.retroId, noteId: note.id },
+        noteDetail
+      );
       setEditDescription(false);
-      props.getNotes();
+      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }
@@ -89,9 +93,10 @@ export default function RetroDescription(props) {
     e.preventDefault();
     try {
       // await boardService.deleteRetro({ retroId: id });
-      await deleteDoc(doc(db, "notes", id));
+      // await deleteDoc(doc(db, "notes", id));
+      await deleteDoc(doc(db, params.boardId, params.retroId, "notes", id));
       // getRetroDetails();
-      props.getNotes();
+      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }

@@ -9,7 +9,6 @@ export default function BaseForm(props) {
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const [retroModel, setRetroModel] = useState({
-    boardId: params.boardId,
     retroName: "",
     createdDate: new Date().toDateString(),
   });
@@ -36,10 +35,8 @@ export default function BaseForm(props) {
     e.preventDefault();
     try {
       await boardService.createRetro({ boardId: params.boardId }, retroModel);
-      // navigate(`/${newRetroId}`);
       closeModal();
       props.getBoardRetros();
-      // window.location.reload(false);
     } catch (e) {
       console.log(e);
     }
