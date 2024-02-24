@@ -1,6 +1,7 @@
 import { db } from "@/firebase";
 import {
   collection,
+  getDoc,
   getDocs,
   addDoc,
   query,
@@ -12,60 +13,31 @@ import {
 } from "firebase/firestore";
 
 export default {
-  // async getBoards({ boardId }) {
-  //   console.log("getBoards boardId", boardId);
-  //   const q = query(collection(db, "boards"), where("boardId", "==", boardId));
-  //   const docs = [];
-  //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {
-  //     docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-  //   });
-  //   console.log("docs board", docs);
-  //   return docs;
-  // },
-  async getBoards() {
-    const querySnapshot = await getDocs(collection(db, "boards"));
+  async getBoard({ boardId }) {
+    const record = await getDoc(doc(db, "boards", boardId));
+    return {
+      id: record.id,
+      path: record.ref.path,
+      ...record.data(),
+    };
+  },
+  async getBoardRetros({ boardId }) {
+    const querySnapshot = await getDocs(
+      collection(db, "boards", boardId, "retros")
+    );
     const docs = [];
     querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+      docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
     });
     return docs;
   },
+
   createBoard(formBody) {
     return addDoc(collection(db, "boards"), formBody);
   },
 
-  createRetro(formBody) {
-    return addDoc(collection(db, "retros"), formBody);
-  },
-
-  async getRetros() {
-    const querySnapshot = await getDocs(collection(db, "retros"));
-    const docs = [];
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-    });
-    return docs;
-  },
-
-  async getRetrosDetail({ boardId }) {
-    const boardRef = collection(db, "retros");
-    const q = query(boardRef, where("boardId", "==", boardId));
-    const docs = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-    });
-    return docs;
-
-    // need to check why this (onSnapshot) is not working
-    // return onSnapshot(q, (snapShot) => {
-    //   let retroDetails = [];
-    //   snapShot.docs.forEach((doc) => {
-    //     retroDetails.push({ ...doc.data(), id: doc.id });
-    //   });
-    //   return retroDetails;
-    // });
+  createRetro({ boardId }, formBody) {
+    return addDoc(collection(db, "boards", boardId, "retros"), formBody);
   },
 
   async getNotes({ retroId }) {

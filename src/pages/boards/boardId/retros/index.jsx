@@ -13,13 +13,15 @@ export default function Retros() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const getRetroDetails = async () => {
+  const getBoardRetros = async () => {
     try {
-      const retroDetails = await boardService.getRetrosDetail({
+      const boardRetros = await boardService.getBoardRetros({
         boardId: params.boardId,
       });
-      setRetros(retroDetails);
-      console.log("retroDetails", retroDetails);
+      console.log(boardRetros);
+      if (boardRetros && boardRetros.length) {
+        setRetros(boardRetros);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -27,7 +29,7 @@ export default function Retros() {
   };
 
   useEffect(() => {
-    getRetroDetails();
+    getBoardRetros();
   }, []);
 
   const retroClick = (retroDetail) => {
@@ -39,7 +41,7 @@ export default function Retros() {
     try {
       // await boardService.deleteRetro({ retroId: id });
       await deleteDoc(doc(db, "retros", id));
-      getRetroDetails();
+      getBoardRetros();
     } catch (e) {
       console.log(e);
     }
@@ -49,7 +51,7 @@ export default function Retros() {
     <div>
       <div className="bg-[#F1F2F5] px-8 py-8">
         <div className=" flex gap-8 flex-wrap items-center py-4">
-          <NewRetroModal getRetroDetails={getRetroDetails}>
+          <NewRetroModal getBoardRetros={getBoardRetros}>
             <button
               type="button"
               className="border-2 border-neutral-600 hover:border-blue-500 hover:text-blue-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"

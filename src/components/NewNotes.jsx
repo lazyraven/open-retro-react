@@ -17,7 +17,6 @@ export default function NewNotes(props) {
     createdDate: new Date().toDateString(),
     description: "",
     tag: "",
-    title: "",
   });
   const [isOpenTextbox, setisOpenTextbox] = useState(false);
   const handleChange = (event) => {

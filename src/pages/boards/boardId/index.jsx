@@ -7,16 +7,13 @@ export default function BoardId() {
   const [board, setBoard] = useState({});
   const params = useParams();
 
-  const getBoard = async () => {
+  const getBoardRecord = async () => {
     try {
-      // { boardId: params.boardId }
-      const boards = await boardService.getBoards();
-      boards.forEach((board) => {
-        if (board.id == params.boardId) {
-          new Date(board.createdDate).toDateString();
-          setBoard(board);
-        }
-      });
+      const board = await boardService.getBoard({ boardId: params.boardId });
+      console.log(board, "board");
+      if (board && board.id) {
+        setBoard(board);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -29,7 +26,7 @@ export default function BoardId() {
   // const formattedDate = date.toDateString();
 
   useEffect(() => {
-    getBoard();
+    getBoardRecord();
   }, []);
   return (
     <div className="flex flex-col gap-6">
