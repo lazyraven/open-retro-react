@@ -89,13 +89,22 @@ export default function RetroDescription(props) {
     }
   };
 
-  const deleteDescriptionModal = async (e, id) => {
+  const deleteNote = async (e) => {
+    console.log("deleteNote", e, note.id);
     e.preventDefault();
     try {
       // await boardService.deleteRetro({ retroId: id });
-      // await deleteDoc(doc(db, "notes", id));
-      await deleteDoc(doc(db, params.boardId, params.retroId, "notes", id));
-      // getRetroDetails();
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          params.boardId,
+          "retros",
+          params.retroId,
+          "notes",
+          note.id
+        )
+      );
       props.getRetroNotes();
     } catch (e) {
       console.log(e);
@@ -154,9 +163,7 @@ export default function RetroDescription(props) {
                 </li>
                 <li>
                   <button
-                    onClick={(event) => {
-                      deleteDescriptionModal(event, note.id);
-                    }}
+                    onClick={deleteNote}
                     className="text-black text-xs px-2 py-1 w-full rounded-br-md rounded-bl-md hover:bg-slate-300"
                   >
                     delete

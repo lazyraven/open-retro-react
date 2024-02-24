@@ -45,7 +45,7 @@ export default {
     deleteDoc(doc(db, "boards", boardId, "retros", deleteRetroId));
   },
 
-  createNotes({ boardId, retroId }, formBody) {
+  createNote({ boardId, retroId }, formBody) {
     console.log("notesModel formBody", formBody);
     return addDoc(
       collection(db, "boards", boardId, "retros", retroId, "notes"),
@@ -64,26 +64,16 @@ export default {
     return docs;
   },
 
-  deleteNote(boardId, retroId, deleteNoteId) {
-    // deleteDoc(doc(db, "notes", deleteNoteId));
-    deleteDoc(
-      doc(db, "boards", boardId, "retros", retroId, "notes", deleteNoteId)
-    );
-  },
-
-  updateNote(boardId, retroId, noteId, noteUpdateDetail) {
-    const docRef = doc(
-      db,
-      "boards",
-      boardId,
-      "retros",
-      retroId,
-      "notes",
-      noteId
-    );
-    updateDoc(docRef, {
+  updateNote({ boardId, retroId, noteId }, noteUpdateDetail) {
+    updateDoc(doc(db, "boards", boardId, "retros", retroId, "notes", noteId), {
       description: noteUpdateDetail.description,
       noteId: noteId,
     });
+  },
+
+  deleteNote(boardId, retroId, deleteNoteId) {
+    deleteDoc(
+      doc(db, "boards", boardId, "retros", retroId, "notes", deleteNoteId)
+    );
   },
 };

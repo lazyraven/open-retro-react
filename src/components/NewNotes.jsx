@@ -54,7 +54,7 @@ export default function NewNotes(props) {
     notesModel.tagName = tagOption;
     e.preventDefault();
     try {
-      await boardService.createNotes(
+      await boardService.createNote(
         { boardId: params.boardId, retroId: params.retroId },
         notesModel
       );
