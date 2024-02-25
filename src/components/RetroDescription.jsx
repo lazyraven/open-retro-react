@@ -16,6 +16,7 @@ export default function RetroDescription(props) {
   let inputClsName = "";
   let buttonClsName = "";
   const descriptionClasses = () => {
+    // descriptionClsName = "border border-2 border-gray-300 bg-neutral-100";
     descriptionClsName =
       note.tagName === "went-well"
         ? "bg-[#009886]"
@@ -115,6 +116,7 @@ export default function RetroDescription(props) {
     <>
       {editDescription ? (
         <form onSubmit={handleSubmit} className="relative w-full">
+          {/* <div className="h-96 w-3"></div> */}
           <textarea
             type="text"
             rows="2"
@@ -141,14 +143,27 @@ export default function RetroDescription(props) {
         </form>
       ) : (
         <div
-          className={`${descriptionClasses()} px-2 py-1 flex flex-col w-full  justify-between rounded-sm text-white`}
+          className={`flex flex-col w-full justify-between rounded-sm border border-2 relative bg-white`}
         >
-          <div className="flex justify-between relative">
-            <h1 className="font-normal text-sm ">{note.description}</h1>
-            <button type="button" onClick={editModalOpen} className="">
+          <div className="flex justify-flex-start gap-2">
+            <div className={`${descriptionClasses()} h-34 w-3`}></div>
+            <h1 className="font-normal text-sm text-black">
+              {note.description}
+            </h1>
+
+            {/* <textarea
+              type="text"
+              rows="2"
+              cols="7"
+              name="editedDescription"
+              value={note.description}
+              disabled
+              className={`py-1 px-2 w-full resize-none text-sm rounded-sm bg-white`}
+            /> */}
+            <button type="button" onClick={editModalOpen}>
               <BaseIcon
                 iconName={ICONS.ellipsisvertical}
-                className="flex h-5 w-5 text-gray-200 "
+                className="flex h-5 w-5 text-black right-0"
               ></BaseIcon>
             </button>
             {isEditing && (
@@ -172,7 +187,7 @@ export default function RetroDescription(props) {
               </ul>
             )}
           </div>
-          <div className="flex gap-1 justify-end">
+          {/* <div className="flex gap-1 justify-end">
             <button type="button" className="flex gap-1 items-center">
               <BaseIcon
                 iconName={ICONS.LikeThumb}
@@ -187,7 +202,7 @@ export default function RetroDescription(props) {
               ></BaseIcon>
               <p className="text-sm font-semibold">0</p>
             </button>
-          </div>
+          </div> */}
         </div>
       )}
     </>
