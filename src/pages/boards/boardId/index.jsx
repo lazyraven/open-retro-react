@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
+// import Retros from "./retros/index";
 
 export default function BoardId() {
   const [board, setBoard] = useState({});
@@ -76,6 +77,7 @@ export default function BoardId() {
           </li>
         </ul>
       </div>
+      {/* <Retros></Retros> */}
       <Outlet></Outlet>
     </div>
   );

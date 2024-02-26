@@ -28,13 +28,21 @@ export default function NewNotes(props) {
 
   const getInputClasses = () => {
     inputClsName =
+      // props.tagName === "went-well"
+      //   ? "border-[#009886]"
+      //   : props.tagName === "action-item"
+      //   ? "border-[#A63EB9]"
+      //   : props.tagName === "to-improve"
+      //   ? "border-[#E92C64]"
+      //   : "border-[#009886]";
+
       props.tagName === "went-well"
-        ? "border-[#009886]"
+        ? "bg-[#009886]"
         : props.tagName === "action-item"
-        ? "border-[#A63EB9]"
+        ? "bg-[#A63EB9]"
         : props.tagName === "to-improve"
-        ? "border-[#E92C64]"
-        : "border-[#009886]";
+        ? "bg-[#E92C64]"
+        : null;
     return inputClsName;
   };
 
@@ -47,6 +55,7 @@ export default function NewNotes(props) {
         : props.tagName === "to-improve"
         ? "bg-[#E92C64] hover:bg-red-700"
         : "border-[#009886]";
+
     return buttonClsName;
   };
 
@@ -92,44 +101,49 @@ export default function NewNotes(props) {
         ></BaseIcon>
       </button>
       {isOpenTextbox && (
-        <form
-          onSubmit={(event) => {
-            handleSubmit(event, props.tagName);
-          }}
-          className="relative w-full"
-        >
-          <textarea
-            type="text"
-            name="description"
-            value={notesModel.description}
-            onChange={handleChange}
-            placeholder="Type something..."
-            rows="2"
-            cols="7"
-            className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
-          />
-
-          <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
-            <button
-              type="button"
-              onClick={(event) => {
-                toggleMenu(event);
+        <div className="flex border border-2 border-slate-300 bg-white">
+          <div className={`flex-none w-2 ${getInputClasses()}`}></div>
+          <div className="grow">
+            <form
+              onSubmit={(event) => {
+                handleSubmit(event, props.tagName);
               }}
-              className=" top-2"
+              className="relative w-full"
             >
-              <BaseIcon
-                iconName={ICONS.Close}
-                className=" flex h-3 w-3 text-gray-600"
-              ></BaseIcon>
-            </button>
-            <button
-              type="submit"
-              className={`flex justify-center  bottom-3 text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
-            >
-              Save
-            </button>
+              <textarea
+                type="text"
+                name="description"
+                value={notesModel.description}
+                onChange={handleChange}
+                placeholder="Type something..."
+                rows="4"
+                cols="7"
+                className={`py-1 px-2 w-full resize-none text-sm rounded-sm outline-none`}
+              />
+
+              <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
+                <button
+                  type="submit"
+                  className={`flex justify-center  bottom-3 text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    toggleMenu(event);
+                  }}
+                  className=" top-2"
+                >
+                  <BaseIcon
+                    iconName={ICONS.Close}
+                    className=" flex h-3 w-3 text-gray-600"
+                  ></BaseIcon>
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );

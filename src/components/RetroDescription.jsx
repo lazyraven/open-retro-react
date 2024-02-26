@@ -115,9 +115,7 @@ export default function RetroDescription(props) {
     <>
       {editDescription ? (
         <div className="flex">
-          <div
-            className={`flex-none top-3 h-34 w-2 ${descriptionClasses()}`}
-          ></div>
+          <div className={`flex-none h-34 w-2 ${descriptionClasses()}`}></div>
           <div className="grow">
             <form onSubmit={handleSubmit} className="relative w-full">
               <div className="grow">
@@ -129,7 +127,7 @@ export default function RetroDescription(props) {
                   value={editedDescription}
                   onChange={handleChange}
                   // className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
-                  className={`border-[3.5px] w-full resize-none text-sm rounded-sm flex`}
+                  className={`border-[3.5px] w-full resize-none text-sm rounded-sm flex py-1 px-2`}
                 />
               </div>
 
