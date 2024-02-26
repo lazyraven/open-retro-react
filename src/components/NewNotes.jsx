@@ -104,7 +104,7 @@ export default function NewNotes(props) {
       )}
 
       {isOpenTextbox && (
-        <div className="flex border border-2 border-slate-300 bg-white">
+        <div className="flex border-slate-300 rounded-md bg-white">
           <div className={`flex-none w-2 ${getInputClasses()}`}></div>
           <div className="grow">
             <form

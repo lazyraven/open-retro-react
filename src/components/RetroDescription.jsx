@@ -150,7 +150,7 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
-          className={`flex flex-col w-full justify-between rounded-sm border border-2 border-slate-300 relative bg-white`}
+          className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-white`}
         >
           <div className="flex gap-2">
             <div
