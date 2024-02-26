@@ -61,7 +61,7 @@ export default function NewBoardModal(props) {
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-neutral-100 flex gap-8 flex-col justify-center px-4 pb-4  sm:p-6 sm:pb-4">
+                  <div className="flex gap-8 flex-col justify-center px-4 pb-4 sm:p-6 sm:pb-4 bg-black text-white">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
@@ -72,42 +72,53 @@ export default function NewBoardModal(props) {
                       </h1>
                     </div>
                     <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        {" "}
-                        Name :
-                      </label>
+                      <div className="flex-1">
+                        <label htmlFor="" className="font-semibold">
+                          {" "}
+                          Name
+                          <span className="text-red-500 text-lg">*</span> :
+                        </label>
+                      </div>
                       <input
                         type="text"
                         name="boardName"
                         value={boardModel.boardName}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        className="grow border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
+                      {/* <div>
+                        <span className="text-red-400 text-sm">
+                          Please fill all the required fields.
+                        </span>
+                      </div> */}
                     </div>
                     <div className="flex gap-2 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        {" "}
-                        Created By :
-                      </label>
+                      <div className="flex-1">
+                        <label htmlFor="" className="font-semibold">
+                          {" "}
+                          Created By
+                          <span className="text-red-500 text-lg">*</span> :
+                        </label>
+                      </div>
                       <input
                         type="text"
                         name="createdBy"
                         value={boardModel.createdBy}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        className="grow border-2 py-1 px-2 border-gray-300 rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex gap-2 justify-end text-white">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className=" hover:bg-red-700 py-1 px-3 text-red-500 hover:text-white rounded-sm"
+                        className="py-1 px-3 rounded-sm bg-[#f51766] hover:bg-[#d55884]"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="hover:text-white hover:bg-blue-500 py-1 px-3 text-blue-500 rounded-sm"
+                        className="py-1 px-3 rounded-sm bg-[#00ac6a] hover:bg-[#4cc798]"
                       >
                         Submit
                       </button>

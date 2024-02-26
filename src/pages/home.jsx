@@ -4,8 +4,8 @@ import CompanyCollaborations from "@/components/CompanyCollaboration";
 import Retrospectives from "@/components/RetroSpective";
 import About from "@/components/About";
 import NewBoardModal from "@/page-components/boards/NewBoardModal";
-// import BaseIcon from "@/components/BaseIcon";
-// import { ICONS } from "@/helpers/constant";
+import BaseIcon from "@/components/BaseIcon";
+import { ICONS } from "@/helpers/constant";
 
 function HomePage() {
   return (
@@ -32,8 +32,14 @@ function HomePage() {
             </div>
 
             <NewBoardModal>
-              <button className=" px-10 py-5 font-mono border text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow-lg">
-                Create Board
+              <button className="flex gap-2 px-8 py-3 font-mono border text-white font-semibold bg-black hover:bg-[#383a3a] shadow-lg">
+                <div className="flex justify-center pt-2">Create Board</div>
+                <div className=" bg-[#C0C0D4] rounded-full px-2 py-2">
+                  <BaseIcon
+                    iconName={ICONS.Plus}
+                    className=" flex h-6 w-6 text-white"
+                  ></BaseIcon>
+                </div>
               </button>
             </NewBoardModal>
           </div>
