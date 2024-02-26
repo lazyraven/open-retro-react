@@ -145,9 +145,11 @@ export default function RetroDescription(props) {
         <div
           className={`flex flex-col w-full justify-between rounded-sm border border-2 relative bg-white`}
         >
-          <div className="flex justify-flex-start gap-2">
-            <div className={`${descriptionClasses()} h-34 w-3`}></div>
-            <h1 className="font-normal text-sm text-black">
+          <div className="flex gap-2">
+            <div
+              className={` flex-none ${descriptionClasses()} h-34 w-2`}
+            ></div>
+            <h1 className="grow font-normal text-sm text-black">
               {note.description}
             </h1>
 
@@ -160,7 +162,7 @@ export default function RetroDescription(props) {
               disabled
               className={`py-1 px-2 w-full resize-none text-sm rounded-sm bg-white`}
             /> */}
-            <button type="button" onClick={editModalOpen}>
+            <button className="flex-none" type="button" onClick={editModalOpen}>
               <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className="flex h-5 w-5 text-black right-0"
