@@ -28,10 +28,10 @@ function HomePage() {
               </p>
             </div>
             <Link
-              to="addRetroBoard"
+              to="/board"
               className=" px-10 py-5 font-mono border text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow-lg"
             >
-              Get Started for Free
+              Create Board
             </Link>
           </div>
           <div className="w-1/2 flex justify-center py-5">

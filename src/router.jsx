@@ -16,12 +16,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      // {
+      //   path: "addRetroBoard",
+      //   element: <AddRetroBoard />,
+      // },
       {
-        path: "addRetroBoard",
-        element: <AddRetroBoard />,
-      },
-      {
-        path: "/addRetroBoard/boards/:boardId",
+        path: "/boards/:boardId",
         element: <BoardId />,
         children: [
           {
