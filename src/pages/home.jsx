@@ -7,8 +7,8 @@ import About from "@/components/About";
 function HomePage() {
   return (
     <>
-      <div className="">
-        <div className="flex  container bg-gradient-to-b from-slate-50 to-indigo-50 ">
+      <div className="bg-gradient-to-b from-slate-50 to-indigo-50">
+        <div className="flex  container m-auto ">
           <div className="w-1/2 px-44 py-2">
             <div className="flex flex-col gap-3 mb-14 pt-10">
               <div className="flex flex-col py-5 text-[#334357]">
@@ -19,7 +19,7 @@ function HomePage() {
                   Fun Sprint
                 </span>
                 <span className="text-[2.5rem] font-sans font-bold">
-                  Retrospectives 🔥
+                  Retrospectives
                 </span>
               </div>
               <p className="text-xl font-sans text-gray-600">
