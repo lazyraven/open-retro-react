@@ -16,7 +16,6 @@ export default function RetroDescription(props) {
   let inputClsName = "";
   let buttonClsName = "";
   const descriptionClasses = () => {
-    // descriptionClsName = "border border-2 border-gray-300 bg-neutral-100";
     descriptionClsName =
       note.tagName === "went-well"
         ? "bg-[#009886]"
@@ -115,35 +114,45 @@ export default function RetroDescription(props) {
   return (
     <>
       {editDescription ? (
-        <form onSubmit={handleSubmit} className="relative w-full">
-          {/* <div className="h-96 w-3"></div> */}
-          <textarea
-            type="text"
-            rows="2"
-            cols="7"
-            name="editedDescription"
-            value={editedDescription}
-            onChange={handleChange}
-            className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
-          />
-          <div className="absolute right-2 bottom-3 flex gap-1">
-            <button
-              type="submit"
-              className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
-            >
-              Save
-            </button>
-            <button type="button" onClick={closeEditDescription}>
-              <BaseIcon
-                iconName={ICONS.Close}
-                className=" flex h-3 w-3 text-gray-600"
-              ></BaseIcon>
-            </button>
+        <div className="flex">
+          <div
+            className={`flex-none top-3 h-34 w-2 ${descriptionClasses()}`}
+          ></div>
+          <div className="grow">
+            <form onSubmit={handleSubmit} className="relative w-full">
+              <div className="grow">
+                <textarea
+                  type="text"
+                  rows="4"
+                  cols="7"
+                  name="editedDescription"
+                  value={editedDescription}
+                  onChange={handleChange}
+                  // className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
+                  className={`border-[3.5px] w-full resize-none text-sm rounded-sm flex`}
+                />
+              </div>
+
+              <div className="absolute right-2 bottom-3 flex gap-1">
+                <button
+                  type="submit"
+                  className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
+                >
+                  Save
+                </button>
+                <button type="button" onClick={closeEditDescription}>
+                  <BaseIcon
+                    iconName={ICONS.Close}
+                    className=" flex h-3 w-3 text-gray-600"
+                  ></BaseIcon>
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       ) : (
         <div
-          className={`flex flex-col w-full justify-between rounded-sm border border-2 relative bg-white`}
+          className={`flex flex-col w-full justify-between rounded-sm border border-2 border-slate-300 relative bg-white`}
         >
           <div className="flex gap-2">
             <div
