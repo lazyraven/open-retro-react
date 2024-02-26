@@ -1,11 +1,11 @@
 import image from "@/assets/images/dashboard.svg";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import CompanyCollaborations from "@/components/CompanyCollaboration";
 import Retrospectives from "@/components/RetroSpective";
 import About from "@/components/About";
 import NewBoardModal from "@/page-components/boards/NewBoardModal";
-import BaseIcon from "@/components/BaseIcon";
-import { ICONS } from "@/helpers/constant";
+// import BaseIcon from "@/components/BaseIcon";
+// import { ICONS } from "@/helpers/constant";
 
 function HomePage() {
   return (
