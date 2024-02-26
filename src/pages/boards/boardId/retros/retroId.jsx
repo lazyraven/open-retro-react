@@ -60,12 +60,12 @@ export default function RetroId() {
     <div className="relative">
       <div
         ref={pdfRef}
-        className="grid grid-cols-3 px-5 gap-5 bg-[#F1F2F5] min-h-screen"
+        className="grid grid-cols-3 px-5 gap-5 bg-black min-h-screen"
       >
         <div className="flex flex-col gap-3 py-2">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-[#3E3E52] text-lg capitalize">
+              <h1 className="font-semibold  text-white text-lg capitalize">
                 Went Well
               </h1>
               <BaseIcon
@@ -97,7 +97,9 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalize">To-Improve</h1>
+              <h1 className="font-semibold text-lg capitalize text-white">
+                To-Improve
+              </h1>
               <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
@@ -125,7 +127,9 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2">
           <div className=" flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalize">Action Item</h1>
+              <h1 className="font-semibold text-lg capitalizetext-white">
+                Action Item
+              </h1>
               <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"

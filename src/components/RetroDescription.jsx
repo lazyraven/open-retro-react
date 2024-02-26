@@ -127,7 +127,7 @@ export default function RetroDescription(props) {
                   value={editedDescription}
                   onChange={handleChange}
                   // className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
-                  className={`border-[3.5px] w-full resize-none text-sm rounded-sm flex py-1 px-2`}
+                  className={`w-full resize-none text-sm rounded-sm flex py-2 px-2`}
                 />
               </div>
 
@@ -156,7 +156,7 @@ export default function RetroDescription(props) {
             <div
               className={` flex-none ${descriptionClasses()} h-34 w-2`}
             ></div>
-            <h1 className="grow font-normal text-sm text-black">
+            <h1 className="grow font-normal text-sm text-black py-2">
               {note.description}
             </h1>
 

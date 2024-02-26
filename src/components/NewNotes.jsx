@@ -88,18 +88,21 @@ export default function NewNotes(props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <button
-        type="button"
-        className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-2 rounded-sm w-full"
-        onClick={(event) => {
-          addRetroDescription(event);
-        }}
-      >
-        <BaseIcon
-          iconName={ICONS.Plus}
-          className=" h-4 w-4 text-gray-500"
-        ></BaseIcon>
-      </button>
+      {!isOpenTextbox && (
+        <button
+          type="button"
+          className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-2 rounded-sm w-full"
+          onClick={(event) => {
+            addRetroDescription(event);
+          }}
+        >
+          <BaseIcon
+            iconName={ICONS.Plus}
+            className=" h-4 w-4 text-gray-500"
+          ></BaseIcon>
+        </button>
+      )}
+
       {isOpenTextbox && (
         <div className="flex border border-2 border-slate-300 bg-white">
           <div className={`flex-none w-2 ${getInputClasses()}`}></div>
@@ -118,7 +121,7 @@ export default function NewNotes(props) {
                 placeholder="Type something..."
                 rows="4"
                 cols="7"
-                className={`py-1 px-2 w-full resize-none text-sm rounded-sm outline-none`}
+                className={`py-2 px-2 w-full resize-none text-sm rounded-sm outline-none`}
               />
 
               <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
