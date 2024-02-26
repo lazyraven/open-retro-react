@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import CompanyCollaborations from "@/components/CompanyCollaboration";
 import Retrospectives from "@/components/RetroSpective";
 import About from "@/components/About";
+import NewBoardModal from "@/page-components/boards/NewBoardModal";
+import BaseIcon from "@/components/BaseIcon";
+import { ICONS } from "@/helpers/constant";
 
 function HomePage() {
   return (
@@ -27,12 +30,12 @@ function HomePage() {
                 with a simple, intuitive and beautiful tool
               </p>
             </div>
-            <Link
-              to="/board"
-              className=" px-10 py-5 font-mono border text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow-lg"
-            >
-              Create Board
-            </Link>
+
+            <NewBoardModal>
+              <button className=" px-10 py-5 font-mono border text-white font-semibold bg-blue-500 hover:bg-blue-600 shadow-lg">
+                Create Board
+              </button>
+            </NewBoardModal>
           </div>
           <div className="w-1/2 flex justify-center py-5">
             <div>

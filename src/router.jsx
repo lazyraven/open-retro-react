@@ -5,7 +5,6 @@ import Home from "@/pages/home";
 import Retros from "@/pages/boards/boardId/retros/index";
 import RetroId from "@/pages/boards/boardId/retros/retroId";
 import BoardId from "@/pages/boards/boardId/index";
-import AddRetroBoard from "./components/AddRetroBoard";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +15,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      // {
-      //   path: "addRetroBoard",
-      //   element: <AddRetroBoard />,
-      // },
+
       {
         path: "/boards/:boardId",
         element: <BoardId />,
