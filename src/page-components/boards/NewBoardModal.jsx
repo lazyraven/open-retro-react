@@ -57,33 +57,36 @@ export default function NewBoardModal(props) {
             role="dialog"
             aria-modal="true"
           >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="flex gap-8 flex-col justify-center px-4 pb-4 sm:p-6 sm:pb-4 bg-black text-white">
+                  <div className="flex gap-8 flex-col justify-center px-4 pb-4 sm:p-6 sm:pb-4 bg-gradient-to-b from-slate-800 to-slate-950 text-white">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
-                        className=" flex w-5 h-5 text-blue-500"
-                      ></BaseIcon>{" "}
-                      <h1 className="text-xl">
-                        Open <b className=" text-gray-500">Retro</b>
+                        className=" flex w-6 h-6 text-blue-500"
+                      ></BaseIcon>
+                      <h1 className="text-2xl text-slate-200">
+                        Open <b className=" text-gray-400">Retro</b>
                       </h1>
                     </div>
-                    <div className="flex gap-2 justify-center items-center">
-                      <div className="flex-1">
-                        <label htmlFor="" className="font-semibold">
-                          {" "}
-                          Name
-                          <span className="text-red-500 text-lg">*</span> :
+                    <div className="flex gap-5 justify-center items-center">
+                      <div className="flex-1 text-right">
+                        <label
+                          htmlFor=""
+                          className="font-semibold text-slate-300"
+                        >
+                          Board Name
+                          <span className="text-red-400 text-lg">*</span> :
                         </label>
                       </div>
                       <input
                         type="text"
                         name="boardName"
+                        required
                         value={boardModel.boardName}
-                        className="grow border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        className="grow border-2 py-1 px-2 border-gray-500 outline-none bg-transparent rounded-sm"
                         onChange={handleChange}
                       />
                       {/* <div>
@@ -92,33 +95,37 @@ export default function NewBoardModal(props) {
                         </span>
                       </div> */}
                     </div>
-                    <div className="flex gap-2 justify-center items-center">
-                      <div className="flex-1">
-                        <label htmlFor="" className="font-semibold">
+                    <div className="flex gap-5 justify-center items-center">
+                      <div className="flex-1 text-right">
+                        <label
+                          htmlFor=""
+                          className="font-semibold text-slate-300"
+                        >
                           {" "}
                           Created By
-                          <span className="text-red-500 text-lg">*</span> :
+                          <span className="text-red-400 text-lg">*</span> :
                         </label>
                       </div>
                       <input
                         type="text"
                         name="createdBy"
+                        required
                         value={boardModel.createdBy}
-                        className="grow border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        className="grow border-2 py-1 px-2 border-gray-500 outline-none bg-transparent  rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex gap-2 justify-end text-white">
+                    <div className="flex gap-2 items-center justify-end text-white">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="py-1 px-3 rounded-sm bg-[#f51766] hover:bg-[#d55884]"
+                        className="py-1 px-3 rounded-sm text-red-500 hover:text-white hover:bg-red-600"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="py-1 px-3 rounded-sm bg-[#00ac6a] hover:bg-[#4cc798]"
+                        className="py-1 px-3 rounded-sm text-black bg-stone-100 hover:bg-stone-300"
                       >
                         Submit
                       </button>

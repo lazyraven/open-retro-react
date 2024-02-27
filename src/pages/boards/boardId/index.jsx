@@ -30,21 +30,21 @@ export default function BoardId() {
     getBoardRecord();
   }, []);
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex justify-between mt-2 items-center py-1 px-3 gap-3">
+    <div className="flex flex-col gap-6 min-h-screen">
+      <div className="flex justify-between mt-2 items-center py-1 px-5 gap-3">
         <div className="flex flex-col">
-          <h1 className="text-2xl">{board.boardName}</h1>
+          <h1 className="text-2xl text-slate-200">{board.boardName}</h1>
           {/* <h1 className="text-sm ">{formattedDate}</h1> */}
         </div>
-        <div>
-          <span className="text-sm text-gray-500">created by :</span>
-          <h1 className="text-lg font-medium text-gray-500">
+        <div className="flex gap-2 items-center">
+          <span className="text-sm text-slate-200">created by :</span>
+          <h1 className="text-lg font-medium text-slate-200">
             {board.createdBy}
           </h1>
         </div>
         <div>
-          <span className="text-sm text-gray-500">created date :</span>
-          <h1 className="text-lg font-medium text-gray-500">
+          <span className="text-sm text-slate-200">created date :</span>
+          <h1 className="text-lg font-medium text-slate-200">
             {board.createdDate}
           </h1>
         </div>

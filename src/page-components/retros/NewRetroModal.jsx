@@ -53,29 +53,30 @@ export default function BaseForm(props) {
             role="dialog"
             aria-modal="true"
           >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-neutral-100 flex gap-8 flex-col justify-center px-4 pb-4  sm:p-6 sm:pb-4">
+                  <div className="bg-gradient-to-b from-slate-800 to-slate-950 flex gap-8 flex-col justify-center px-4 pb-4  sm:p-6 sm:pb-4">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
                         className=" flex w-5 h-5 text-blue-500"
                       ></BaseIcon>{" "}
-                      <h1 className="text-xl">
-                        Open <b className=" text-gray-500">Retro</b>
+                      <h1 className="text-2xl text-slate-200">
+                        Open <b className=" text-gray-400">Retro</b>
                       </h1>
                     </div>
-                    <div className="flex gap-2 justify-center items-center">
+                    <div className="flex gap-5 justify-center items-center">
                       <label htmlFor="" className="font-semibold">
                         Retro Name :
                       </label>
                       <input
                         type="text"
                         name="retroName"
+                        required
                         value={retroModel.retroName}
-                        className="border-2 py-1 px-2 border-gray-300 rounded-sm"
+                        className="border-2 py-1 px-2 border-gray-500 bg-transparent  rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
@@ -89,7 +90,7 @@ export default function BaseForm(props) {
                       </button>
                       <button
                         type="submit"
-                        className="hover:text-white hover:bg-blue-500 py-1 px-3 text-blue-500 rounded-sm"
+                        className=" py-1 px-3  text-black bg-stone-100 hover:bg-stone-300 rounded-sm"
                       >
                         Submit
                       </button>

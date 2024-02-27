@@ -1,10 +1,10 @@
 export default function About() {
   return (
-    <div className="bg-[#F8FAFE]">
-      <h1 className="text-4xl text-center py-24 font-medium">
+    <div className="">
+      <h1 className="text-4xl text-center text-slate-200 py-24 font-medium">
         Getting Started
       </h1>
-      <div className="container w-7/12 m-auto text-lg text-gray-600 font-medium flex flex-col gap-8 leading-8">
+      <div className="container w-7/12 m-auto text-lg text-gray-400 font-medium flex flex-col gap-8 leading-8">
         <h3 className="">
           If you’ve got the fun, exciting, and innovative team - we have the
           tool. OpenRetro is a fun retrospective (‘retro’ for short) tool you

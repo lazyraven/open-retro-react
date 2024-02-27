@@ -50,7 +50,7 @@ export default function Retros() {
 
   return (
     <div>
-      <div className="bg-black px-8 py-8 text-white">
+      <div className=" px-8 py-8 text-white">
         <div className=" flex gap-8 flex-wrap items-center py-4">
           <NewRetroModal getBoardRetros={getBoardRetros}>
             <button

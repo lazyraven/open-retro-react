@@ -10,11 +10,11 @@ import { ICONS } from "@/helpers/constant";
 function HomePage() {
   return (
     <>
-      <div className="bg-gradient-to-b from-slate-50 to-indigo-50">
+      <div className="bg-slate-900">
         <div className="flex  container m-auto ">
           <div className="w-1/2 px-44 py-2">
             <div className="flex flex-col gap-3 mb-14 pt-10">
-              <div className="flex flex-col py-5 text-[#334357]">
+              <div className="flex flex-col py-5 text-slate-200">
                 <span className="text-[2.5rem] font-sans font-bold">
                   Improve with
                 </span>
@@ -25,21 +25,19 @@ function HomePage() {
                   Retrospectives
                 </span>
               </div>
-              <p className="text-xl font-sans text-gray-600">
+              <p className="text-xl font-sans text-gray-400">
                 Collaborate with your remote team and get better at what you do
                 with a simple, intuitive and beautiful tool
               </p>
             </div>
 
             <NewBoardModal>
-              <button className="flex gap-2 px-8 py-3 font-mono border text-white font-semibold bg-black hover:bg-[#383a3a] shadow-lg">
-                <div className="flex justify-center pt-2">Create Board</div>
-                <div className=" bg-[#C0C0D4] rounded-full px-2 py-2">
-                  <BaseIcon
-                    iconName={ICONS.Plus}
-                    className=" flex h-6 w-6 text-white"
-                  ></BaseIcon>
-                </div>
+              <button className="flex gap-3 px-8 py-3 items-center font-mono border text-white font-semibold bg-transparent hover:bg-[#383a3a]">
+                <div className="">Create Board</div>
+                <BaseIcon
+                  iconName={ICONS.Plus}
+                  className=" flex h-4 w-4 text-white"
+                ></BaseIcon>
               </button>
             </NewBoardModal>
           </div>
