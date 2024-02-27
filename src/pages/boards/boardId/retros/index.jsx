@@ -76,14 +76,14 @@ export default function Retros() {
               <div key={retroDetails.retroName + index}>
                 <div
                   type="button"
-                  className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-white"
+                  className="border-2 border-neutral-300 border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-slate-900"
                 >
-                  <div className="divide-y divide-zinc-300 m-auto">
+                  <div className="divide-y divide-zinc-200 m-auto">
                     <div>
-                      <h1 className="text-md text-left capitalize text-slate-600">
+                      <h1 className="text-md text-left capitalize text-slate-300">
                         <strong>{retroDetails.retroName}</strong>
                       </h1>
-                      <div className="flex text-xs text-zinc-500 py-2 gap-2">
+                      <div className="flex text-xs text-zinc-400 py-2 gap-2">
                         <div> {retroDetails.createdDate}</div>
                         <div className="text-right">3 cards</div>
                       </div>
