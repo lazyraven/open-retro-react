@@ -30,38 +30,38 @@ export default function RetroId() {
     getRetroNotes({ boardId: params.boardId, retroId: params.OpenRetroId });
   }, []);
 
-  // const pdfRef = useRef();
+  const pdfRef = useRef();
 
   const dowanloadPdf = () => {
-    // const input = pdfRef.current;
-    // html2canvas(input).then((canvas) => {
-    //   const imgData = canvas.toBlob("image/png");
-    //   const pdf = new jsPDF("p", "mm", "a4", true);
-    //   const pdfWidth = pdf.internal.pageSize.getWidth();
-    //   const pdfHeight = pdf.internal.pageSize.getHeight();
-    //   const imgWidth = canvas.width;
-    //   const imgHeight = canvas.height;
-    //   const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    //   const imgX = (pdfWidth - imgWidth * ratio) / 2;
-    //   const imgY = 30;
-    //   pdf.addImage(
-    //     imgData,
-    //     " PNG",
-    //     imgX,
-    //     imgY,
-    //     imgWidth * ratio,
-    //     imgHeight * ratio
-    //   );
-    //   pdf.save("boardReport.pdf");
-    // });
-    let doc = new jsPDF("p", "pt", "a4");
-    doc.html(document.querySelector("#content"), {
-      callback: function (pdf) {
-        // let pageCount = doc.internal.getNumberOfPages();
-        // pdf.deletePage(pageCount);
-        pdf.save("mypdf.pdf");
-      },
+    const input = pdfRef.current;
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4", true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(
+        imgData,
+        " PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      pdf.save("boardReport.pdf");
     });
+    // let doc = new jsPDF("p", "pt", "a4");
+    // doc.html(document.querySelector("#content"), {
+    //   callback: function (pdf) {
+    //     // let pageCount = doc.internal.getNumberOfPages();
+    //     // pdf.deletePage(pageCount);
+    //     pdf.save("mypdf.pdf");
+    //   },
+    // });
   };
 
   // const contentRef = useRef(null);
@@ -105,9 +105,9 @@ export default function RetroId() {
   return (
     <div className="relative">
       <div
-        id="content"
-        // ref={pdfRef}
-        className="grid grid-cols-3 px-5 gap-5  min-h-screen"
+        // id="content"
+        ref={pdfRef}
+        className="grid grid-cols-3 px-5 gap-5  min-h-screen bg-slate-900"
       >
         <div className="flex flex-col gap-3 py-2">
           <div className="flex flex-col gap-3">
