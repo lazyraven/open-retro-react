@@ -6,9 +6,9 @@ import fyndster from "@/assets/images/fyndster.png";
 
 export default function CompanyCollaborations() {
   return (
-    <div className="bg-gradient-to-b from-slate-900 to-slate-500">
+    <div className="bg-gradient-to-b from-zinc-950 to-zinc-400">
       <div className="py-10">
-        <h1 className="text-center text-[1.8rem] font-semibold text-slate-200">
+        <h1 className="text-center text-[1.8rem] font-semibold text-slate-300">
           Thousands of teams across 100+ countries trust OpenRetro
         </h1>
         <div className="flex justify-center items-center gap-3 py-4">

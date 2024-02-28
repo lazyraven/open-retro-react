@@ -10,7 +10,7 @@ import { ICONS } from "@/helpers/constant";
 function HomePage() {
   return (
     <>
-      <div className="bg-slate-900">
+      <div className="">
         <div className="flex  container m-auto ">
           <div className="w-1/2 px-44 py-2">
             <div className="flex flex-col gap-3 mb-14 pt-10">
@@ -32,7 +32,7 @@ function HomePage() {
             </div>
 
             <NewBoardModal>
-              <button className="flex gap-3 px-8 py-3 items-center font-mono border text-white font-semibold bg-transparent hover:bg-[#383a3a]">
+              <button className="flex gap-3 px-8 py-3 items-center font-mono border border-zinc-600 text-slate-200 rounded-sm font-semibold bg-zinc-900 hover:bg-zinc-900">
                 <div className="">Create Board</div>
                 <BaseIcon
                   iconName={ICONS.Plus}

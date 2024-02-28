@@ -91,7 +91,7 @@ export default function NewNotes(props) {
       {!isOpenTextbox && (
         <button
           type="button"
-          className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-2 rounded-sm w-full"
+          className="flex justify-center bg-slate-100 hover:bg-slate-200 py-2 rounded-sm w-full"
           onClick={(event) => {
             addRetroDescription(event);
           }}
@@ -104,8 +104,10 @@ export default function NewNotes(props) {
       )}
 
       {isOpenTextbox && (
-        <div className="flex border-slate-300 rounded-md bg-white">
-          <div className={`flex-none w-2 ${getInputClasses()}`}></div>
+        <div className="flex border border-slate-700 rounded-md">
+          <div
+            className={`flex-none w-2 ${getInputClasses()} rounded-tl-md rounded-bl-md`}
+          ></div>
           <div className="grow">
             <form
               onSubmit={(event) => {
@@ -121,7 +123,7 @@ export default function NewNotes(props) {
                 placeholder="Type something..."
                 rows="4"
                 cols="7"
-                className={`py-2 px-2 w-full resize-none text-sm rounded-sm outline-none`}
+                className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
               />
 
               <div className="absolute right-2 bottom-3 mt-1  flex gap-2">

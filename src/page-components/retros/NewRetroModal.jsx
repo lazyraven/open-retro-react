@@ -56,8 +56,8 @@ export default function BaseForm(props) {
             <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-gradient-to-b from-slate-800 to-slate-950 flex gap-8 flex-col justify-center px-4 pb-4  sm:p-6 sm:pb-4">
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="bg-zinc-950 flex gap-8 flex-col justify-center px-4 pb-4  sm:p-6 sm:pb-4">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
@@ -67,20 +67,27 @@ export default function BaseForm(props) {
                         Open <b className=" text-gray-400">Retro</b>
                       </h1>
                     </div>
-                    <div className="flex gap-5 justify-center items-center">
-                      <label htmlFor="" className="font-semibold">
-                        Retro Name :
-                      </label>
+                    <div className="flex flex-col gap-2 px-8 ">
+                      <div className="flex gap-1">
+                        <label
+                          htmlFor=""
+                          className="font-semibold text-slate-300"
+                        >
+                          {" "}
+                          Retro Name
+                        </label>
+                        <span className="text-red-400 ">*</span>
+                      </div>
                       <input
                         type="text"
                         name="retroName"
                         required
                         value={retroModel.retroName}
-                        className="border-2 py-1 px-2 border-gray-500 bg-transparent  rounded-sm"
+                        className="border-2 py-1 px-2 border-gray-500 bg-transparent outline-none rounded-sm"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex gap-4 justify-end px-8">
                       <button
                         type="button"
                         onClick={closeModal}

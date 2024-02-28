@@ -32,17 +32,17 @@ export default function BoardId() {
   return (
     <div className="flex flex-col gap-6 min-h-screen">
       <div className="flex justify-between mt-2 items-center py-1 px-5 gap-3">
-        <div className="flex flex-col">
+        <div className="flex flex-col px-4 py-2 bg-[#121212] rounded-sm">
           <h1 className="text-2xl text-slate-200">{board.boardName}</h1>
           {/* <h1 className="text-sm ">{formattedDate}</h1> */}
         </div>
-        <div className="flex gap-2 items-center">
-          <span className="text-sm text-slate-200">created by :</span>
+        <div className="flex gap-2 items-center px-4 py-2 bg-[#121212] rounded-sm">
+          <span className="text-sm text-slate-200">Created By :</span>
           <h1 className="text-lg font-medium text-slate-200">
             {board.createdBy}
           </h1>
         </div>
-        <div>
+        <div className="px-4 py-2 bg-[#121212] rounded-sm">
           <span className="text-sm text-slate-200">created date :</span>
           <h1 className="text-lg font-medium text-slate-200">
             {board.createdDate}
@@ -54,7 +54,7 @@ export default function BoardId() {
           <li>
             <Link
               to="retros"
-              className="px-2 py-1 text-sm border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-medium"
+              className="px-3 py-2 text-sm  rounded-md text-slate-200 bg-neutral-800 hover:bg-[#181818] font-medium"
             >
               Retros
             </Link>
@@ -62,7 +62,7 @@ export default function BoardId() {
           <li>
             <Link
               to="members"
-              className="px-2 py-1 text-sm border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-medium"
+              className="px-3 py-2 text-sm  rounded-md text-slate-200 bg-neutral-800 hover:bg-[#181818] font-medium"
             >
               Members
             </Link>
@@ -70,7 +70,7 @@ export default function BoardId() {
           <li>
             <Link
               to="reports"
-              className="px-2 py-1 text-sm border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-medium"
+              className="px-3 py-2 text-sm  rounded-md text-slate-200 bg-neutral-800 hover:bg-[#181818] font-medium"
             >
               Reports
             </Link>

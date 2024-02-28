@@ -107,12 +107,12 @@ export default function RetroId() {
       <div
         // id="content"
         ref={pdfRef}
-        className="grid grid-cols-3 px-5 gap-5  min-h-screen bg-slate-900"
+        className="grid grid-cols-3 px-5 gap-5   "
       >
-        <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold  text-white text-lg capitalize">
+              <h1 className="font-semibold  text-slate-200 text-lg capitalize">
                 Went Well
               </h1>
               <BaseIcon
@@ -141,10 +141,10 @@ export default function RetroId() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalize text-white">
+              <h1 className="font-semibold text-lg capitalize text-slate-200">
                 To-Improve
               </h1>
               <BaseIcon
@@ -171,10 +171,10 @@ export default function RetroId() {
             })}
           </div>
         </div>
-        <div className="flex flex-col gap-3 py-2">
+        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
           <div className=" flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalizetext-white  text-white">
+              <h1 className="font-semibold text-lg capitalizetext-white  text-slate-200">
                 Action Item
               </h1>
               <BaseIcon
@@ -206,7 +206,7 @@ export default function RetroId() {
         type="button"
         // onClick={generatePdf}
         onClick={dowanloadPdf}
-        className="px-4 fixed right-4 bottom-4 py-2 border bg-black text-white rounded-sm"
+        className="px-4 fixed right-4 bottom-4 py-2 border bg-black text-slate-300 rounded-md"
       >
         Generate Report
       </button>
