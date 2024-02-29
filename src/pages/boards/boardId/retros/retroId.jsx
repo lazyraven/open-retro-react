@@ -54,6 +54,7 @@ export default function RetroId() {
         imgWidth * ratio,
         imgHeight * ratio
       );
+      console.log("pdf", pdf);
       pdf.save("boardReport.pdf");
     });
     // let doc = new jsPDF("p", "pt", "a4");
