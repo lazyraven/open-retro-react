@@ -49,7 +49,7 @@ export default function BoardId() {
           </h1>
         </div>
       </div>
-      <div className="flex px-3">
+      <div className="flex">
         <ul className="flex gap-3">
           <li>
             <Link

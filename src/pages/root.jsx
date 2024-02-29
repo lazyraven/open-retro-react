@@ -5,7 +5,9 @@ function Root() {
   return (
     <div>
       <BaseNavbar></BaseNavbar>
-      <Outlet />
+      <div className="container mx-auto px-6 md:p-12">
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -49,81 +49,79 @@ export default function Retros() {
   };
 
   return (
-    <div>
-      <div className=" px-8 py-8 text-white">
-        <div className=" flex gap-8 flex-wrap items-center py-4">
-          <NewRetroModal getBoardRetros={getBoardRetros}>
-            <button
-              type="button"
-              className="border-2 border-neutral-600 hover:border-gray-400 hover:text-gray-400 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"
-            >
-              <div className=" bg-[#C0C0D4] rounded-full px-2 py-2">
-                <BaseIcon
-                  iconName={ICONS.Plus}
-                  className=" flex h-6 w-6 text-white"
-                ></BaseIcon>
-              </div>
-              <h1 className="text-sm">New Retro</h1>
-            </button>
-          </NewRetroModal>
+    <>
+      <div className=" flex gap-8 flex-wrap items-center py-4">
+        <NewRetroModal getBoardRetros={getBoardRetros}>
+          <button
+            type="button"
+            className="flex flex-col gap-y-2 justify-center items-center bg-zinc-900 hover:bg-zinc-800 border-2 border-zinc-700 border-dashed h-40 w-60 rounded-md"
+          >
+            <div className="bg-zinc-950 rounded-full p-4">
+              <BaseIcon
+                iconName={ICONS.Plus}
+                className=" flex h-6 w-6 text-white"
+              ></BaseIcon>
+            </div>
+            <h1 className="text-sm text-white">New Retro</h1>
+          </button>
+        </NewRetroModal>
 
-          {retros.map((retroDetails, index) => {
-            return (
-              //   <h1 key={retroDetails.retroName + index}>
-              //     {retroDetails.retroName}
-              //     <span>abc</span>
-              //   </h1>
-              <div key={retroDetails.retroName + index}>
-                <div
-                  type="button"
-                  className=" border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-[#181818]"
-                >
-                  <div className="divide-y divide-zinc-200 m-auto">
-                    <div>
-                      <h1 className="text-md text-left capitalize text-slate-300">
-                        <strong>{retroDetails.retroName}</strong>
-                      </h1>
-                      <div className="flex text-xs text-zinc-400 py-2 gap-2">
-                        <div> {retroDetails.createdDate}</div>
-                        <div className="text-right">3 cards</div>
-                      </div>
+        {retros.map((retroDetails, index) => {
+          return (
+            //   <h1 key={retroDetails.retroName + index}>
+            //     {retroDetails.retroName}
+            //     <span>abc</span>
+            //   </h1>
+            <div key={retroDetails.retroName + index}>
+              <div
+                type="button"
+                className=" border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-[#181818]"
+              >
+                <div className="divide-y divide-zinc-200 m-auto">
+                  <div>
+                    <h1 className="text-md text-left capitalize text-slate-300">
+                      <strong>{retroDetails.retroName}</strong>
+                    </h1>
+                    <div className="flex text-xs text-zinc-400 py-2 gap-2">
+                      <div> {retroDetails.createdDate}</div>
+                      <div className="text-right">3 cards</div>
                     </div>
+                  </div>
 
+                  <button
+                    onClick={() => {
+                      retroClick(retroDetails);
+                    }}
+                  >
+                    <div className="flex h-32 py-3 gap-4">
+                      <div className="bg-teal-700 text-white w-14"></div>
+                      <div className="bg-rose-700 text-white w-14"></div>
+                      <div className="bg-fuchsia-700 text-white w-14"></div>
+                    </div>
+                  </button>
+                  <div className="flex justify-between items-center">
+                    <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
+                      Share
+                    </h6>
                     <button
-                      onClick={() => {
-                        retroClick(retroDetails);
+                      type="button"
+                      onClick={(event) => {
+                        deleteRetro(event, retroDetails.id);
                       }}
+                      className="  text-red-500 hover:text-red-800 rounded-sm"
                     >
-                      <div className="flex h-32 py-3 gap-4">
-                        <div className="bg-teal-700 text-white w-14"></div>
-                        <div className="bg-rose-700 text-white w-14"></div>
-                        <div className="bg-fuchsia-700 text-white w-14"></div>
-                      </div>
+                      <BaseIcon
+                        className="flex h-4 w-4"
+                        iconName={ICONS.Delete}
+                      ></BaseIcon>
                     </button>
-                    <div className="flex justify-between items-center">
-                      <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
-                        Share
-                      </h6>
-                      <button
-                        type="button"
-                        onClick={(event) => {
-                          deleteRetro(event, retroDetails.id);
-                        }}
-                        className="  text-red-500 hover:text-red-800 rounded-sm"
-                      >
-                        <BaseIcon
-                          className="flex h-4 w-4"
-                          iconName={ICONS.Delete}
-                        ></BaseIcon>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
-    </div>
+    </>
   );
 }
