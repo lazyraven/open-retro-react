@@ -112,6 +112,7 @@ export default function NewBoardModal(props) {
                           className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3 w-full"
                         />
                         <button
+                          type="button"
                           onClick={() => copyToClipboard(url)}
                           className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
                         >
