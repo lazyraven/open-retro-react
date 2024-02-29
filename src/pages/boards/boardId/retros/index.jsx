@@ -75,7 +75,7 @@ export default function Retros() {
             <div key={retroDetails.retroName + index}>
               <div
                 type="button"
-                className=" border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-[#181818]"
+                className=" border-solid h-60 w-60 flex flex-col gap-1 rounded-md px-2 py-2 bg-zinc-900 hover:bg-zinc-800"
               >
                 <div className="divide-y divide-zinc-200 m-auto">
                   <div>

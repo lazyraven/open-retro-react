@@ -35,7 +35,9 @@ export default function RetroId() {
   const dowanloadPdf = () => {
     const input = pdfRef.current;
     html2canvas(input).then((canvas) => {
+      // console.log("canvas", canvas);
       const imgData = canvas.toDataURL("image/png");
+      // return;
       const pdf = new jsPDF("p", "mm", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
@@ -107,7 +109,7 @@ export default function RetroId() {
       <div
         // id="content"
         ref={pdfRef}
-        className="grid grid-cols-3 px-5 gap-5   "
+        className="grid grid-cols-3 gap-5"
       >
         <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
           <div className="flex flex-col gap-3">
