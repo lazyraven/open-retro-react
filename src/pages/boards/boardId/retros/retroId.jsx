@@ -5,14 +5,10 @@ import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import NewNotes from "@/components/NewNotes";
 import RetroDescription from "@/components/RetroDescription";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-// import { storage } from "../../../../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toast } from "react-toastify";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
-  const [pdfData, setPdfData] = useState([]);
 
   const params = useParams();
 
@@ -47,8 +43,10 @@ export default function RetroId() {
         htmlInput: input,
       });
       console.log(pdfResult, "pdfResult");
+      toast.success("Generate pdf is Updated!");
     } catch (error) {
       console.log(error, "error");
+      toast.error("Error occurred, while uploading file.");
     }
   };
 

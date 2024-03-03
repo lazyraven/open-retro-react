@@ -3,6 +3,7 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function BaseForm(props) {
   const { children } = props;
@@ -37,6 +38,7 @@ export default function BaseForm(props) {
       await boardService.createRetro({ boardId: params.boardId }, retroModel);
       closeModal();
       props.getBoardRetros();
+      toast.success("Successfully retro created !!");
     } catch (e) {
       console.log(e);
     }
