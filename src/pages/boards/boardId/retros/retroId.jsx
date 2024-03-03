@@ -63,61 +63,27 @@ export default function RetroId() {
     }
   };
 
-  // const contentRef = useRef(null);
-
-  // const generatePdf = async () => {
-  //   const content = contentRef.current;
-
-  //   if (!content) return;
-
-  //   try {
-  //     const canvas = await html2canvas(content);
-  //     const imgData = canvas.toDataURL("text/png");
-  //     const pdf = new jsPDF();
-  //     const imgWidth = 210;
-  //     const pageHeight = 297;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  //     let heightLeft = imgHeight;
-
-  //     let position = 0;
-
-  //     pdf.addImage(imgData, "TEXT", 0, position, imgWidth, imgHeight);
-  //     heightLeft -= pageHeight;
-
-  //     while (heightLeft >= 0) {
-  //       position = heightLeft - imgHeight;
-  //       pdf.addPage();
-  //       pdf.addImage(imgData, "TEXT", 0, position, imgWidth, imgHeight);
-  //       heightLeft -= pageHeight;
-  //     }
-
-  //     pdf.save("download.pdf");
-
-  //     // Copy PDF text to clipboard
-  //     const text = pdf.internal.getText();
-  //     navigator.clipboard.writeText(text);
-  //     console.log("PDF text copied to clipboard:", text);
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   }
-
   return (
     <div className="relative">
+      <h1 className="mb-4 text-zinc-200">
+        Sprint Retro 1
+        <span className="text-zinc-500 text-sm"> | Sun Mar 03 2024</span>
+      </h1>
       <div
         // id="content"
         ref={pdfRef}
-        className="grid grid-cols-3 gap-5"
+        className="grid grid-cols-3 gap-x-2"
       >
-        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold  text-slate-200 text-lg capitalize">
+              <h1 className="font-semibold text-slate-200 capitalize">
                 Went Well
               </h1>
-              <BaseIcon
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="went-well"
@@ -140,16 +106,16 @@ export default function RetroId() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalize text-slate-200">
+              <h1 className="font-semibold capitalize text-slate-200">
                 To-Improve
               </h1>
-              <BaseIcon
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="to-improve"
@@ -170,16 +136,16 @@ export default function RetroId() {
             })}
           </div>
         </div>
-        <div className="flex flex-col gap-3 py-2 bg-[#121212] px-3 rounded-sm">
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className=" flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-lg capitalizetext-white  text-slate-200">
+              <h1 className="font-semibold capitalizetext-white  text-slate-200">
                 Action Item
               </h1>
-              <BaseIcon
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="action-item"
@@ -203,12 +169,15 @@ export default function RetroId() {
       </div>
       <button
         type="button"
-        // onClick={generatePdf}
         onClick={(event) => {
           dowanloadPdf(event, notes);
         }}
-        className="px-4 fixed right-4 bottom-4 py-2 border bg-black text-slate-300 rounded-md"
+        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-violet-500  text-violet-500 rounded-md bg-zinc-900 shadow-2xl"
       >
+        <BaseIcon
+          iconName={ICONS.Bolt}
+          className=" flex h-5 w-5 text-violet-600"
+        ></BaseIcon>
         Generate Report
       </button>
     </div>

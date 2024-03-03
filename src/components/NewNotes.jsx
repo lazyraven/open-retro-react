@@ -129,7 +129,7 @@ export default function NewNotes(props) {
               <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
                 <button
                   type="submit"
-                  className={`flex justify-center  bottom-3 text-white items-center rounded-sm border-blue-100 text-s px-1 ${getButtonClass()}`}
+                  className={`flex justify-center bottom-3 text-white items-center rounded-sm border-blue-100 text-sm px-2 ${getButtonClass()}`}
                 >
                   Save
                 </button>

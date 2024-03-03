@@ -114,8 +114,10 @@ export default function RetroDescription(props) {
   return (
     <>
       {editDescription ? (
-        <div className="flex">
-          <div className={`flex-none h-34 w-2 ${descriptionClasses()}`}></div>
+        <div className="flex border border-slate-700 rounded-md">
+          <div
+            className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
+          ></div>
           <div className="grow">
             <form onSubmit={handleSubmit} className="relative w-full">
               <div className="grow">
@@ -150,7 +152,7 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
-          className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-neutral-800`}
+          className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
         >
           <div className="flex gap-2">
             <div

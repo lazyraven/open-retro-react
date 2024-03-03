@@ -64,36 +64,36 @@ export default function Reports() {
         {retros.map((retroDetails, index) => {
           return (
             retroDetails.pathRetroSrc && (
-              <div key={retroDetails.retroName + index}>
-                <div className="border-solid h-36 w-96 rounded-md px-2 py-2 bg-zinc-900 hover:bg-zinc-800 relative">
-                  {/* <div className="divide-y divide-zinc-200 m-auto"> */}
-                  <div className="flex">
-                    <div>
-                      <h1 className="text-md text-left capitalize text-slate-300">
-                        <strong>{retroDetails.retroName}</strong>
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="text-xs text-zinc-400 py-2 gap-2">
-                    {retroDetails.createdDate}
-                  </div>
-                  <div className="absolute right-2 bottom-3 flex gap-2">
-                    <button
-                      type="view"
-                      className="px-3 py-1 items-center border border-zinc-600 text-zinc-950 bg-neutral-50 hover:bg-neutral-200"
-                      onClick={viewReport}
-                    >
-                      View
-                    </button>
-                    <button
-                      type="view"
-                      className="px-3 py-1 items-center border border-zinc-600 text-zinc-950 bg-neutral-50 hover:bg-neutral-200"
-                    >
-                      Download
-                    </button>
+              <div
+                key={retroDetails.retroName + index}
+                className="flex flex-col border-solid w-72 rounded-md p-3 bg-zinc-800"
+              >
+                {/* <div className="divide-y divide-zinc-200 m-auto"> */}
+                <div className="flex">
+                  <div>
+                    <h1 className="text-md text-left capitalize text-slate-300">
+                      <strong>{retroDetails.retroName}</strong>
+                    </h1>
                   </div>
                 </div>
-                {/* </div> */}
+                <div className="text-xs text-zinc-400 py-2 gap-2">
+                  {retroDetails.createdDate}
+                </div>
+                <div className="flex justify-end gap-2 mt-5">
+                  <button
+                    type="button"
+                    className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-400 hover:bg-zinc-700"
+                    onClick={viewReport}
+                  >
+                    View
+                  </button>
+                  <button
+                    type="button"
+                    className="px-3 py-1  text-sm items-center border rounded-sm border-zinc-600 text-zinc-950 bg-zinc-50 hover:bg-zinc-200"
+                  >
+                    Download
+                  </button>
+                </div>
               </div>
             )
           );

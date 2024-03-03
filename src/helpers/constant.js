@@ -5,6 +5,9 @@ export const ICONS = {
   LikeThumb: "hand-thumb-up",
   Comment: "chat-bubble-oval-left",
   Delete: "trash",
+  Bolt: "bolt",
+  ArrowUTurn: "arrow-uturn-left",
+  ArrowUpOnSquare: "arrow-up-on-square",
 };
 
 export const buildQRImage = (dataUrl) =>
