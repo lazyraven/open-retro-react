@@ -134,7 +134,7 @@ export default function RetroDescription(props) {
               <div className="absolute right-2 bottom-3 flex gap-1">
                 <button
                   type="submit"
-                  className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-xs px-1 ${getButtonClass()}`}
+                  className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-s px-1 ${getButtonClass()}`}
                 >
                   Save
                 </button>

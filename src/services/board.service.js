@@ -127,4 +127,10 @@ export default {
       console.log(error, "error");
     }
   },
+
+  updateRetros({ boardId, retroId }, pathRetroSrc) {
+    updateDoc(doc(db, "boards", boardId, "retros", retroId), {
+      pathRetroSrc,
+    });
+  },
 };

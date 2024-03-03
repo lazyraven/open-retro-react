@@ -31,7 +31,6 @@ export default function RetroId() {
   }, []);
 
   const pdfRef = useRef();
-  console.log("pdfRef", pdfRef);
 
   const dowanloadPdf = async () => {
     const input = pdfRef.current;
@@ -44,6 +43,20 @@ export default function RetroId() {
       });
       console.log(pdfResult, "pdfResult");
       toast.success("Generate pdf is Updated!");
+      updateGenratePdf();
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error occurred, while uploading file.");
+    }
+  };
+
+  const updateGenratePdf = async () => {
+    const reportSrcPath = `${params.boardId}/${params.retroId}`;
+    try {
+      await boardService.updateRetros(
+        { boardId: params.boardId, retroId: params.retroId },
+        reportSrcPath
+      );
     } catch (error) {
       console.log(error, "error");
       toast.error("Error occurred, while uploading file.");
