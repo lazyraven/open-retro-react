@@ -7,9 +7,12 @@ import NewNotes from "@/components/NewNotes";
 import RetroDescription from "@/components/RetroDescription";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+// import { storage } from "../../../../firebase";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
+  const [pdfData, setPdfData] = useState([]);
 
   const params = useParams();
 
@@ -21,6 +24,7 @@ export default function RetroId() {
         // retroId: params.OpenRetroId,
       });
       setNotes(notes);
+      // setPdfData(notes);
     } catch (e) {
       console.log(e);
     }
@@ -31,40 +35,21 @@ export default function RetroId() {
   }, []);
 
   const pdfRef = useRef();
+  console.log("pdfRef", pdfRef);
 
-  const dowanloadPdf = () => {
+  const dowanloadPdf = async () => {
     const input = pdfRef.current;
-    html2canvas(input).then((canvas) => {
-      // console.log("canvas", canvas);
-      const imgData = canvas.toDataURL("image/png");
-      // return;
-      const pdf = new jsPDF("p", "mm", "a4", true);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
-      pdf.addImage(
-        imgData,
-        " PNG",
-        imgX,
-        imgY,
-        imgWidth * ratio,
-        imgHeight * ratio
-      );
-      console.log("pdf", pdf);
-      pdf.save("boardReport.pdf");
-    });
-    // let doc = new jsPDF("p", "pt", "a4");
-    // doc.html(document.querySelector("#content"), {
-    //   callback: function (pdf) {
-    //     // let pageCount = doc.internal.getNumberOfPages();
-    //     // pdf.deletePage(pageCount);
-    //     pdf.save("mypdf.pdf");
-    //   },
-    // });
+    try {
+      const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
+      const pdfResult = await boardService.generateAndUploadPdf({
+        storagePath: reportSrc,
+        fileName: `${params.retroId}.pdf`,
+        htmlInput: input,
+      });
+      console.log(pdfResult, "pdfResult");
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   // const contentRef = useRef(null);
@@ -208,7 +193,9 @@ export default function RetroId() {
       <button
         type="button"
         // onClick={generatePdf}
-        onClick={dowanloadPdf}
+        onClick={(event) => {
+          dowanloadPdf(event, notes);
+        }}
         className="px-4 fixed right-4 bottom-4 py-2 border bg-black text-slate-300 rounded-md"
       >
         Generate Report

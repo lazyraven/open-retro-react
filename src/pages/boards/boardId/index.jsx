@@ -43,7 +43,7 @@ export default function BoardId() {
           </h1>
         </div>
         <div className="px-4 py-2 bg-[#121212] rounded-sm">
-          <span className="text-sm text-slate-200">created date :</span>
+          <span className="text-sm text-slate-200">Created Date :</span>
           <h1 className="text-lg font-medium text-slate-200">
             {board.createdDate}
           </h1>

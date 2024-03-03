@@ -5,7 +5,10 @@ export default function Reports() {
   const [pdfSrc, setPdfSrc] = useState("");
 
   const storage = getStorage();
-  const starsRef = ref(storage, "retro-reports/boardReport.pdf");
+  const starsRef = ref(
+    storage,
+    "IA3OkEgf7lATECtpo65c/NyXVGiXbgMPF246wl6vH.pdf"
+  );
 
   async function setPdfReports() {
     try {
