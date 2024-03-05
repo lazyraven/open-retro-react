@@ -5,8 +5,8 @@ import { ICONS } from "@/helpers/constant";
 import NewRetroModal from "@/page-components/retros/NewRetroModal";
 import { useNavigate } from "react-router-dom";
 import boardService from "@/services/board.service";
-import { db } from "@/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+// import { db } from "@/firebase";
+// import { deleteDoc, doc } from "firebase/firestore";
 
 export default function Retros() {
   const [retros, setRetros] = useState([]);

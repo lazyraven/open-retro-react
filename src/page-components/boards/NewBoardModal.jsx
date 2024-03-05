@@ -5,6 +5,7 @@ import boardService from "@/services/board.service";
 import { useNavigate } from "react-router-dom";
 import { buildQRImage } from "@/helpers/constant";
 import { useRef } from "react";
+import { toast } from "react-toastify";
 export default function NewBoardModal(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +49,9 @@ export default function NewBoardModal(props) {
         console.log(newBoard);
         console.log("boardId", newBoardId);
         setNewBoardId(newBoard.id);
+        toast.success(
+          `${boardModel.createdBy} your board is created Successfully !!`
+        );
         setUrl(`${window.location.origin}/boards/${newBoard.id}`);
       }
       // navigate(`/boards/${newBoard.id}`);
@@ -56,7 +60,7 @@ export default function NewBoardModal(props) {
       console.log(e);
     }
   };
-  console.log("url", url);
+  console.log("url", boardModel);
 
   const handleInputChange = (event) => {
     setUrl(event.target.value);
@@ -70,6 +74,7 @@ export default function NewBoardModal(props) {
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
+    toast.success(`url Copied !!`);
   };
 
   return (
@@ -78,7 +83,7 @@ export default function NewBoardModal(props) {
       {isOpen && (
         <form onSubmit={handleSave}>
           <div
-            className="relative z-10"
+            className="relative z-10 "
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
