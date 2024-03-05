@@ -8,13 +8,12 @@ import { useParams } from "react-router-dom";
 
 export default function RetroDescription(props) {
   const { note } = props;
-  const [isEditing, setIsEditing] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
   const params = useParams();
   let descriptionClsName = "";
   let inputClsName = "";
-  let buttonClsName = "";
+  // let buttonClsName = "";
   const descriptionClasses = () => {
     descriptionClsName =
       note.tagName === "went-well"
@@ -39,21 +38,21 @@ export default function RetroDescription(props) {
     return inputClsName;
   };
 
-  const getButtonClass = () => {
-    buttonClsName =
-      note.tagName === "went-well"
-        ? "bg-[#009886] hover:bg-emerald-700"
-        : note.tagName === "action-item"
-        ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-        : note.tagName === "to-improve"
-        ? "bg-[#E92C64] hover:bg-red-700"
-        : "border-[#009886]";
-    return buttonClsName;
-  };
+  // const getButtonClass = () => {
+  //   buttonClsName =
+  //     note.tagName === "went-well"
+  //       ? "bg-[#009886] hover:bg-emerald-700"
+  //       : note.tagName === "action-item"
+  //       ? "bg-[#A63EB9] hover:bg-fuchsia-800"
+  //       : note.tagName === "to-improve"
+  //       ? "bg-[#E92C64] hover:bg-red-700"
+  //       : "border-[#009886]";
+  //   return buttonClsName;
+  // };
 
-  const editModalOpen = () => {
-    setIsEditing(true);
-  };
+  // const editModalOpen = () => {
+  //   // setIsEditing(true);
+  // };
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -63,7 +62,6 @@ export default function RetroDescription(props) {
 
   const editDescriptionModal = () => {
     setEditDescription(true);
-    setIsEditing(false);
   };
 
   const closeEditDescription = () => {
@@ -109,7 +107,6 @@ export default function RetroDescription(props) {
     } catch (e) {
       console.log(e);
     }
-    setIsEditing(false);
   };
   return (
     <>
@@ -128,22 +125,21 @@ export default function RetroDescription(props) {
                   name="editedDescription"
                   value={editedDescription}
                   onChange={handleChange}
-                  // className={`border-[3.5px] py-1 px-2 w-full resize-none text-sm rounded-sm outline-none ${getInputClasses()}`}
-                  className={`w-full resize-none text-sm rounded-sm flex py-2 px-2`}
+                  className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
                 />
               </div>
 
-              <div className="absolute right-2 bottom-3 flex gap-1">
+              <div className="absolute right-2 bottom-3 flex gap-2">
                 <button
                   type="submit"
-                  className={`flex justify-center text-white items-center rounded-sm border-blue-100 text-s px-1 ${getButtonClass()}`}
+                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
                 >
                   Save
                 </button>
                 <button type="button" onClick={closeEditDescription}>
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className=" flex h-3 w-3 text-gray-600"
+                    className=" flex h-3 w-3 text-zinc-300"
                   ></BaseIcon>
                 </button>
               </div>
@@ -158,66 +154,25 @@ export default function RetroDescription(props) {
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <h1 className="grow font-normal text-sm text-gray-300 py-2">
+            <h1 className="grow font-normal text-sm text-gray-300 py-4">
               {note.description}
             </h1>
 
-            {/* <textarea
-              type="text"
-              rows="2"
-              cols="7"
-              name="editedDescription"
-              value={note.description}
-              disabled
-              className={`py-1 px-2 w-full resize-none text-sm rounded-sm bg-white`}
-            /> */}
-            <button
-              className="flex flex-col py-2"
-              type="button"
-              onClick={editModalOpen}
-            >
-              <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className="flex h-5 w-5 text-slate-200 right-0"
-              ></BaseIcon>
-            </button>
-            {isEditing && (
-              <ul className="absolute right-0 top-3 bg-slate-200 rounded-md z-10">
-                <li>
-                  <button
-                    onClick={editDescriptionModal}
-                    className="text-black text-xs w-full px-6 py-1 rounded-tr-md rounded-tl-md hover:bg-slate-300"
-                  >
-                    edit
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={deleteNote}
-                    className="text-black text-xs px-2 py-1 w-full rounded-br-md rounded-bl-md hover:bg-slate-300"
-                  >
-                    delete
-                  </button>
-                </li>
-              </ul>
-            )}
+            <div className="flex gap-2 absolute right-2 bottom-1">
+              <button onClick={editDescriptionModal} className="">
+                <BaseIcon
+                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                  iconName={ICONS.Edit}
+                ></BaseIcon>
+              </button>
+              <button onClick={deleteNote} className="">
+                <BaseIcon
+                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                  iconName={ICONS.Delete}
+                ></BaseIcon>
+              </button>
+            </div>
           </div>
-          {/* <div className="flex gap-1 justify-end">
-            <button type="button" className="flex gap-1 items-center">
-              <BaseIcon
-                iconName={ICONS.LikeThumb}
-                className="flex h-4 w-4"
-              ></BaseIcon>
-              <p className="text-sm font-normal">0</p>
-            </button>
-            <button type="button" className="flex gap-1 items-center">
-              <BaseIcon
-                iconName={ICONS.Comment}
-                className="flex h-4 w-4"
-              ></BaseIcon>
-              <p className="text-sm font-semibold">0</p>
-            </button>
-          </div> */}
         </div>
       )}
     </>

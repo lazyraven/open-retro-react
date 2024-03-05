@@ -36,17 +36,17 @@ export default function Retros() {
     navigate(`/boards/${params.boardId}/retros/${retroDetail.id}`);
   };
 
-  const deleteRetro = async (e, id) => {
-    e.preventDefault();
-    try {
-      // await boardService.deleteRetro({ boardId: params.boardId, retroId: id });
-      // await deleteDoc(doc(db, "retros", id));
-      await deleteDoc(doc(db, "boards", params.boardId, "retros", id));
-      getBoardRetros();
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const deleteRetro = async (e, id) => {
+  //   e.preventDefault();
+  //   try {
+  //     // await boardService.deleteRetro({ boardId: params.boardId, retroId: id });
+  //     // await deleteDoc(doc(db, "retros", id));
+  //     await deleteDoc(doc(db, "boards", params.boardId, "retros", id));
+  //     getBoardRetros();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <>
@@ -103,7 +103,7 @@ export default function Retros() {
                     <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
                       Share
                     </h6>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={(event) => {
                         deleteRetro(event, retroDetails.id);
@@ -114,7 +114,7 @@ export default function Retros() {
                         className="flex h-4 w-4"
                         iconName={ICONS.Delete}
                       ></BaseIcon>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

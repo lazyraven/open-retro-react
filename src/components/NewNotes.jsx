@@ -46,18 +46,18 @@ export default function NewNotes(props) {
     return inputClsName;
   };
 
-  const getButtonClass = () => {
-    buttonClsName =
-      props.tagName === "went-well"
-        ? "bg-[#009886] hover:bg-emerald-700"
-        : props.tagName === "action-item"
-        ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-        : props.tagName === "to-improve"
-        ? "bg-[#E92C64] hover:bg-red-700"
-        : "border-[#009886]";
+  // const getButtonClass = () => {
+  //   buttonClsName =
+  //     props.tagName === "went-well"
+  //       ? "bg-[#009886] hover:bg-emerald-700"
+  //       : props.tagName === "action-item"
+  //       ? "bg-[#A63EB9] hover:bg-fuchsia-800"
+  //       : props.tagName === "to-improve"
+  //       ? "bg-[#E92C64] hover:bg-red-700"
+  //       : "border-[#009886]";
 
-    return buttonClsName;
-  };
+  //   return buttonClsName;
+  // };
 
   const handleSubmit = async (e, tagOption) => {
     notesModel.tagName = tagOption;
@@ -130,7 +130,7 @@ export default function NewNotes(props) {
               <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
                 <button
                   type="submit"
-                  className={`flex justify-center bottom-3 text-white items-center rounded-sm border-blue-100 text-sm px-2 ${getButtonClass()}`}
+                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
                 >
                   Save
                 </button>
@@ -143,7 +143,7 @@ export default function NewNotes(props) {
                 >
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className=" flex h-3 w-3 text-gray-600"
+                    className=" flex h-3 w-3 text-zinc-300"
                   ></BaseIcon>
                 </button>
               </div>
