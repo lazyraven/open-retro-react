@@ -68,6 +68,7 @@ export default function NewNotes(props) {
         notesModel
       );
       setisOpenTextbox(false);
+      setNotesModel("");
       props.getRetroNotes();
     } catch (e) {
       console.log(e);
