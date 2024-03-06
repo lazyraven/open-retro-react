@@ -114,7 +114,7 @@ export default function NewNotes(props) {
               onSubmit={(event) => {
                 handleSubmit(event, props.tagName);
               }}
-              className="relative w-full"
+              className=" w-full"
             >
               <textarea
                 type="text"
@@ -122,15 +122,15 @@ export default function NewNotes(props) {
                 value={notesModel.description}
                 onChange={handleChange}
                 placeholder="Type something..."
-                rows="4"
+                rows="2"
                 cols="7"
                 className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
               />
 
-              <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
+              <div className="flex justify-end gap-2 px-2 py-1">
                 <button
                   type="submit"
-                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
+                  className={`flex justify-center text-zinc-200 items-center rounded-sm  bg-zinc-700 hover:bg-zinc-400 text-xs px-1`}
                 >
                   Save
                 </button>

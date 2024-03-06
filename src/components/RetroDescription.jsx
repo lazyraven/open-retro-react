@@ -10,7 +10,7 @@ export default function RetroDescription(props) {
   const { note } = props;
   const [editDescription, setEditDescription] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
-  const [isShown, setIsShown] = useState(false);
+  // const [isShown, setIsShown] = useState(false);
   const params = useParams();
   let descriptionClsName = "";
   let inputClsName = "";
@@ -117,7 +117,7 @@ export default function RetroDescription(props) {
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
           <div className="grow">
-            <form onSubmit={handleSubmit} className="relative w-full">
+            <form onSubmit={handleSubmit} className=" w-full">
               <div className="grow">
                 <textarea
                   type="text"
@@ -130,10 +130,10 @@ export default function RetroDescription(props) {
                 />
               </div>
 
-              <div className="absolute right-2 bottom-3 flex gap-2">
+              <div className="flex justify-end gap-2 px-2 py-1">
                 <button
                   type="submit"
-                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
+                  className={`flex justify-center text-zinc-200 items-center rounded-sm  bg-zinc-700 hover:bg-zinc-800 text-xs px-1`}
                 >
                   Save
                 </button>
@@ -149,34 +149,36 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
-          onMouseEnter={() => setIsShown(true)}
-          onMouseLeave={() => setIsShown(false)}
-          className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
+          className={` flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
         >
-          <div className="flex gap-2">
+          <div className="flex gap-1 ">
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <h1 className="grow font-normal text-sm text-gray-300 py-4">
-              {note.description}
-            </h1>
-
-            {isShown && (
-              <div className="flex gap-2 absolute right-2 bottom-1">
-                <button onClick={editDescriptionModal} className="">
-                  <BaseIcon
-                    className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                    iconName={ICONS.Edit}
-                  ></BaseIcon>
-                </button>
-                <button onClick={deleteNote} className="">
-                  <BaseIcon
-                    className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                    iconName={ICONS.Delete}
-                  ></BaseIcon>
-                </button>
+            <div className="flex flex-col gap-1 px-1 w-full parent relative">
+              <h1 className="grow font-normal text-sm text-gray-300 py-4">
+                {note.description}
+              </h1>
+              <div className="flex justify-between items-center gap-2 py-2 border-t border-zinc-700">
+                <p className="text-zinc-200 bg-zinc-500 px-2  rounded-md text-xs">
+                  Jhon
+                </p>
+                <div className="child flex ">
+                  <button onClick={editDescriptionModal} className="">
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                      iconName={ICONS.Edit}
+                    ></BaseIcon>
+                  </button>
+                  <button onClick={deleteNote} className="">
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                      iconName={ICONS.Delete}
+                    ></BaseIcon>
+                  </button>
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}
