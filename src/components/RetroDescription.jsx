@@ -10,6 +10,7 @@ export default function RetroDescription(props) {
   const { note } = props;
   const [editDescription, setEditDescription] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
+  const [isShown, setIsShown] = useState(false);
   const params = useParams();
   let descriptionClsName = "";
   let inputClsName = "";
@@ -148,6 +149,8 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
+          onMouseEnter={() => setIsShown(true)}
+          onMouseLeave={() => setIsShown(false)}
           className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
         >
           <div className="flex gap-2">
@@ -158,20 +161,22 @@ export default function RetroDescription(props) {
               {note.description}
             </h1>
 
-            <div className="flex gap-2 absolute right-2 bottom-1">
-              <button onClick={editDescriptionModal} className="">
-                <BaseIcon
-                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                  iconName={ICONS.Edit}
-                ></BaseIcon>
-              </button>
-              <button onClick={deleteNote} className="">
-                <BaseIcon
-                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                  iconName={ICONS.Delete}
-                ></BaseIcon>
-              </button>
-            </div>
+            {isShown && (
+              <div className="flex gap-2 absolute right-2 bottom-1">
+                <button onClick={editDescriptionModal} className="">
+                  <BaseIcon
+                    className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                    iconName={ICONS.Edit}
+                  ></BaseIcon>
+                </button>
+                <button onClick={deleteNote} className="">
+                  <BaseIcon
+                    className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                    iconName={ICONS.Delete}
+                  ></BaseIcon>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
