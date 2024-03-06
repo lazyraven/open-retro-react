@@ -1,369 +1,185 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
+import NewNotes from "@/components/NewNotes";
+import RetroDescription from "@/components/RetroDescription";
+import { toast } from "react-toastify";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenWentWell, setisOpenWentWell] = useState(false);
-  const [isOpenToImprove, setIsOpenToImprove] = useState(false);
-  const [isOpenActionItem, setisOpenActionItem] = useState(false);
 
   const params = useParams();
 
-  const [notesModel, setNotesModel] = useState({
-    boardId: params.boardId,
-    retroId: params.retroId,
-    createdBy: "",
-    createdDate: "",
-    description: "",
-    tag: "",
-    title: "",
-  });
-
-  const getNotes = async () => {
+  const getRetroNotes = async () => {
     try {
-      const notes = await boardService.getNotes({
+      const notes = await boardService.getRetroNotes({
+        boardId: params.boardId,
         retroId: params.retroId,
         // retroId: params.OpenRetroId,
       });
       setNotes(notes);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const addRetroDescription = (tagName) => {
-    tagName == "went-well"
-      ? setisOpenWentWell(true)
-      : tagName == "to-improve"
-      ? setIsOpenToImprove(true)
-      : tagName == "action-item"
-      ? setisOpenActionItem(true)
-      : "";
-  };
-
-  const toggleMenu = (tagName) => {
-    tagName == "went-well"
-      ? setisOpenWentWell(!isOpenWentWell)
-      : tagName == "to-improve"
-      ? setIsOpenToImprove(!isOpenToImprove)
-      : tagName == "action-item"
-      ? setisOpenActionItem(!isOpenActionItem)
-      : "";
-    // setisOpenWentWell(!isOpenWentWell);
-  };
-
-  const handleChange = (event) => {
-    // event.preventDefault();
-    const { name, value } = event.target;
-    setNotesModel({
-      ...notesModel,
-      [name]: value,
-    });
-  };
-
-  const handleSave = async (tagName) => {
-    notesModel.tag = tagName;
-    // console.log("handleSave called", tagName, notesModel);
-    // e.preventDefault();
-    try {
-      const newNotes = await boardService.createNotes(notesModel);
-      console.log(newNotes);
-      // navigate(`/${newRetroId}`);
+      // setPdfData(notes);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    getNotes({ retroId: params.OpenRetroId });
+    getRetroNotes({ boardId: params.boardId, retroId: params.OpenRetroId });
   }, []);
 
-  // for list rendering
-  const renderBoardRow = (note) => {
-    switch (note.tag) {
-      case "went-well":
-        return (
-          <div className="bg-[#009886] px-4 py-1  flex flex-col  w-full justify-between rounded-sm text-white">
-            <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
-              <button type="button">
-                <BaseIcon
-                  iconName={ICONS.ellipsisvertical}
-                  className=" flex h-5 w-5 text-gray-200"
-                ></BaseIcon>
-              </button>
-            </div>
-            <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-            </div>
-          </div>
-        );
-      case "to-improve":
-        return (
-          <div className="bg-[#E92C64] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
-            <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
-              <button type="button">
-                <BaseIcon
-                  iconName={ICONS.ellipsisvertical}
-                  className=" flex h-5 w-5 text-gray-200"
-                ></BaseIcon>
-              </button>
-            </div>
-            <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-            </div>
-          </div>
-        );
-      case "action-item":
-        return (
-          <div className="bg-[#A63EB9] px-4 py-1   flex flex-col justify-between rounded-sm text-white">
-            <div className="flex justify-between">
-              <h1 className="font-semibold">{note.description}</h1>
-              <button type="button">
-                <BaseIcon
-                  iconName={ICONS.ellipsisvertical}
-                  className=" flex h-5 w-5 text-gray-200"
-                ></BaseIcon>
-              </button>
-            </div>
-            <div className="flex gap-1 justify-end">
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.LikeThumb}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-              <button type="button" className="flex gap-1">
-                <BaseIcon
-                  iconName={ICONS.Comment}
-                  className="flex h-5 w-5"
-                ></BaseIcon>
-                <p className="text-sm font-semibold">0</p>
-              </button>
-            </div>
-          </div>
-        );
+  const pdfRef = useRef();
+
+  const dowanloadPdf = async () => {
+    const input = pdfRef.current;
+    try {
+      const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
+      const pdfResult = await boardService.generateAndUploadPdf({
+        storagePath: reportSrc,
+        fileName: `${params.retroId}.pdf`,
+        htmlInput: input,
+      });
+      console.log(pdfResult, "pdfResult");
+      toast.success("Generate pdf is Updated!");
+      updateGenratePdf();
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error occurred, while uploading file.");
     }
   };
 
-  // description modal box
+  const updateGenratePdf = async () => {
+    const reportSrcPath = `${params.boardId}/${params.retroId}`;
+    try {
+      await boardService.updateRetros(
+        { boardId: params.boardId, retroId: params.retroId },
+        reportSrcPath
+      );
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error occurred, while uploading file.");
+    }
+  };
+
   return (
-    <div>
-      <div className="grid grid-cols-3 px-5 py-5 gap-5 bg-[#F1F2F5]">
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">Went-Well</h1>
-              <BaseIcon
+    <div className="relative">
+      <h1 className="mb-4 text-zinc-200">
+        Sprint Retro 1
+        <span className="text-zinc-500 text-sm"> | Sun Mar 03 2024</span>
+      </h1>
+      <div
+        // id="content"
+        ref={pdfRef}
+        className="grid grid-cols-3 gap-x-2"
+      >
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <h1 className="font-semibold text-slate-200 capitalize">
+                Went Well
+              </h1>
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("went-well");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-            {isOpenWentWell && (
-              <div className="flex gap-2 relative">
-                {/* <form className="relative w-full"> */}
-                <input
-                  type="text"
-                  id="went-well"
-                  name="description"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                  className="border-4 py-1 px-2 w-full h-16 border-[#009886] rounded-sm outline-none"
-                />
-
-                <button
-                  type="submit"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#009886] hover:bg-emerald-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("went-well");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    toggleMenu("went-well");
-                  }}
-                  className="absolute right-2 top-2"
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-                {/* </form> */}
-              </div>
-            )}
+            <NewNotes
+              tagName="went-well"
+              notes={notes}
+              getRetroNotes={getRetroNotes}
+            ></NewNotes>
+          </div>
+          <div>
+            {notes.map((note, index) => {
+              if (!note || note.tagName !== "went-well") return null;
+              return (
+                <div className="mb-2" key={"note" + index}>
+                  <RetroDescription
+                    note={note}
+                    getRetroNotes={getRetroNotes}
+                  ></RetroDescription>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">Action-Item</h1>
-              <BaseIcon
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <h1 className="font-semibold capitalize text-slate-200">
+                To-Improve
+              </h1>
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("action-item");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-
-            {isOpenActionItem && (
-              <div className="flex gap-2 relative">
-                <input
-                  type="text"
-                  id="action-item"
-                  name="description"
-                  className="border-4 py-1 px-2 w-full h-16 border-[#A63EB9] rounded-sm outline-none"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#A63EB9] font-semibold hover:bg-fuchsia-800 rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("action-item");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  className="absolute right-2 top-2"
-                  onClick={() => {
-                    toggleMenu("action-item");
-                  }}
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-              </div>
-            )}
+            <NewNotes
+              tagName="to-improve"
+              getRetroNotes={getRetroNotes}
+            ></NewNotes>
+          </div>
+          <div>
+            {notes.map((note, index) => {
+              if (!note || note.tagName !== "to-improve") return null;
+              return (
+                <div className="mb-2" key={"note" + index}>
+                  <RetroDescription
+                    note={note}
+                    getRetroNotes={getRetroNotes}
+                  ></RetroDescription>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div className="flex justify-between py-2">
-          <div>
-            <div className="flex">
-              <h1 className="font-semibold text-xl capitalize">To-Improve</h1>
-              <BaseIcon
+        <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
+          <div className=" flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <h1 className="font-semibold capitalizetext-white  text-slate-200">
+                Action Item
+              </h1>
+              {/* <BaseIcon
                 iconName={ICONS.ellipsisvertical}
                 className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon>
+              ></BaseIcon> */}
             </div>
-            <button
-              type="button"
-              className="flex justify-center bg-[#E5E6EB] hover:bg-slate-200 py-3 rounded-sm w-full"
-              onClick={() => {
-                addRetroDescription("to-improve");
-              }}
-            >
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" h-4 w-4 text-gray-500"
-              ></BaseIcon>
-            </button>
-
-            {isOpenToImprove && (
-              <div className="flex gap-2 relative">
-                <input
-                  type="text"
-                  id="to-improve"
-                  name="description"
-                  className="border-4 py-1 px-2 w-full h-16 border-[#E92C64] rounded-sm outline-none"
-                  value={notesModel.description}
-                  onChange={handleChange}
-                />
-
-                <button
-                  type="button"
-                  className="flex justify-center absolute right-2 bottom-2 text-white items-center bg-[#E92C64] hover:bg-red-700 font-semibold rounded-sm border-blue-100 text-sm px-1"
-                  onClick={() => {
-                    handleSave("to-improve");
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  className="absolute right-2 top-2"
-                  onClick={() => {
-                    toggleMenu("to-improve");
-                  }}
-                >
-                  <BaseIcon
-                    iconName={ICONS.Close}
-                    className=" flex h-4 w-4 text-gray-500"
-                  ></BaseIcon>
-                </button>
-              </div>
-            )}
+            <NewNotes
+              tagName="action-item"
+              getRetroNotes={getRetroNotes}
+            ></NewNotes>
+          </div>
+          <div>
+            {notes.map((note, index) => {
+              if (!note || note.tagName !== "action-item") return null;
+              return (
+                <div className="mb-2" key={"note" + index}>
+                  <RetroDescription
+                    note={note}
+                    getRetroNotes={getRetroNotes}
+                  ></RetroDescription>
+                </div>
+              );
+            })}
           </div>
         </div>
-        {notes.map((note, index) => {
-          return (
-            <div className="flex flex-col gap-3" key={note.tag + index}>
-              <div>{renderBoardRow(note)}</div>
-            </div>
-          );
-        })}
       </div>
+      <button
+        type="button"
+        onClick={(event) => {
+          dowanloadPdf(event, notes);
+        }}
+        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-violet-500  text-violet-500 rounded-md bg-zinc-900 shadow-2xl"
+      >
+        <BaseIcon
+          iconName={ICONS.Bolt}
+          className=" flex h-5 w-5 text-violet-600"
+        ></BaseIcon>
+        Generate Report
+      </button>
     </div>
   );
 }

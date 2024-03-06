@@ -1,65 +1,164 @@
 import { useEffect, useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
+import BaseIcon from "@/components/BaseIcon";
+import { ICONS } from "@/helpers/constant";
+import { useRef } from "react";
+import { buildQRImage } from "@/helpers/constant";
 
 export default function BoardId() {
   const [board, setBoard] = useState({});
+  const [shareBoard, setShareBoard] = useState(false);
+  const [url, setUrl] = useState("");
   const params = useParams();
+  const tabs = [
+    { name: "Retros", to: "retros" },
+    { name: "Members", to: "members" },
+    { name: "Reports", to: "reports" },
+  ];
 
-  const getBoard = async () => {
+  const getBoardRecord = async () => {
     try {
-      // { boardId: params.boardId }
-      const boards = await boardService.getBoards();
-      boards.forEach((board) => {
-        if (board.id == params.boardId) {
-          // const date = new Date(board.createdDate);
-          // console.log(date);
-          setBoard(board);
-        }
-      });
+      const board = await boardService.getBoard({ boardId: params.boardId });
+      console.log(board, "board");
+      if (board && board.id) {
+        setBoard(board);
+      }
     } catch (e) {
       console.log(e);
     }
   };
+
   useEffect(() => {
-    getBoard();
+    getBoardRecord();
   }, []);
+
+  const handelOpenShareModal = () => {
+    setShareBoard(true);
+    setUrl(`${window.location.origin}/boards/${board.id}`);
+  };
+
+  const handelCloseShareModal = () => {
+    setShareBoard(false);
+  };
+  const handleInputChange = (event) => {
+    setUrl(event.target.value);
+    //
+  };
+  const inputRef = useRef(null);
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+  // console.log(url, "urllllllllllll");
+
   return (
-    <div className="flex flex-col gap-5">
-      <div className="px-3 pt-5 gap-3">
-        <div className="text-xl">{board.boardName}</div>
-        <div className="text-xl">{board.createdBy}</div>
-        {/* <h1 className="text-xl">{new Date(board.createdDate)}</h1> */}
+    <div className="flex flex-col gap-1 min-h-screen">
+      <div className="flex justify-between mt-2 items-center py-1 gap-3">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl text-zinc-200">
+            {board.boardName} • {board.createdBy}
+          </h1>
+          <h3 className="text-zinc-500 text-sm">{board.createdDate}</h3>
+        </div>
+        <div className="flex">
+          <button
+            type="button"
+            onClick={handelOpenShareModal}
+            className="flex gap-1 items-center px-3 py-1 border border-zinc-500  text-zinc-500 rounded-md bg-zinc-900 shadow-2xl"
+          >
+            <BaseIcon
+              iconName={ICONS.ArrowUpOnSquare}
+              className="flex h-5 w-5 text-violet-600"
+            ></BaseIcon>
+            Share
+          </button>
+          {shareBoard && (
+            <div
+              className="relative z-10"
+              aria-labelledby="modal-title"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
+              <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white relative">
+                      <button
+                        onClick={handelCloseShareModal}
+                        className="absolute right-6 top-5"
+                      >
+                        <BaseIcon
+                          iconName={ICONS.Cross}
+                          className="flex text-zinc-300 h-5 w-5"
+                        ></BaseIcon>
+                      </button>
+                      <h1 className="text-zinc-300 text-xl text-center">
+                        Share Board
+                      </h1>
+                      <div className="flex gap-2 justify-center">
+                        <input
+                          type="text"
+                          name=""
+                          disabled
+                          onChange={handleInputChange}
+                          value={url}
+                          ref={inputRef}
+                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3 w-full"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard(url)}
+                          className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                        >
+                          COPY
+                        </button>
+                      </div>
+                      <span className="text-center text-zinc-300">OR</span>
+                      <h2 className="text-center text-zinc-300">
+                        People can also join with QR Code:
+                      </h2>
+
+                      <img
+                        src={buildQRImage(url)}
+                        alt=""
+                        className="w-32 m-auto"
+                      />
+                      <h2 className="text-center text-zinc-300">
+                        Everyone with this URL will be able to access the board.
+                      </h2>
+                      {/* <button
+                        // onClick={navigateTOBoardPage}
+                        className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                      >
+                        Go To Board
+                      </button> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="flex px-3">
-        <ul className="flex gap-3">
-          <li>
-            <Link
-              to="retros"
-              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
+      <ul className="flex gap-3 border-b border-zinc-700 mb-4">
+        {tabs.map((tab, index) => (
+          <li key={`tab-index-${index}`} className="flex">
+            <NavLink
+              to={tab.to}
+              className={({ isActive }) =>
+                isActive
+                  ? "px-4 py-4 text-sm font-medium text-violet-600 border-b border-violet-600"
+                  : "px-4 py-4 text-sm text-slate-200 font-medium"
+              }
             >
-              Retros
-            </Link>
+              {tab.name}
+            </NavLink>
           </li>
-          <li>
-            <Link
-              to="members"
-              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
-            >
-              Members
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="reports"
-              className="px-3 py-2 border rounded-md bg-[#F1F2F5] hover:bg-slate-200 font-semibold"
-            >
-              Reports
-            </Link>
-          </li>
-        </ul>
-      </div>
+        ))}
+      </ul>
+      {/* <Retros></Retros> */}
       <Outlet></Outlet>
     </div>
   );

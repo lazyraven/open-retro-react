@@ -5,6 +5,7 @@ import Home from "@/pages/home";
 import Retros from "@/pages/boards/boardId/retros/index";
 import RetroId from "@/pages/boards/boardId/retros/retroId";
 import BoardId from "@/pages/boards/boardId/index";
+import Reports from "@/pages/boards/boardId/reports/index";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+
       {
         path: "/boards/:boardId",
         element: <BoardId />,
@@ -25,14 +27,14 @@ const router = createBrowserRouter([
           },
           {
             path: "reports",
-            element: <h1>Reports</h1>,
+            element: <Reports></Reports>,
           },
           {
             path: "retros",
             element: <Retros />,
           },
           {
-            path: ":retroId",
+            path: "retros/:retroId",
             element: <RetroId />,
           },
         ],

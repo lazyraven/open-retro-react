@@ -1,82 +1,136 @@
 import { db } from "@/firebase";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import {
   collection,
+  getDoc,
   getDocs,
   addDoc,
   query,
   where,
+  deleteDoc,
+  doc,
+  updateDoc,
   // onSnapshot,
 } from "firebase/firestore";
 
 export default {
-  // async getBoards({ boardId }) {
-  //   console.log("getBoards boardId", boardId);
-  //   const q = query(collection(db, "boards"), where("boardId", "==", boardId));
-  //   const docs = [];
-  //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {
-  //     docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-  //   });
-  //   console.log("docs board", docs);
-  //   return docs;
-  // },
-  async getBoards() {
-    const querySnapshot = await getDocs(collection(db, "boards"));
-    const docs = [];
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-    });
-    return docs;
-  },
   createBoard(formBody) {
     return addDoc(collection(db, "boards"), formBody);
   },
 
-  createRetro(formBody) {
-    return addDoc(collection(db, "retros"), formBody);
+  async getBoard({ boardId }) {
+    const record = await getDoc(doc(db, "boards", boardId));
+    return {
+      id: record.id,
+      path: record.ref.path,
+      ...record.data(),
+    };
   },
 
-  async getRetros() {
-    const querySnapshot = await getDocs(collection(db, "retros"));
+  createRetro({ boardId }, formBody) {
+    return addDoc(collection(db, "boards", boardId, "retros"), formBody);
+  },
+
+  async getBoardRetros({ boardId }) {
+    const querySnapshot = await getDocs(
+      collection(db, "boards", boardId, "retros")
+    );
     const docs = [];
     querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+      docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
     });
     return docs;
   },
 
-  async getRetrosDetail({ boardId }) {
-    const boardRef = collection(db, "retros");
-    const q = query(boardRef, where("boardId", "==", boardId));
-    const docs = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
-    });
-    return docs;
-
-    // need to check why this (onSnapshot) is not working
-    // return onSnapshot(q, (snapShot) => {
-    //   let retroDetails = [];
-    //   snapShot.docs.forEach((doc) => {
-    //     retroDetails.push({ ...doc.data(), id: doc.id });
-    //   });
-    //   return retroDetails;
-    // });
+  deleteRetro(boardId, deleteRetroId) {
+    deleteDoc(doc(db, "boards", boardId, "retros", deleteRetroId));
   },
 
-  async getNotes({ retroId }) {
-    const q = query(collection(db, "notes"), where("retroId", "==", retroId));
-    const docs = [];
+  createNote({ boardId, retroId }, formBody) {
+    console.log("notesModel formBody", formBody);
+    return addDoc(
+      collection(db, "boards", boardId, "retros", retroId, "notes"),
+      formBody
+    );
+  },
 
-    const querySnapshot = await getDocs(q);
+  async getRetroNotes({ boardId, retroId }) {
+    const querySnapshot = await getDocs(
+      collection(db, "boards", boardId, "retros", retroId, "notes")
+    );
+    const docs = [];
     querySnapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id, path: doc.ref.path });
+      docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
     });
     return docs;
   },
 
-  createNotes(formBody) {
-    return addDoc(collection(db, "notes"), formBody);
+  updateNote({ boardId, retroId, noteId }, noteUpdateDetail) {
+    updateDoc(doc(db, "boards", boardId, "retros", retroId, "notes", noteId), {
+      description: noteUpdateDetail.description,
+      noteId: noteId,
+    });
+  },
+
+  deleteNote(boardId, retroId, deleteNoteId) {
+    deleteDoc(
+      doc(db, "boards", boardId, "retros", retroId, "notes", deleteNoteId)
+    );
+  },
+
+  async generateAndUploadPdf({ storagePath, fileName, htmlInput }) {
+    try {
+      const canvas = await html2canvas(htmlInput);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4", true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      console.log("pdf", pdf);
+
+      const pdfDataUri = pdf.output("datauristring");
+      // Convert data URL to Blob object
+      const byteCharacters = atob(pdfDataUri.split(",")[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+
+      // Create a file object
+      const fileObject = new File([blob], fileName, {
+        type: "application/pdf",
+      });
+
+      const storage = getStorage();
+      const storageRef = ref(storage, storagePath);
+      // const message = 'This is my message.';
+      const storageSnapshot = await uploadBytes(storageRef, fileObject);
+      console.log("snapshot", storageSnapshot);
+      return storageSnapshot;
+    } catch (error) {
+      console.log(error, "error");
+    }
+  },
+
+  updateRetros({ boardId, retroId }, pathRetroSrc) {
+    updateDoc(doc(db, "boards", boardId, "retros", retroId), {
+      pathRetroSrc,
+    });
   },
 };
