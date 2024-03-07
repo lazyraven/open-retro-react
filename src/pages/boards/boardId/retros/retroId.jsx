@@ -136,6 +136,7 @@ export default function RetroId() {
             })}
           </div>
         </div>
+
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className=" flex flex-col gap-3">
             <div className="flex justify-between items-center">
@@ -172,11 +173,11 @@ export default function RetroId() {
         onClick={(event) => {
           dowanloadPdf(event, notes);
         }}
-        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-violet-500  text-violet-500 rounded-md bg-zinc-900 shadow-2xl"
+        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-indigo-500  text-indigo-500 rounded-md bg-zinc-900 shadow-2xl"
       >
         <BaseIcon
           iconName={ICONS.Bolt}
-          className=" flex h-5 w-5 text-violet-600"
+          className=" flex h-5 w-5 text-indigo-500"
         ></BaseIcon>
         Generate Report
       </button>

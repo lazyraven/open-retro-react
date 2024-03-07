@@ -99,8 +99,8 @@ export default function NewBoardModal(props) {
                         className="absolute right-6 top-5"
                       >
                         <BaseIcon
-                          iconName={ICONS.Cross}
-                          className="flex text-zinc-300 h-5 w-5"
+                          iconName={ICONS.Close}
+                          className="flex text-zinc-300 h-6 w-6"
                         ></BaseIcon>
                       </button>
                       <h1 className="text-zinc-300 text-xl text-center">
@@ -150,7 +150,7 @@ export default function NewBoardModal(props) {
                         <div className="flex gap-2 items-center">
                           <BaseIcon
                             iconName={ICONS.rocket}
-                            className=" flex w-6 h-6 text-blue-500"
+                            className=" flex w-6 h-6 text-indigo-500"
                           ></BaseIcon>
                           <h1 className="text-2xl text-slate-200">
                             Open <b className=" text-gray-400">Retro</b>

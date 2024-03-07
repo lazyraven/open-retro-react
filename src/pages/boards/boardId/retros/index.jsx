@@ -94,9 +94,9 @@ export default function Retros() {
                     }}
                   >
                     <div className="flex h-32 py-3 gap-4">
-                      <div className="bg-teal-700 text-white w-14"></div>
-                      <div className="bg-rose-700 text-white w-14"></div>
-                      <div className="bg-fuchsia-700 text-white w-14"></div>
+                      <div className="bg-teal-600 text-white w-14"></div>
+                      <div className="bg-pink-600 text-white w-14"></div>
+                      <div className="bg-fuchsia-600 text-white w-14"></div>
                     </div>
                   </button>
                   <div className="flex justify-between items-center">

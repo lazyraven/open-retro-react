@@ -27,37 +27,16 @@ export default function NewNotes(props) {
   };
 
   const getInputClasses = () => {
-    inputClsName =
-      // props.tagName === "went-well"
-      //   ? "border-[#009886]"
-      //   : props.tagName === "action-item"
-      //   ? "border-[#A63EB9]"
-      //   : props.tagName === "to-improve"
-      //   ? "border-[#E92C64]"
-      //   : "border-[#009886]";
-
-      props.tagName === "went-well"
-        ? "bg-[#009886]"
-        : props.tagName === "action-item"
-        ? "bg-[#A63EB9]"
-        : props.tagName === "to-improve"
-        ? "bg-[#E92C64]"
-        : null;
-    return inputClsName;
+    const { tagName } = props;
+    switch (tagName) {
+      case "went-well":
+        return "bg-teal-600";
+      case "to-improve":
+        return "bg-pink-600";
+      case "action-item":
+        return "bg-fuchsia-600";
+    }
   };
-
-  // const getButtonClass = () => {
-  //   buttonClsName =
-  //     props.tagName === "went-well"
-  //       ? "bg-[#009886] hover:bg-emerald-700"
-  //       : props.tagName === "action-item"
-  //       ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-  //       : props.tagName === "to-improve"
-  //       ? "bg-[#E92C64] hover:bg-red-700"
-  //       : "border-[#009886]";
-
-  //   return buttonClsName;
-  // };
 
   const handleSubmit = async (e, tagOption) => {
     notesModel.tagName = tagOption;
@@ -143,7 +122,7 @@ export default function NewNotes(props) {
                 >
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className=" flex h-3 w-3 text-zinc-300"
+                    className=" flex h-4 w-4 text-zinc-300"
                   ></BaseIcon>
                 </button>
               </div>
