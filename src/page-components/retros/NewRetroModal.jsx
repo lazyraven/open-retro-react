@@ -48,43 +48,41 @@ export default function BaseForm(props) {
     <>
       <div onClick={openModal}>{children}</div>
       {isOpen && (
-        <form onSubmit={handleSave}>
-          <div
-            className="relative z-10"
-            aria-labelledby="modal-title"
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
-                    <div className="flex gap-2 justify-center items-center">
-                      <BaseIcon
-                        iconName={ICONS.rocket}
-                        className="flex w-5 h-5 text-blue-500"
-                      ></BaseIcon>{" "}
-                      <h1 className="text-2xl text-slate-200">
-                        Open <b className=" text-gray-400">Retro</b>
-                      </h1>
-                    </div>
-                    <div className="flex flex-col gap-2 px-8 ">
-                      <div className="">
-                        <label htmlFor="" className="text-zinc-300">
-                          Retro Name*
-                        </label>
-                      </div>
+        <div
+          className="relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
+                  <div className="flex gap-2 justify-center items-center">
+                    <BaseIcon
+                      iconName={ICONS.rocket}
+                      className="flex w-5 h-5 text-blue-500"
+                    ></BaseIcon>{" "}
+                    <h1 className="text-2xl text-slate-200">
+                      Open <b className=" text-gray-400">Retro</b>
+                    </h1>
+                  </div>
+                  <form onSubmit={handleSave} className="flex flex-col gap-y-6">
+                    <div className="flex flex-col gap-y-2 px-8 ">
+                      <label htmlFor="" className="text-zinc-300">
+                        Retro Name*
+                      </label>
                       <input
                         type="text"
                         name="retroName"
                         required
                         value={retroModel.retroName}
-                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-2 px-3"
+                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex gap-4 items-center justify-end px-8 mt-4 text-white">
+                    <div className="flex gap-4 items-center justify-end px-8  text-white">
                       <button
                         type="button"
                         onClick={closeModal}
@@ -99,12 +97,12 @@ export default function BaseForm(props) {
                         Submit
                       </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </form>
+        </div>
       )}
     </>
   );
