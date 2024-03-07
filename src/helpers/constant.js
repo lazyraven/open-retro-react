@@ -9,6 +9,7 @@ export const ICONS = {
   ArrowUTurn: "arrow-uturn-left",
   ArrowUpOnSquare: "arrow-up-on-square",
   Edit: "pencil-square",
+  Close: "close",
 };
 
 export const buildQRImage = (dataUrl) =>

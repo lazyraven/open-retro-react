@@ -99,8 +99,8 @@ export default function NewBoardModal(props) {
                         className="absolute right-6 top-5"
                       >
                         <BaseIcon
-                          iconName={ICONS.Cross}
-                          className="flex text-zinc-300 h-5 w-5"
+                          iconName={ICONS.Close}
+                          className="flex text-zinc-300 h-6 w-6"
                         ></BaseIcon>
                       </button>
                       <h1 className="text-zinc-300 text-xl text-center">
@@ -146,19 +146,27 @@ export default function NewBoardModal(props) {
                     </div>
                   ) : (
                     <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
-                      <div className="flex justify-between items-center mb-2 p-8">
-                        <div className="flex gap-2 items-center">
-                          <BaseIcon
-                            iconName={ICONS.rocket}
-                            className=" flex w-6 h-6 text-blue-500"
-                          ></BaseIcon>
-                          <h1 className="text-2xl text-slate-200">
-                            Open <b className=" text-gray-400">Retro</b>
-                          </h1>
+                      <div className="flex justify-center items-center mb-2">
+                        <h6 className="text-2xl text-slate-200">
+                          Create Board
+                        </h6>
+                      </div>
+
+                      <div className="flex flex-col gap-y-1 px-8">
+                        <div className="flex gap-1">
+                          <label htmlFor="" className="text-zinc-300">
+                            Date
+                          </label>
                         </div>
-                        <h1 className="text-sm text-right text-slate-200 ">
-                          {boardModel.createdDate}
-                        </h1>
+                        <input
+                          type="text"
+                          name="boardName"
+                          required
+                          disabled
+                          value={boardModel.createdDate}
+                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div className="flex flex-col gap-y-1 px-8">
@@ -172,7 +180,7 @@ export default function NewBoardModal(props) {
                           name="boardName"
                           required
                           value={boardModel.boardName}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-2 px-3"
+                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3"
                           onChange={handleChange}
                         />
                       </div>
@@ -187,7 +195,7 @@ export default function NewBoardModal(props) {
                           name="createdBy"
                           required
                           value={boardModel.createdBy}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-2 px-3"
+                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3"
                           onChange={handleChange}
                         />
                       </div>

@@ -27,37 +27,16 @@ export default function NewNotes(props) {
   };
 
   const getInputClasses = () => {
-    inputClsName =
-      // props.tagName === "went-well"
-      //   ? "border-[#009886]"
-      //   : props.tagName === "action-item"
-      //   ? "border-[#A63EB9]"
-      //   : props.tagName === "to-improve"
-      //   ? "border-[#E92C64]"
-      //   : "border-[#009886]";
-
-      props.tagName === "went-well"
-        ? "bg-[#009886]"
-        : props.tagName === "action-item"
-        ? "bg-[#A63EB9]"
-        : props.tagName === "to-improve"
-        ? "bg-[#E92C64]"
-        : null;
-    return inputClsName;
+    const { tagName } = props;
+    switch (tagName) {
+      case "went-well":
+        return "bg-teal-600";
+      case "to-improve":
+        return "bg-pink-600";
+      case "action-item":
+        return "bg-fuchsia-600";
+    }
   };
-
-  // const getButtonClass = () => {
-  //   buttonClsName =
-  //     props.tagName === "went-well"
-  //       ? "bg-[#009886] hover:bg-emerald-700"
-  //       : props.tagName === "action-item"
-  //       ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-  //       : props.tagName === "to-improve"
-  //       ? "bg-[#E92C64] hover:bg-red-700"
-  //       : "border-[#009886]";
-
-  //   return buttonClsName;
-  // };
 
   const handleSubmit = async (e, tagOption) => {
     notesModel.tagName = tagOption;
@@ -114,7 +93,7 @@ export default function NewNotes(props) {
               onSubmit={(event) => {
                 handleSubmit(event, props.tagName);
               }}
-              className="relative w-full"
+              className=" w-full"
             >
               <textarea
                 type="text"
@@ -122,15 +101,15 @@ export default function NewNotes(props) {
                 value={notesModel.description}
                 onChange={handleChange}
                 placeholder="Type something..."
-                rows="4"
+                rows="2"
                 cols="7"
                 className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
               />
 
-              <div className="absolute right-2 bottom-3 mt-1  flex gap-2">
+              <div className="flex justify-end gap-2 px-2 py-1">
                 <button
                   type="submit"
-                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
+                  className={`flex justify-center text-zinc-200 items-center rounded-sm  bg-zinc-700 hover:bg-zinc-400 text-xs px-1`}
                 >
                   Save
                 </button>
@@ -143,7 +122,7 @@ export default function NewNotes(props) {
                 >
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className=" flex h-3 w-3 text-zinc-300"
+                    className=" flex h-4 w-4 text-zinc-300"
                   ></BaseIcon>
                 </button>
               </div>

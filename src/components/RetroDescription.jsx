@@ -11,48 +11,18 @@ export default function RetroDescription(props) {
   const [editDescription, setEditDescription] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
   const params = useParams();
-  let descriptionClsName = "";
-  let inputClsName = "";
-  // let buttonClsName = "";
+
   const descriptionClasses = () => {
-    descriptionClsName =
-      note.tagName === "went-well"
-        ? "bg-[#009886]"
-        : note.tagName === "action-item"
-        ? "bg-[#A63EB9]"
-        : note.tagName === "to-improve"
-        ? "bg-[#E92C64]"
-        : null;
-    return descriptionClsName;
+    const { tagName } = note;
+    switch (tagName) {
+      case "went-well":
+        return "bg-teal-600";
+      case "to-improve":
+        return "bg-pink-600";
+      case "action-item":
+        return "bg-fuchsia-600";
+    }
   };
-
-  const getInputClasses = () => {
-    inputClsName =
-      note.tagName === "went-well"
-        ? "border-[#009886]"
-        : note.tagName === "action-item"
-        ? "border-[#A63EB9]"
-        : note.tagName === "to-improve"
-        ? "border-[#E92C64]"
-        : "border-[#009886]";
-    return inputClsName;
-  };
-
-  // const getButtonClass = () => {
-  //   buttonClsName =
-  //     note.tagName === "went-well"
-  //       ? "bg-[#009886] hover:bg-emerald-700"
-  //       : note.tagName === "action-item"
-  //       ? "bg-[#A63EB9] hover:bg-fuchsia-800"
-  //       : note.tagName === "to-improve"
-  //       ? "bg-[#E92C64] hover:bg-red-700"
-  //       : "border-[#009886]";
-  //   return buttonClsName;
-  // };
-
-  // const editModalOpen = () => {
-  //   // setIsEditing(true);
-  // };
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -116,7 +86,7 @@ export default function RetroDescription(props) {
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
           <div className="grow">
-            <form onSubmit={handleSubmit} className="relative w-full">
+            <form onSubmit={handleSubmit} className=" w-full">
               <div className="grow">
                 <textarea
                   type="text"
@@ -129,17 +99,17 @@ export default function RetroDescription(props) {
                 />
               </div>
 
-              <div className="absolute right-2 bottom-3 flex gap-2">
+              <div className="flex justify-end gap-2 px-2 py-1">
                 <button
                   type="submit"
-                  className={`flex justify-center text-zinc-900 items-center rounded-sm border-blue-100 bg-zinc-300 hover:bg-zinc-400 text-sm px-1`}
+                  className={`flex justify-center text-zinc-200 items-center rounded-sm  bg-zinc-700 hover:bg-zinc-800 text-xs px-1`}
                 >
                   Save
                 </button>
                 <button type="button" onClick={closeEditDescription}>
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className=" flex h-3 w-3 text-zinc-300"
+                    className="flex h-4 w-4 text-zinc-300"
                   ></BaseIcon>
                 </button>
               </div>
@@ -148,29 +118,38 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
-          className={`flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
+          className={` flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
         >
-          <div className="flex gap-2">
+          <div className="flex gap-1 ">
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <h1 className="grow font-normal text-sm text-gray-300 py-4">
-              {note.description}
-            </h1>
-
-            <div className="flex gap-2 absolute right-2 bottom-1">
-              <button onClick={editDescriptionModal} className="">
-                <BaseIcon
-                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                  iconName={ICONS.Edit}
-                ></BaseIcon>
-              </button>
-              <button onClick={deleteNote} className="">
-                <BaseIcon
-                  className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                  iconName={ICONS.Delete}
-                ></BaseIcon>
-              </button>
+            <div className="flex flex-col gap-1 px-1 w-full parent relative">
+              <h1 className="grow font-normal text-sm text-gray-300 py-4">
+                {note.description}
+              </h1>
+              <div className="flex justify-between items-center gap-2 py-2 border-zinc-700">
+                <div className="flex gap-1 items-center">
+                  <span className="flex items-center justify-center bg-zinc-500 rounded-full h-5 w-5 text-white text-xs">
+                    N
+                  </span>
+                  <p className="text-zinc-200 text-xs">Nisha Yadav</p>
+                </div>
+                <div className="child flex ">
+                  <button onClick={editDescriptionModal} className="">
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                      iconName={ICONS.Edit}
+                    ></BaseIcon>
+                  </button>
+                  <button onClick={deleteNote} className="">
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
+                      iconName={ICONS.Delete}
+                    ></BaseIcon>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

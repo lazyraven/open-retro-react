@@ -120,7 +120,7 @@ export default function Reports() {
                     >
                       <BaseIcon
                         iconName={ICONS.Close}
-                        className=" flex h-3 w-3 text-gray-600"
+                        className=" flex h-6 w-6 text-gray-600"
                       ></BaseIcon>
                     </button>
                     <h2>PDF Display</h2>

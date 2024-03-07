@@ -19,3 +19,18 @@
     /* color:black; */
     /* background-color: aliceblue; */
 }
+
+/* .parent {
+    position: relative;
+  } */
+
+  .child {
+    position: absolute;
+    right: 2%;
+    display: none;
+  }
+
+  .parent:hover .child {
+    display: flex;
+    gap: 6px;
+  }
