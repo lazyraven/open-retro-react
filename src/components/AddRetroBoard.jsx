@@ -9,7 +9,7 @@ export default function AddRetroBoard() {
         <NewBoardModal>
           <button
             type="button"
-            className="border-2 border-neutral-600 hover:border-indigo-500 hover:text-indigo-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"
+            className="border-2 border-neutral-600 hover:border-blue-500 hover:text-blue-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"
           >
             <div className=" bg-[#C0C0D4] rounded-full px-2 py-2">
               <BaseIcon

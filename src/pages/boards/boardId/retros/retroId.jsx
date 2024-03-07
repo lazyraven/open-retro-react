@@ -173,11 +173,11 @@ export default function RetroId() {
         onClick={(event) => {
           dowanloadPdf(event, notes);
         }}
-        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-indigo-500  text-indigo-500 rounded-md bg-zinc-900 shadow-2xl"
+        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-blue-500  text-white rounded-md bg-blue-500 shadow-2xl"
       >
         <BaseIcon
           iconName={ICONS.Bolt}
-          className=" flex h-5 w-5 text-indigo-500"
+          className="flex h-5 w-5 text-white"
         ></BaseIcon>
         Generate Report
       </button>

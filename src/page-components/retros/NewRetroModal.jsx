@@ -63,7 +63,7 @@ export default function BaseForm(props) {
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
-                        className="flex w-5 h-5 text-indigo-500"
+                        className="flex w-5 h-5 text-blue-500"
                       ></BaseIcon>{" "}
                       <h1 className="text-2xl text-slate-200">
                         Open <b className=" text-gray-400">Retro</b>

@@ -8,7 +8,7 @@ export default function BaseNavbar() {
       <Link to="/" className="flex gap-3 items-center">
         <BaseIcon
           iconName={ICONS.rocket}
-          className=" flex w-8 h-8 text-indigo-500"
+          className="flex w-8 h-8 text-blue-500"
         ></BaseIcon>
 
         <h1 className="text-xl font-medium">

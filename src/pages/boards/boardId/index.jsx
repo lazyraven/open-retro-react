@@ -65,11 +65,11 @@ export default function BoardId() {
           <button
             type="button"
             onClick={handelOpenShareModal}
-            className="flex gap-1 items-center px-3 py-1 border border-zinc-500  text-zinc-500 rounded-md bg-zinc-900 shadow-2xl"
+            className="flex gap-1 items-center px-3 py-1 border border-blue-500  text-blue-500 rounded-md bg-zinc-900 shadow-2xl"
           >
             <BaseIcon
               iconName={ICONS.ArrowUpOnSquare}
-              className="flex h-5 w-5 text-indigo-500"
+              className="flex h-5 w-5 text-blue-500"
             ></BaseIcon>
             Share
           </button>
@@ -149,7 +149,7 @@ export default function BoardId() {
               to={tab.to}
               className={({ isActive }) =>
                 isActive
-                  ? "px-4 py-4 text-sm font-medium text-indigo-500 border-b border-indigo-500"
+                  ? "px-4 py-4 text-sm font-medium text-blue-500 border-b border-blue-500"
                   : "px-4 py-4 text-sm text-slate-200 font-medium"
               }
             >
