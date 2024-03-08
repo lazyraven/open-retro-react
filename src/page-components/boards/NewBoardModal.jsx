@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { buildQRImage } from "@/helpers/constant";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import ReactGA from "react-ga";
 export default function NewBoardModal(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,9 @@ export default function NewBoardModal(props) {
     });
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
   const handleSave = async (e) => {
     e.preventDefault();
