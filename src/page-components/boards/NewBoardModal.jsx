@@ -81,77 +81,74 @@ export default function NewBoardModal(props) {
     <>
       <div onClick={openModal}>{children}</div>
       {isOpen && (
-        <form onSubmit={handleSave}>
-          <div
-            className="relative z-10 "
-            aria-labelledby="modal-title"
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  {newBoardId ? (
-                    <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white relative">
-                      <button
-                        onClick={closeModal}
-                        className="absolute right-6 top-5"
-                      >
-                        <BaseIcon
-                          iconName={ICONS.Close}
-                          className="flex text-zinc-300 h-6 w-6"
-                        ></BaseIcon>
-                      </button>
-                      <h1 className="text-zinc-300 text-xl text-center">
-                        Share Board
-                      </h1>
-                      <div className="flex gap-2 justify-center">
-                        <input
-                          type="text"
-                          name=""
-                          disabled
-                          onChange={handleInputChange}
-                          value={url}
-                          ref={inputRef}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3 w-full"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => copyToClipboard(url)}
-                          className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
-                        >
-                          COPY
-                        </button>
-                      </div>
-                      <span className="text-center text-zinc-300">OR</span>
-                      <h2 className="text-center text-zinc-300">
-                        People can also join with QR Code:
-                      </h2>
-
-                      <img
-                        src={buildQRImage(url)}
-                        alt=""
-                        className="w-32 m-auto"
+        <div
+          className="relative z-10 "
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                {newBoardId ? (
+                  <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white relative">
+                    <button
+                      onClick={closeModal}
+                      className="absolute right-6 top-5"
+                    >
+                      <BaseIcon
+                        iconName={ICONS.Close}
+                        className="flex text-zinc-300 h-6 w-6"
+                      ></BaseIcon>
+                    </button>
+                    <h1 className="text-zinc-300 text-xl text-center">
+                      Share Board
+                    </h1>
+                    <div className="flex gap-2 justify-center">
+                      <input
+                        type="text"
+                        name=""
+                        disabled
+                        onChange={handleInputChange}
+                        value={url}
+                        ref={inputRef}
+                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3 w-full"
                       />
-                      <h2 className="text-center text-zinc-300">
-                        Everyone with this URL will be able to access the board.
-                      </h2>
                       <button
-                        onClick={navigateTOBoardPage}
-                        className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                        type="button"
+                        onClick={() => copyToClipboard(url)}
+                        className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
                       >
-                        Go To Board
+                        COPY
                       </button>
                     </div>
-                  ) : (
-                    <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
-                      <div className="flex justify-center items-center mb-2">
-                        <h6 className="text-2xl text-slate-200">
-                          Create Board
-                        </h6>
-                      </div>
+                    <span className="text-center text-zinc-300">OR</span>
+                    <h2 className="text-center text-zinc-300">
+                      People can also join with QR Code:
+                    </h2>
 
+                    <img
+                      src={buildQRImage(url)}
+                      alt=""
+                      className="w-32 m-auto"
+                    />
+                    <h2 className="text-center text-zinc-300">
+                      Everyone with this URL will be able to access the board.
+                    </h2>
+                    <button
+                      onClick={navigateTOBoardPage}
+                      className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                    >
+                      Go To Board
+                    </button>
+                  </div>
+                ) : (
+                  <div className="justify-center p-8 bg-zinc-950  text-white">
+                    <div className="flex justify-center mb-4">
+                      <h6 className="text-2xl text-slate-200">Create Board</h6>
+                    </div>
+                    <form onSubmit={handleSave} className="flex gap-5 flex-col">
                       <div className="flex flex-col gap-y-1 px-8">
                         <div className="flex gap-1">
                           <label htmlFor="" className="text-zinc-300">
@@ -215,13 +212,13 @@ export default function NewBoardModal(props) {
                           Submit
                         </button>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    </form>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        </form>
+        </div>
       )}
     </>
   );

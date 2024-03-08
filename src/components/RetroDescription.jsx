@@ -5,6 +5,7 @@ import boardService from "../services/board.service";
 import { db } from "@/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import BaseFirstChar from "./BaseFirstChar";
 
 export default function RetroDescription(props) {
   const { note } = props;
@@ -78,6 +79,14 @@ export default function RetroDescription(props) {
       console.log(e);
     }
   };
+  console.log(note, "note");
+
+  // const firstLetter = note.createdBy.charAt(0);
+  console.log("LameStr".charAt(0));
+  {
+    // note?.createdBy ? note.createdBy.charAt(0) : "UU";
+  }
+  // const storedName = localStorage.getItem("name");
   return (
     <>
       {editDescription ? (
@@ -120,20 +129,16 @@ export default function RetroDescription(props) {
         <div
           className={` flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
         >
-          <div className="flex gap-1 ">
+          <div className="flex">
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <div className="flex flex-col gap-1 px-1 w-full parent relative">
-              <h1 className="grow font-normal text-sm text-gray-300 py-4">
-                {note.description}
-              </h1>
-              <div className="flex justify-between items-center gap-2 py-2 border-zinc-700">
+            <div className="flex flex-col gap-y-3 p-3 w-full parent relative">
+              <p className="text-sm text-gray-300">{note.description}</p>
+              <div className="flex justify-between items-center gap-2 border-zinc-700">
                 <div className="flex gap-1 items-center">
-                  <span className="flex items-center justify-center bg-zinc-500 rounded-full h-5 w-5 text-white text-xs">
-                    N
-                  </span>
-                  <p className="text-zinc-200 text-xs">Nisha Yadav</p>
+                  <BaseFirstChar note={note}></BaseFirstChar>
+                  <p className="text-zinc-200 text-xs">{note.createdBy}</p>
                 </div>
                 <div className="child flex ">
                   <button onClick={editDescriptionModal} className="">

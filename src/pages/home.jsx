@@ -10,9 +10,9 @@ import { ICONS } from "@/helpers/constant";
 function HomePage() {
   return (
     <>
-      <div className="flex">
-        <div className="w-1/2 py-2">
-          <div className="flex flex-col gap-3 mb-14 pt-10">
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full lg:w-1/2 py-2">
+          <div className="flex flex-col  gap-3 mb-14 pt-10 ">
             <div className="flex flex-col py-5 text-slate-200">
               <span className="text-[2.5rem] font-sans font-bold">
                 Improve with
@@ -40,7 +40,7 @@ function HomePage() {
             </button>
           </NewBoardModal>
         </div>
-        <div className="w-1/2 flex justify-center py-5">
+        <div className="w-full lg:w-1/2 flex justify-center py-5">
           <div>
             <img src={image} alt="" className="h-[32rem]" />
           </div>

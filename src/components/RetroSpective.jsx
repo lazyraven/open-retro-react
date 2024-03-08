@@ -5,15 +5,15 @@ export default function Retrospectives() {
       <h1 className="text-center text-[2.5rem] py-5 font-semibold text-slate-200">
         What Is A Fun Retrospective?
       </h1>
-      <div className="flex gap-5 px-40">
-        <div className="w-1/2 flex justify-end py-5 px-3">
+      <div className="flex flex-col lg:flex-row gap-5 lg:px-40">
+        <div className="lg:w-1/2 flex justify-end py-5 px-3">
           <img
             src={screenshot}
             alt=""
-            className="h-80 w-[36rem] rounded-lg img"
+            className="h-80  lg:w-[36rem] sm:w-full rounded-lg img"
           />
         </div>
-        <div className="w-1/2 px-3">
+        <div className=" lg:w-1/2 px-3">
           <div className="text-gray-400 flex flex-col gap-4 leading-8">
             <h3 className="text-lg pt-4 ">
               A retrospective is an opportunity to learn and improve, in a fun
