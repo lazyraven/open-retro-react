@@ -33,7 +33,6 @@ export default function Reports() {
       const boardRetros = await boardService.getBoardRetros({
         boardId: params.boardId,
       });
-      console.log("boardRetros", boardRetros);
       if (boardRetros && boardRetros.length) {
         setRetros(boardRetros);
       }
@@ -43,7 +42,6 @@ export default function Reports() {
     // getRetroDetails();
   };
   const viewReport = () => {
-    console.log("viewReport called");
     setIsOpen(true);
   };
 

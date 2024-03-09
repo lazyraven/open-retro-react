@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpBxBTcyVw9p8iSeZ2lpWamYJ2l24OECY",
@@ -9,7 +10,10 @@ const firebaseConfig = {
   messagingSenderId: "56358085480",
   appId: "1:56358085480:web:ae9dad8682b737aa9becdd",
   measurementId: "G-6CF6DRXKQ2",
+  databaseURL: "https://open-retro-react-default-rtdb.firebaseio.com/",
 };
 
 const app = initializeApp(firebaseConfig);
+
+export const rtdb = getDatabase(app);
 export const db = getFirestore(app);

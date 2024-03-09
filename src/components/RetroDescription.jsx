@@ -37,7 +37,6 @@ export default function RetroDescription(props) {
 
   const closeEditDescription = () => {
     setEditDescription(false);
-    props.getRetroNotes();
   };
 
   const handleSubmit = async (e) => {
@@ -52,17 +51,14 @@ export default function RetroDescription(props) {
         noteDetail
       );
       setEditDescription(false);
-      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }
   };
 
   const deleteNote = async (e) => {
-    console.log("deleteNote", e, note.id);
     e.preventDefault();
     try {
-      // await boardService.deleteRetro({ retroId: id });
       await deleteDoc(
         doc(
           db,
@@ -74,19 +70,11 @@ export default function RetroDescription(props) {
           note.id
         )
       );
-      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }
   };
-  console.log(note, "note");
 
-  // const firstLetter = note.createdBy.charAt(0);
-  console.log("LameStr".charAt(0));
-  {
-    // note?.createdBy ? note.createdBy.charAt(0) : "UU";
-  }
-  // const storedName = localStorage.getItem("name");
   return (
     <>
       {editDescription ? (

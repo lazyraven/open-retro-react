@@ -21,17 +21,16 @@ export default function BoardId() {
     { name: "Reports", to: "reports" },
   ];
 
-  const getBoardRecord = async () => {
+  async function getBoardRecord() {
     try {
       const board = await boardService.getBoard({ boardId: params.boardId });
-      console.log(board, "board");
       if (board && board.id) {
         setBoard(board);
       }
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   useEffect(() => {
     getBoardRecord();
@@ -72,7 +71,6 @@ export default function BoardId() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log("name", name);
 
   const storedName = localStorage.getItem("name");
 
