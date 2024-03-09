@@ -121,8 +121,8 @@ export default function RetroDescription(props) {
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <div className="flex flex-col gap-y-3 p-3 w-full parent relative">
-              <p className="text-sm text-zinc-300">{note.description}</p>
+            <div className="flex flex-col gap-y-3 px-3 pt-2 pb-3 w-full parent relative">
+              <p className="text-zinc-300">{note.description}</p>
               <div className="flex justify-between items-center gap-2 border-zinc-700">
                 <div className="flex gap-1 items-center">
                   <BaseFirstChar note={note}></BaseFirstChar>
