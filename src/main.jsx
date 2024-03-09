@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import ReactGA from "react-ga4";
 
-const TRACKING_ID = "UA-281986007-1";
+const TRACKING_ID = "G-G8XKH37LMH";
 ReactGA.initialize(TRACKING_ID);
 
 ReactGA.send({
