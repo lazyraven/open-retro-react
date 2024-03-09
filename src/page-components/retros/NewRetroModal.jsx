@@ -54,22 +54,25 @@ export default function BaseForm(props) {
           role="dialog"
           aria-modal="true"
         >
-          <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
+          <div className="fixed inset-0 bg-zinc-700 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
+                <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white">
                   <div className="flex gap-2 justify-center items-center">
                     <BaseIcon
                       iconName={ICONS.rocket}
                       className="flex w-5 h-5 text-blue-500"
                     ></BaseIcon>{" "}
-                    <h1 className="text-2xl text-slate-200">
-                      Open <b className=" text-gray-400">Retro</b>
+                    <h1 className="text-2xl text-zinc-200">
+                      Open <b className=" text-zinc-400">Retro</b>
                     </h1>
                   </div>
-                  <form onSubmit={handleSave} className="flex flex-col gap-y-6">
-                    <div className="flex flex-col gap-y-2 px-8 ">
+                  <form
+                    onSubmit={handleSave}
+                    className="flex flex-col gap-y-4 px-8"
+                  >
+                    <div className="flex flex-col gap-y-1">
                       <label htmlFor="" className="text-zinc-300">
                         Retro Name*
                       </label>
@@ -78,21 +81,21 @@ export default function BaseForm(props) {
                         name="retroName"
                         required
                         value={retroModel.retroName}
-                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3"
+                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="flex gap-4 items-center justify-end px-8  text-white">
+                    <div className="flex gap-3 items-center justify-end mt-4">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="px-6 py-2"
+                        className="px-4 py-1 rounded-sm text-white"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="px-6 py-2 items-center border border-zinc-600 text-zinc-950 bg-neutral-50 hover:bg-neutral-200"
+                        className="px-4 py-1 rounded-sm text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
                       >
                         Submit
                       </button>

@@ -71,20 +71,20 @@ export default function NewNotes(props) {
       {!isOpenTextbox && (
         <button
           type="button"
-          className="flex justify-center bg-slate-100 hover:bg-slate-200 py-2 rounded-sm w-full"
+          className="flex justify-center bg-zinc-100 hover:bg-zinc-200 py-2 rounded-sm w-full"
           onClick={(event) => {
             addRetroDescription(event);
           }}
         >
           <BaseIcon
             iconName={ICONS.Plus}
-            className=" h-4 w-4 text-gray-500"
+            className=" h-4 w-4 text-zinc-500"
           ></BaseIcon>
         </button>
       )}
 
       {isOpenTextbox && (
-        <div className="flex border border-slate-700 rounded-md">
+        <div className="flex border border-zinc-700 rounded-md">
           <div
             className={`flex-none w-2 ${getInputClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
@@ -103,7 +103,7 @@ export default function NewNotes(props) {
                 placeholder="Type something..."
                 rows="2"
                 cols="7"
-                className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
+                className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-zinc-200 outline-none bg-transparent`}
               />
 
               <div className="flex justify-end gap-2 px-2 py-1">

@@ -77,13 +77,9 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-slate-200 capitalize">
+              <h1 className="font-semibold text-zinc-200 capitalize">
                 Went Well
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="went-well"
@@ -109,13 +105,9 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold capitalize text-slate-200">
+              <h1 className="font-semibold capitalize text-zinc-200">
                 To-Improve
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="to-improve"
@@ -138,15 +130,11 @@ export default function RetroId() {
         </div>
 
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
-          <div className=" flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold capitalizetext-white  text-slate-200">
+              <h1 className="font-semibold capitalizetext-white text-zinc-200">
                 Action Item
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
             <NewNotes
               tagName="action-item"
