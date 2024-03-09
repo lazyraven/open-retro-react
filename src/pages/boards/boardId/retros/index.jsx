@@ -5,8 +5,6 @@ import { ICONS } from "@/helpers/constant";
 import NewRetroModal from "@/page-components/retros/NewRetroModal";
 import { useNavigate } from "react-router-dom";
 import boardService from "@/services/board.service";
-// import { db } from "@/firebase";
-// import { deleteDoc, doc } from "firebase/firestore";
 
 export default function Retros() {
   const [retros, setRetros] = useState([]);
@@ -18,14 +16,12 @@ export default function Retros() {
       const boardRetros = await boardService.getBoardRetros({
         boardId: params.boardId,
       });
-      console.log(boardRetros);
       if (boardRetros && boardRetros.length) {
         setRetros(boardRetros);
       }
     } catch (e) {
       console.log(e);
     }
-    // getRetroDetails();
   };
 
   useEffect(() => {
@@ -35,18 +31,6 @@ export default function Retros() {
   const retroClick = (retroDetail) => {
     navigate(`/boards/${params.boardId}/retros/${retroDetail.id}`);
   };
-
-  // const deleteRetro = async (e, id) => {
-  //   e.preventDefault();
-  //   try {
-  //     // await boardService.deleteRetro({ boardId: params.boardId, retroId: id });
-  //     // await deleteDoc(doc(db, "retros", id));
-  //     await deleteDoc(doc(db, "boards", params.boardId, "retros", id));
-  //     getBoardRetros();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   return (
     <>
@@ -68,10 +52,6 @@ export default function Retros() {
 
         {retros.map((retroDetails, index) => {
           return (
-            //   <h1 key={retroDetails.retroName + index}>
-            //     {retroDetails.retroName}
-            //     <span>abc</span>
-            //   </h1>
             <div key={retroDetails.retroName + index}>
               <div
                 type="button"
@@ -103,18 +83,6 @@ export default function Retros() {
                     <h6 className="text-zinc-400 text-sm font-semibold py-2 text-left">
                       Share
                     </h6>
-                    {/* <button
-                      type="button"
-                      onClick={(event) => {
-                        deleteRetro(event, retroDetails.id);
-                      }}
-                      className="  text-red-500 hover:text-red-800 rounded-sm"
-                    >
-                      <BaseIcon
-                        className="flex h-4 w-4"
-                        iconName={ICONS.Delete}
-                      ></BaseIcon>
-                    </button> */}
                   </div>
                 </div>
               </div>

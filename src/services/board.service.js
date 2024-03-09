@@ -7,12 +7,9 @@ import {
   getDoc,
   getDocs,
   addDoc,
-  query,
-  where,
   deleteDoc,
   doc,
   updateDoc,
-  // onSnapshot,
 } from "firebase/firestore";
 
 export default {
@@ -22,6 +19,15 @@ export default {
 
   async getBoard({ boardId }) {
     const record = await getDoc(doc(db, "boards", boardId));
+    return {
+      id: record.id,
+      path: record.ref.path,
+      ...record.data(),
+    };
+  },
+
+  async getRetro({ boardId, retroId }) {
+    const record = await getDoc(doc(db, "boards", boardId, "retros", retroId));
     return {
       id: record.id,
       path: record.ref.path,
@@ -46,25 +52,6 @@ export default {
 
   deleteRetro(boardId, deleteRetroId) {
     deleteDoc(doc(db, "boards", boardId, "retros", deleteRetroId));
-  },
-
-  createNote({ boardId, retroId }, formBody) {
-    console.log("notesModel formBody", formBody);
-    return addDoc(
-      collection(db, "boards", boardId, "retros", retroId, "notes"),
-      formBody
-    );
-  },
-
-  async getRetroNotes({ boardId, retroId }) {
-    const querySnapshot = await getDocs(
-      collection(db, "boards", boardId, "retros", retroId, "notes")
-    );
-    const docs = [];
-    querySnapshot.forEach((doc) => {
-      docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
-    });
-    return docs;
   },
 
   updateNote({ boardId, retroId, noteId }, noteUpdateDetail) {
@@ -100,7 +87,6 @@ export default {
         imgWidth * ratio,
         imgHeight * ratio
       );
-      console.log("pdf", pdf);
 
       const pdfDataUri = pdf.output("datauristring");
       // Convert data URL to Blob object
@@ -121,7 +107,6 @@ export default {
       const storageRef = ref(storage, storagePath);
       // const message = 'This is my message.';
       const storageSnapshot = await uploadBytes(storageRef, fileObject);
-      console.log("snapshot", storageSnapshot);
       return storageSnapshot;
     } catch (error) {
       console.log(error, "error");

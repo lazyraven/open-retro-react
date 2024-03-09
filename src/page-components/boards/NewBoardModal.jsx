@@ -44,21 +44,16 @@ export default function NewBoardModal(props) {
     try {
       const newBoard = await boardService.createBoard(boardModel);
       if (newBoard && newBoard.id) {
-        console.log(newBoard);
-        console.log("boardId", newBoardId);
         setNewBoardId(newBoard.id);
         toast.success(
           `${boardModel.createdBy} your board is created Successfully !!`
         );
         setUrl(`${window.location.origin}/boards/${newBoard.id}`);
       }
-      // navigate(`/boards/${newBoard.id}`);
-      // closeModal();
     } catch (e) {
       console.log(e);
     }
   };
-  console.log("url", boardModel);
 
   const handleInputChange = (event) => {
     setUrl(event.target.value);

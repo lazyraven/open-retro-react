@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import boardService from "@/services/board.service";
+import notesService from "@/services/notes.service";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
+import { toast } from "react-toastify";
 
 export default function NewNotes(props) {
   // const { notes } = props;
@@ -42,15 +43,14 @@ export default function NewNotes(props) {
     notesModel.tagName = tagOption;
     e.preventDefault();
     try {
-      await boardService.createNote(
+      await notesService.createRetroNotes(
         { boardId: params.boardId, retroId: params.retroId },
         notesModel
       );
       setisOpenTextbox(false);
       setNotesModel("");
-      props.getRetroNotes();
     } catch (e) {
-      console.log(e);
+      toast.error(`Error occurred, ${e.msg}`);
     }
   };
 
