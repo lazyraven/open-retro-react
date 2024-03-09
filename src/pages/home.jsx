@@ -13,7 +13,7 @@ function HomePage() {
       <div className="flex flex-col lg:flex-row">
         <div className="w-full lg:w-1/2 py-2">
           <div className="flex flex-col  gap-3 mb-14 pt-10 ">
-            <div className="flex flex-col py-5 text-slate-200">
+            <div className="flex flex-col py-5 text-zinc-200">
               <span className="text-[2.5rem] font-sans font-bold">
                 Improve with
               </span>
@@ -24,14 +24,14 @@ function HomePage() {
                 Retrospectives
               </span>
             </div>
-            <p className="text-xl font-sans text-gray-400">
+            <p className="text-xl font-sans text-zinc-400">
               Collaborate with your remote team and get better at what you do
               with a simple, intuitive and beautiful tool
             </p>
           </div>
 
           <NewBoardModal>
-            <button className="flex gap-3 px-8 py-3 items-center font-mono border border-zinc-600 text-slate-200 font-semibold bg-zinc-900 hover:bg-zinc-900">
+            <button className="flex gap-3 px-8 py-3 items-center font-mono border border-zinc-600 text-zinc-200 font-semibold bg-zinc-900 hover:bg-zinc-900">
               <div className="">Create Board</div>
               <BaseIcon
                 iconName={ICONS.Plus}

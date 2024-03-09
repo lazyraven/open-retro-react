@@ -6,28 +6,38 @@ import { useParams } from "react-router-dom";
 import NewNotes from "@/components/NewNotes";
 import RetroDescription from "@/components/RetroDescription";
 import { toast } from "react-toastify";
+import notesService from "@/services/notes.service";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
+  const [retro, setRetro] = useState({});
 
   const params = useParams();
 
-  const getRetroNotes = async () => {
+  function listenRetroNotesChange({ retroId }) {
     try {
-      const notes = await boardService.getRetroNotes({
-        boardId: params.boardId,
-        retroId: params.retroId,
-        // retroId: params.OpenRetroId,
+      notesService.listenRetroNotesChange({ retroId }, (retroNotes) => {
+        setNotes(retroNotes);
       });
-      setNotes(notes);
-      // setPdfData(notes);
     } catch (e) {
       console.log(e);
     }
-  };
+  }
+
+  async function getRetro({ boardId, retroId }) {
+    try {
+      const result = await boardService.getRetro({ boardId, retroId });
+      if (result && result.id) {
+        setRetro(result);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   useEffect(() => {
-    getRetroNotes({ boardId: params.boardId, retroId: params.OpenRetroId });
+    getRetro({ boardId: params.boardId, retroId: params.retroId });
+    listenRetroNotesChange({ retroId: params.retroId });
   }, []);
 
   const pdfRef = useRef();
@@ -41,11 +51,9 @@ export default function RetroId() {
         fileName: `${params.retroId}.pdf`,
         htmlInput: input,
       });
-      console.log(pdfResult, "pdfResult");
       toast.success("Generate pdf is Updated!");
       updateGenratePdf();
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error occurred, while uploading file.");
     }
   };
@@ -58,7 +66,6 @@ export default function RetroId() {
         reportSrcPath
       );
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error occurred, while uploading file.");
     }
   };
@@ -66,8 +73,8 @@ export default function RetroId() {
   return (
     <div className="relative">
       <h1 className="mb-4 text-zinc-200">
-        Sprint Retro 1
-        <span className="text-zinc-500 text-sm"> | Sun Mar 03 2024</span>
+        {retro.retroName}
+        <span className="text-zinc-500 text-sm"> | {retro.createdDate}</span>
       </h1>
       <div
         // id="content"
@@ -77,29 +84,18 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold text-slate-200 capitalize">
+              <h1 className="font-semibold text-zinc-200 capitalize">
                 Went Well
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
-            <NewNotes
-              tagName="went-well"
-              notes={notes}
-              getRetroNotes={getRetroNotes}
-            ></NewNotes>
+            <NewNotes tagName="went-well" notes={notes}></NewNotes>
           </div>
           <div>
             {notes.map((note, index) => {
               if (!note || note.tagName !== "went-well") return null;
               return (
                 <div className="mb-2" key={"note" + index}>
-                  <RetroDescription
-                    note={note}
-                    getRetroNotes={getRetroNotes}
-                  ></RetroDescription>
+                  <RetroDescription note={note}></RetroDescription>
                 </div>
               );
             })}
@@ -109,28 +105,18 @@ export default function RetroId() {
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold capitalize text-slate-200">
+              <h1 className="font-semibold capitalize text-zinc-200">
                 To-Improve
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
-            <NewNotes
-              tagName="to-improve"
-              getRetroNotes={getRetroNotes}
-            ></NewNotes>
+            <NewNotes tagName="to-improve"></NewNotes>
           </div>
           <div>
             {notes.map((note, index) => {
               if (!note || note.tagName !== "to-improve") return null;
               return (
                 <div className="mb-2" key={"note" + index}>
-                  <RetroDescription
-                    note={note}
-                    getRetroNotes={getRetroNotes}
-                  ></RetroDescription>
+                  <RetroDescription note={note}></RetroDescription>
                 </div>
               );
             })}
@@ -138,30 +124,20 @@ export default function RetroId() {
         </div>
 
         <div className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md">
-          <div className=" flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <h1 className="font-semibold capitalizetext-white  text-slate-200">
+              <h1 className="font-semibold capitalizetext-white text-zinc-200">
                 Action Item
               </h1>
-              {/* <BaseIcon
-                iconName={ICONS.ellipsisvertical}
-                className=" flex h-5 w-5 text-gray-400"
-              ></BaseIcon> */}
             </div>
-            <NewNotes
-              tagName="action-item"
-              getRetroNotes={getRetroNotes}
-            ></NewNotes>
+            <NewNotes tagName="action-item"></NewNotes>
           </div>
           <div>
             {notes.map((note, index) => {
               if (!note || note.tagName !== "action-item") return null;
               return (
                 <div className="mb-2" key={"note" + index}>
-                  <RetroDescription
-                    note={note}
-                    getRetroNotes={getRetroNotes}
-                  ></RetroDescription>
+                  <RetroDescription note={note}></RetroDescription>
                 </div>
               );
             })}

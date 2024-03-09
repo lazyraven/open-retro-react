@@ -2,7 +2,7 @@ import screenshot from "@/assets/images/screenshot.png";
 export default function Retrospectives() {
   return (
     <div className="mt-6 mb-8">
-      <h1 className="text-center text-[2.5rem] py-5 font-semibold text-slate-200">
+      <h1 className="text-center text-[2.5rem] py-5 font-semibold text-zinc-200">
         What Is A Fun Retrospective?
       </h1>
       <div className="flex flex-col lg:flex-row gap-5 lg:px-40">
@@ -14,7 +14,7 @@ export default function Retrospectives() {
           />
         </div>
         <div className=" lg:w-1/2 px-3">
-          <div className="text-gray-400 flex flex-col gap-4 leading-8">
+          <div className="text-zinc-400 flex flex-col gap-4 leading-8">
             <h3 className="text-lg pt-4 ">
               A retrospective is an opportunity to learn and improve, in a fun
               environment. To break it down in the simplest way you should

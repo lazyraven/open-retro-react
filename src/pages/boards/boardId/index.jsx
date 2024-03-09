@@ -21,17 +21,16 @@ export default function BoardId() {
     { name: "Reports", to: "reports" },
   ];
 
-  const getBoardRecord = async () => {
+  async function getBoardRecord() {
     try {
       const board = await boardService.getBoard({ boardId: params.boardId });
-      console.log(board, "board");
       if (board && board.id) {
         setBoard(board);
       }
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   useEffect(() => {
     getBoardRecord();
@@ -72,7 +71,6 @@ export default function BoardId() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log("name", name);
 
   const storedName = localStorage.getItem("name");
 
@@ -104,21 +102,21 @@ export default function BoardId() {
               role="dialog"
               aria-modal="true"
             >
-              <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
+              <div className="fixed inset-0 bg-zinc-700 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
               <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white relative">
+                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white relative">
                       <button
                         onClick={handelCloseShareModal}
                         className="absolute right-6 top-5"
                       >
                         <BaseIcon
                           iconName={ICONS.Close}
-                          className="flex text-zinc-300 h-6 w-6"
+                          className="flex text-zinc-200 h-6 w-6"
                         ></BaseIcon>
                       </button>
-                      <h1 className="text-zinc-300 text-xl text-center">
+                      <h1 className="text-zinc-200 text-xl text-center">
                         Share Board
                       </h1>
                       <div className="flex gap-2 justify-center">
@@ -134,13 +132,13 @@ export default function BoardId() {
                         <button
                           type="button"
                           onClick={() => copyToClipboard(url)}
-                          className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                          className="px-4 py-1 text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
                         >
                           COPY
                         </button>
                       </div>
-                      <span className="text-center text-zinc-300">OR</span>
-                      <h2 className="text-center text-zinc-300">
+                      <span className="text-center text-zinc-200">OR</span>
+                      <h2 className="text-center text-zinc-200">
                         People can also join with QR Code:
                       </h2>
 
@@ -149,12 +147,12 @@ export default function BoardId() {
                         alt=""
                         className="w-32 m-auto"
                       />
-                      <h2 className="text-center text-zinc-300">
+                      <h2 className="text-center text-zinc-200">
                         Everyone with this URL will be able to access the board.
                       </h2>
                       {/* <button
                         // onClick={navigateTOBoardPage}
-                        className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-neutral-200"
+                        className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-zinc-200"
                       >
                         Go To Board
                       </button> */}
@@ -178,7 +176,7 @@ export default function BoardId() {
                   className={({ isActive }) =>
                     isActive
                       ? "px-4 py-4 text-sm font-medium text-blue-500 border-b border-blue-500"
-                      : "px-4 py-4 text-sm text-slate-200 font-medium"
+                      : "px-4 py-4 text-sm text-zinc-200 font-medium"
                   }
                 >
                   {tab.name}
@@ -196,24 +194,27 @@ export default function BoardId() {
             role="dialog"
             aria-modal="true"
           >
-            <div className="fixed inset-0 bg-gradient-to-b from-slate-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
+            <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-950  text-white">
+                  <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
                         iconName={ICONS.rocket}
                         className="flex w-5 h-5 text-blue-500"
                       ></BaseIcon>{" "}
-                      <h1 className="text-2xl text-slate-200">
-                        Open <b className=" text-gray-400">Retro</b>
+                      <h1 className="text-2xl text-zinc-200">
+                        Open <b className=" text-zinc-400">Retro</b>
                       </h1>
                     </div>
-                    <form onSubmit={handleFormSubmit}>
-                      <div className="flex flex-col gap-2 px-8 ">
+                    <form
+                      onSubmit={handleFormSubmit}
+                      className="flex flex-col gap-y-4 px-8"
+                    >
+                      <div className="flex flex-col gap-2">
                         <div className="">
-                          <label htmlFor="" className="text-zinc-300">
+                          <label htmlFor="" className="text-zinc-200">
                             Name*
                           </label>
                         </div>
@@ -223,20 +224,20 @@ export default function BoardId() {
                           required
                           value={name}
                           onChange={handleNameChange}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-2 px-3"
+                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
                         />
                       </div>
-                      <div className="flex gap-4 items-center justify-end px-8 mt-4 text-white">
+                      <div className="flex gap-3 items-center justify-end mt-4 text-white">
                         <button
                           type="button"
                           onClick={closeModal}
-                          className="px-6 py-2"
+                          className="px-4 py-1 rounded-sm text-white"
                         >
                           Cancel
                         </button>
                         <button
                           type="submit"
-                          className="px-6 py-2 items-center border border-zinc-600 text-zinc-950 bg-neutral-50 hover:bg-neutral-200"
+                          className="px-4 py-1 rounded-sm text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
                         >
                           Submit
                         </button>

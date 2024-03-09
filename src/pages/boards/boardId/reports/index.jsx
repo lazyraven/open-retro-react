@@ -33,7 +33,6 @@ export default function Reports() {
       const boardRetros = await boardService.getBoardRetros({
         boardId: params.boardId,
       });
-      console.log("boardRetros", boardRetros);
       if (boardRetros && boardRetros.length) {
         setRetros(boardRetros);
       }
@@ -43,7 +42,6 @@ export default function Reports() {
     // getRetroDetails();
   };
   const viewReport = () => {
-    console.log("viewReport called");
     setIsOpen(true);
   };
 
@@ -71,7 +69,7 @@ export default function Reports() {
                 {/* <div className="divide-y divide-zinc-200 m-auto"> */}
                 <div className="flex">
                   <div>
-                    <h1 className="text-md text-left capitalize text-slate-300">
+                    <h1 className="text-md text-left capitalize text-zinc-300">
                       <strong>{retroDetails.retroName}</strong>
                     </h1>
                   </div>
@@ -82,14 +80,14 @@ export default function Reports() {
                 <div className="flex justify-end gap-2 mt-5">
                   <button
                     type="button"
-                    className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-400 hover:bg-zinc-700"
+                    className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-600 hover:bg-zinc-700"
                     onClick={viewReport}
                   >
                     View
                   </button>
                   <button
                     type="button"
-                    className="px-3 py-1  text-sm items-center border rounded-sm border-zinc-600 text-zinc-950 bg-zinc-50 hover:bg-zinc-200"
+                    className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-600 text-zinc-900 bg-zinc-50 hover:bg-zinc-200"
                   >
                     Download
                   </button>
@@ -107,7 +105,7 @@ export default function Reports() {
               role="dialog"
               aria-modal="true"
             >
-              <div className="fixed inset-0 bg-gradient-to-b from-slate-600 to-slate-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
+              <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 to-zinc-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
               <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                   <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg p-3">
@@ -120,7 +118,7 @@ export default function Reports() {
                     >
                       <BaseIcon
                         iconName={ICONS.Close}
-                        className=" flex h-6 w-6 text-gray-600"
+                        className=" flex h-6 w-6 text-zinc-600"
                       ></BaseIcon>
                     </button>
                     <h2>PDF Display</h2>

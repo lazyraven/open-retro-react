@@ -8,7 +8,7 @@ export default function CompanyCollaborations() {
   return (
     <div className="bg-gradient-to-b from-zinc-900 to-zinc-500">
       <div className="py-10">
-        <h1 className="text-center text-3xl  font-semibold text-slate-300">
+        <h1 className="text-center text-3xl font-semibold text-zinc-300">
           Companies Using Open Retro
         </h1>
         <div className="flex flex-wrap justify-center items-center gap-3 py-4">

@@ -37,7 +37,6 @@ export default function RetroDescription(props) {
 
   const closeEditDescription = () => {
     setEditDescription(false);
-    props.getRetroNotes();
   };
 
   const handleSubmit = async (e) => {
@@ -52,17 +51,14 @@ export default function RetroDescription(props) {
         noteDetail
       );
       setEditDescription(false);
-      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }
   };
 
   const deleteNote = async (e) => {
-    console.log("deleteNote", e, note.id);
     e.preventDefault();
     try {
-      // await boardService.deleteRetro({ retroId: id });
       await deleteDoc(
         doc(
           db,
@@ -74,23 +70,15 @@ export default function RetroDescription(props) {
           note.id
         )
       );
-      props.getRetroNotes();
     } catch (e) {
       console.log(e);
     }
   };
-  console.log(note, "note");
 
-  // const firstLetter = note.createdBy.charAt(0);
-  console.log("LameStr".charAt(0));
-  {
-    // note?.createdBy ? note.createdBy.charAt(0) : "UU";
-  }
-  // const storedName = localStorage.getItem("name");
   return (
     <>
       {editDescription ? (
-        <div className="flex border border-slate-700 rounded-md">
+        <div className="flex border border-zinc-700 rounded-md">
           <div
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
@@ -104,7 +92,7 @@ export default function RetroDescription(props) {
                   name="editedDescription"
                   value={editedDescription}
                   onChange={handleChange}
-                  className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-slate-200 outline-none bg-transparent`}
+                  className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-zinc-200 outline-none bg-transparent`}
                 />
               </div>
 
@@ -127,14 +115,14 @@ export default function RetroDescription(props) {
         </div>
       ) : (
         <div
-          className={` flex flex-col w-full justify-between rounded-md border-slate-300 relative bg-zinc-800`}
+          className={` flex flex-col w-full justify-between rounded-md border-zinc-300 relative bg-zinc-800`}
         >
           <div className="flex">
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <div className="flex flex-col gap-y-3 p-3 w-full parent relative">
-              <p className="text-sm text-gray-300">{note.description}</p>
+            <div className="flex flex-col gap-y-3 px-3 pt-2 pb-3 w-full parent relative">
+              <p className="text-zinc-300">{note.description}</p>
               <div className="flex justify-between items-center gap-2 border-zinc-700">
                 <div className="flex gap-1 items-center">
                   <BaseFirstChar note={note}></BaseFirstChar>
