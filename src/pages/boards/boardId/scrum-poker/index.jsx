@@ -36,8 +36,8 @@ export default function ScrumPoker() {
     });
   }
 
-  function updatePokerState() {
-    pokerService.updatePokerState(
+  async function updatePokerState() {
+    await pokerService.updatePokerState(
       { boardId: params.boardId },
       {
         ...pokerUIState,
@@ -57,6 +57,24 @@ export default function ScrumPoker() {
       }
     });
   }
+
+  const resetScrumPoker = async () => {
+    try {
+      await pokerService.deleteAllPokerVote({
+        boardId: params.boardId,
+      });
+      await pokerService.updatePokerState(
+        { boardId: params.boardId },
+        {
+          ...pokerUIState,
+          show: false,
+        }
+      );
+      toast.success("Scrum Poker reset successfully.");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   useEffect(() => {
     listenMemberChange();
@@ -166,14 +184,7 @@ export default function ScrumPoker() {
                 </li>
               ))}
               <div className="flex flex-col mt-12 mb-3">
-                <BaseButton
-                  theme="DANGER"
-                  onClick={() => {
-                    pokerService.deleteAllPokerVote({
-                      boardId: params.boardId,
-                    });
-                  }}
-                >
+                <BaseButton theme="DANGER" onClick={resetScrumPoker}>
                   Reset All
                 </BaseButton>
               </div>
