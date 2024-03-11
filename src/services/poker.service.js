@@ -47,5 +47,21 @@ export default {
     });
   },
 
-  showEstimate() {},
+  async updatePokerState({ boardId }, body) {
+    const { show } = body;
+    const updates = {};
+    updates[`poker-state/${boardId}`] = {
+      show,
+    };
+    const rtdbRef = ref(rtdb);
+    await update(rtdbRef, updates);
+    return body;
+  },
+
+  listenPokerStateChange({ boardId }, listenerFn) {
+    const pokerStateRef = ref(rtdb, `poker-state/${boardId}`);
+    onValue(pokerStateRef, (snapshot) => {
+      listenerFn(snapshot.val());
+    });
+  },
 };

@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import BaseFirstChar from "@/components/BaseFirstChar";
 import BaseIcon from "@/components/BaseIcon";
 import BaseButton from "@/components/BaseButton";
 import memberService from "@/services/member.service";
 import pokerService from "@/services/poker.service";
-
 import { ICONS } from "@/helpers/constant";
 import { getLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
@@ -17,7 +17,7 @@ export default function ScrumPoker() {
   const params = useParams();
   const [members, setMembers] = useState([]);
   const [memberVoteMap, setMemberVoteMap] = useState({});
-  const [showPoints, setShowPoints] = useState(false);
+  const [pokerUIState, setPokerUIState] = useState({});
   const { board } = useContext(BoardContext);
 
   function listenMemberChange() {
@@ -28,11 +28,28 @@ export default function ScrumPoker() {
     });
   }
 
+  function listenPokerStateChange() {
+    pokerService.listenPokerStateChange({ boardId: params.boardId }, (doc) => {
+      if (doc) {
+        setPokerUIState(doc);
+      }
+    });
+  }
+
+  function updatePokerState() {
+    pokerService.updatePokerState(
+      { boardId: params.boardId },
+      {
+        ...pokerUIState,
+        show: !pokerUIState.show,
+      }
+    );
+  }
+
   function listenVoteChange() {
     pokerService.listenVoteChange({ boardId: params.boardId }, (docs) => {
       if (docs && Array.isArray(docs)) {
         const votesMap = docs.reduce((accum, item) => {
-          console.log(`listenVoteChange cakke`);
           accum[item.memberId] = item;
           return accum;
         }, {});
@@ -44,14 +61,14 @@ export default function ScrumPoker() {
   useEffect(() => {
     listenMemberChange();
     listenVoteChange();
+    listenPokerStateChange();
   }, []);
 
   const handlePokerCardClick = async (point) => {
     try {
-      let voteResult = "";
       if (memberVoteMap[storedMember.id]?.point) {
         const { id: voteId } = memberVoteMap[storedMember.id];
-        voteResult = await pokerService.updatePokerVote(
+        await pokerService.updatePokerVote(
           { boardId: params.boardId, voteId },
           {
             point:
@@ -60,7 +77,7 @@ export default function ScrumPoker() {
           }
         );
       } else {
-        voteResult = await pokerService.pokerVote(
+        await pokerService.pokerVote(
           { boardId: params.boardId },
           {
             point,
@@ -68,9 +85,8 @@ export default function ScrumPoker() {
           }
         );
       }
-      console.log(`voteResult`, voteResult);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -118,13 +134,8 @@ export default function ScrumPoker() {
               <div className="flex justify-between w-full items-center p-2">
                 <span className="text-zinc-300 font-medium">Members</span>
                 {board?.owner == storedMember.id && (
-                  <BaseButton
-                    theme="SECONDARY"
-                    onClick={() => {
-                      setShowPoints(!showPoints);
-                    }}
-                  >
-                    {showPoints ? "Hide" : "Show"}
+                  <BaseButton theme="SECONDARY" onClick={updatePokerState}>
+                    {pokerUIState.show ? "Hide" : "Show"}
                   </BaseButton>
                 )}
               </div>
@@ -142,7 +153,7 @@ export default function ScrumPoker() {
                     <span>{member.name}</span>
                   </div>
                   <div className="flex justify-center items-center min-h-[4rem] basis-16">
-                    {showPoints ? (
+                    {pokerUIState.show ? (
                       <span className="flex items-center justify-center h-10 w-10 text-xl font-medium bg-white rounded-full text-zinc-800">
                         {memberVoteMap[member.id]?.point}
                       </span>

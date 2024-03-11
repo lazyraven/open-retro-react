@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useRef } from "react";
 import { buildQRImage } from "@/helpers/constant";
 import memberService from "@/services/member.service";
-import { toast } from "react-toastify";
 import { getLocalStorage, setLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
 
@@ -69,7 +69,7 @@ export default function BoardId() {
       setLocalStorage("member", addMemberResult);
       setIsOpen(false);
     } catch (error) {
-      toast.error(error.msg);
+      toast.error(error.message);
     }
   };
 
