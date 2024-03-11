@@ -10,6 +10,7 @@ export const ICONS = {
   ArrowUpOnSquare: "arrow-up-on-square",
   Edit: "pencil-square",
   Close: "close",
+  SolidCheckCircle: "solid-check-circle",
 };
 
 export const buildQRImage = (dataUrl) =>

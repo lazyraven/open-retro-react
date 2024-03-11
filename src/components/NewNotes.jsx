@@ -9,8 +9,6 @@ export default function NewNotes(props) {
   // const { notes } = props;
   const params = useParams();
 
-  let inputClsName = "";
-  let buttonClsName = "";
   const [notesModel, setNotesModel] = useState({
     createdBy: localStorage.getItem("name"),
     createdDate: new Date().toDateString(),

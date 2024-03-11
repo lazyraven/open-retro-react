@@ -4,13 +4,13 @@ import { rtdb } from "@/firebase";
 
 export default {
   createRetroNotes({ retroId }, body) {
-    const retroIdRef = ref(rtdb, `retros/${retroId}`);
-    const newNoteRef = push(retroIdRef);
+    const retrosRef = ref(rtdb, `retros/${retroId}`);
+    const newNoteRef = push(retrosRef);
     return set(newNoteRef, body);
   },
   listenRetroNotesChange({ retroId }, listenerFn) {
-    const retroIdRef = ref(rtdb, `retros/${retroId}`);
-    onValue(retroIdRef, (snapshot) => {
+    const retrosRef = ref(rtdb, `retros/${retroId}`);
+    onValue(retrosRef, (snapshot) => {
       let docs = [];
       snapshot.forEach((childSnapshot) => {
         docs.push({ id: childSnapshot.key, ...childSnapshot.val() });

@@ -6,19 +6,27 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useRef } from "react";
 import { buildQRImage } from "@/helpers/constant";
+import memberService from "@/services/member.service";
+import { toast } from "react-toastify";
+import { getLocalStorage, setLocalStorage } from "@/utils/common.util";
 
 export default function BoardId() {
   const [board, setBoard] = useState({});
   const [shareBoard, setShareBoard] = useState(false);
   const [url, setUrl] = useState("");
-  const [name, setName] = useState(" ");
+  const storedMember = getLocalStorage("member");
   const [isOpen, setIsOpen] = useState(true);
-
   const params = useParams();
+
+  const [memberModel, setMemberModel] = useState({
+    name: "",
+  });
+
   const tabs = [
     { name: "Retros", to: "retros" },
     { name: "Members", to: "members" },
     { name: "Reports", to: "reports" },
+    { name: "Scrum Poker", to: "scrum-poker" },
   ];
 
   async function getBoardRecord() {
@@ -53,35 +61,43 @@ export default function BoardId() {
     navigator.clipboard.writeText(text);
   };
 
-  // const storedName = localStorage.getItem("name");
-  // if (storedName) {
-  //   setName(storedName);
-  // }
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    localStorage.setItem("name", name);
-    setIsOpen(false);
+  const handleMemberFormSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const addMemberResult = await memberService.addMember(
+        { boardId: params.boardId },
+        memberModel
+      );
+      console.log(`addMemberResponse`, addMemberResult);
+      setLocalStorage("member", addMemberResult);
+      setIsOpen(false);
+    } catch (error) {
+      toast.error(error.msg);
+    }
   };
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleMemberModelChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    console.log(`memberModel`);
+    console.log(memberModel);
+
+    setMemberModel({
+      ...memberModel,
+      [name]: value,
+    });
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  const storedName = localStorage.getItem("name");
-
   return (
     <div className="flex flex-col gap-1 min-h-screen">
       <div className="flex justify-between mt-2 items-center py-1 gap-3">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl text-zinc-200">
-            {board.boardName} • {board.createdBy}
-          </h1>
-          <h3 className="text-zinc-500 text-sm">{board.createdDate}</h3>
+          <h1 className="text-2xl text-zinc-200">📋{board.boardName}</h1>
+          <h3 className="text-zinc-500">{board.createdBy}</h3>
         </div>
         <div className="flex">
           <button
@@ -166,17 +182,17 @@ export default function BoardId() {
       </div>
 
       {/* <Outlet></Outlet> */}
-      {storedName ? (
+      {storedMember?.name ? (
         <>
-          <ul className="flex gap-3 border-b border-zinc-700 mb-4">
+          <ul className="flex gap-3 border-b border-zinc-700 mb-4 overflow-auto">
             {tabs.map((tab, index) => (
               <li key={`tab-index-${index}`} className="flex">
                 <NavLink
                   to={tab.to}
                   className={({ isActive }) =>
                     isActive
-                      ? "px-4 py-4 text-sm font-medium text-blue-500 border-b border-blue-500"
-                      : "px-4 py-4 text-sm text-zinc-200 font-medium"
+                      ? "px-4 py-4 text-sm font-medium text-blue-500 whitespace-nowrap border-b border-blue-500"
+                      : "px-4 py-4 text-sm text-zinc-200 whitespace-nowrap font-medium"
                   }
                 >
                   {tab.name}
@@ -209,7 +225,7 @@ export default function BoardId() {
                       </h1>
                     </div>
                     <form
-                      onSubmit={handleFormSubmit}
+                      onSubmit={handleMemberFormSubmit}
                       className="flex flex-col gap-y-4 px-8"
                     >
                       <div className="flex flex-col gap-2">
@@ -220,10 +236,10 @@ export default function BoardId() {
                         </div>
                         <input
                           type="text"
-                          name="retroName"
+                          name="name"
                           required
-                          value={name}
-                          onChange={handleNameChange}
+                          value={memberModel.name}
+                          onChange={handleMemberModelChange}
                           className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
                         />
                       </div>

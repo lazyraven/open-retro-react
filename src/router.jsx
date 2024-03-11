@@ -6,6 +6,7 @@ import Retros from "@/pages/boards/boardId/retros/index";
 import RetroId from "@/pages/boards/boardId/retros/retroId";
 import BoardId from "@/pages/boards/boardId/index";
 import Reports from "@/pages/boards/boardId/reports/index";
+import ScrumPoker from "@/pages/boards/boardId/scrum-poker/index";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
           {
             path: "retros/:retroId",
             element: <RetroId />,
+          },
+          {
+            path: "scrum-poker",
+            element: <ScrumPoker></ScrumPoker>,
           },
         ],
       },
