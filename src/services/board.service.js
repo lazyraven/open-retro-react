@@ -17,6 +17,14 @@ export default {
     return addDoc(collection(db, "boards"), formBody);
   },
 
+  updateBoardOwner({ boardId }, { owner }) {
+    const boardIdRef = doc(db, "boards", boardId);
+    return updateDoc(boardIdRef, {
+      owner,
+    });
+    // return addDoc(collection(db, "boards"), formBody);
+  },
+
   async getBoard({ boardId }) {
     const record = await getDoc(doc(db, "boards", boardId));
     return {

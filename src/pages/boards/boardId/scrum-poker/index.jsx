@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import BaseFirstChar from "@/components/BaseFirstChar";
 import BaseIcon from "@/components/BaseIcon";
 import BaseButton from "@/components/BaseButton";
 import memberService from "@/services/member.service";
+import pokerService from "@/services/poker.service";
+
 import { ICONS } from "@/helpers/constant";
 import { getLocalStorage } from "@/utils/common.util";
+import BoardContext from "@/contexts/BoardContext";
 
 export default function ScrumPoker() {
   const points = ["?", 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
@@ -15,6 +18,7 @@ export default function ScrumPoker() {
   const [members, setMembers] = useState([]);
   const [memberVoteMap, setMemberVoteMap] = useState({});
   const [showPoints, setShowPoints] = useState(false);
+  const { board } = useContext(BoardContext);
 
   function listenMemberChange() {
     memberService.listenMemberChange({ boardId: params.boardId }, (docs) => {
@@ -25,9 +29,10 @@ export default function ScrumPoker() {
   }
 
   function listenVoteChange() {
-    memberService.listenVoteChange({ boardId: params.boardId }, (docs) => {
+    pokerService.listenVoteChange({ boardId: params.boardId }, (docs) => {
       if (docs && Array.isArray(docs)) {
         const votesMap = docs.reduce((accum, item) => {
+          console.log(`listenVoteChange cakke`);
           accum[item.memberId] = item;
           return accum;
         }, {});
@@ -43,13 +48,26 @@ export default function ScrumPoker() {
 
   const handlePokerCardClick = async (point) => {
     try {
-      const voteResult = await memberService.pokerVote(
-        { boardId: params.boardId },
-        {
-          point: memberVoteMap[storedMember.id]?.point === point ? null : point,
-          memberId: storedMember.id,
-        }
-      );
+      let voteResult = "";
+      if (memberVoteMap[storedMember.id]?.point) {
+        const { id: voteId } = memberVoteMap[storedMember.id];
+        voteResult = await pokerService.updatePokerVote(
+          { boardId: params.boardId, voteId },
+          {
+            point:
+              memberVoteMap[storedMember.id]?.point === point ? null : point,
+            memberId: storedMember.id,
+          }
+        );
+      } else {
+        voteResult = await pokerService.pokerVote(
+          { boardId: params.boardId },
+          {
+            point,
+            memberId: storedMember.id,
+          }
+        );
+      }
       console.log(`voteResult`, voteResult);
     } catch (error) {
       console.log(error);
@@ -99,14 +117,16 @@ export default function ScrumPoker() {
             <ul className="flex flex-col gap-1 p-2 items-center border border-zinc-700 rounded-md">
               <div className="flex justify-between w-full items-center p-2">
                 <span className="text-zinc-300 font-medium">Members</span>
-                <BaseButton
-                  theme="SECONDARY"
-                  onClick={() => {
-                    setShowPoints(!showPoints);
-                  }}
-                >
-                  {showPoints ? "Hide" : "Show"}
-                </BaseButton>
+                {board?.owner == storedMember.id && (
+                  <BaseButton
+                    theme="SECONDARY"
+                    onClick={() => {
+                      setShowPoints(!showPoints);
+                    }}
+                  >
+                    {showPoints ? "Hide" : "Show"}
+                  </BaseButton>
+                )}
               </div>
 
               {members.map((member, index) => (
@@ -134,6 +154,18 @@ export default function ScrumPoker() {
                   </div>
                 </li>
               ))}
+              <div className="flex flex-col mt-12 mb-3">
+                <BaseButton
+                  theme="DANGER"
+                  onClick={() => {
+                    pokerService.deleteAllPokerVote({
+                      boardId: params.boardId,
+                    });
+                  }}
+                >
+                  Reset All
+                </BaseButton>
+              </div>
             </ul>
           </div>
         </div>

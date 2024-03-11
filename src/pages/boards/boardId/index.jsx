@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
@@ -9,9 +8,10 @@ import { buildQRImage } from "@/helpers/constant";
 import memberService from "@/services/member.service";
 import { toast } from "react-toastify";
 import { getLocalStorage, setLocalStorage } from "@/utils/common.util";
+import BoardContext from "@/contexts/BoardContext";
 
 export default function BoardId() {
-  const [board, setBoard] = useState({});
+  const { board, reFetchBoard } = useContext(BoardContext);
   const [shareBoard, setShareBoard] = useState(false);
   const [url, setUrl] = useState("");
   const storedMember = getLocalStorage("member");
@@ -24,21 +24,18 @@ export default function BoardId() {
 
   const tabs = [
     { name: "Retros", to: "retros" },
-    { name: "Members", to: "members" },
-    { name: "Reports", to: "reports" },
     { name: "Scrum Poker", to: "scrum-poker" },
+    { name: "Reports", to: "reports" },
+    { name: "Members", to: "members" },
   ];
 
-  async function getBoardRecord() {
+  const getBoardRecord = async function () {
     try {
-      const board = await boardService.getBoard({ boardId: params.boardId });
-      if (board && board.id) {
-        setBoard(board);
-      }
-    } catch (e) {
-      console.log(e);
+      await reFetchBoard({ boardId: params.boardId });
+    } catch (error) {
+      toast.error(error.message);
     }
-  }
+  };
 
   useEffect(() => {
     getBoardRecord();

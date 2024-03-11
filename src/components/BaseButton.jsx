@@ -9,7 +9,9 @@ export default function BaseButton(props) {
     case "SECONDARY":
       classes = "px-4 py-1 rounded-md text-white border border-zinc-700";
       break;
-
+    case "DANGER":
+      classes = "px-4 py-1 rounded-md text-red-700 border border-red-700";
+      break;
     default:
       classes = "px-4 py-1 rounded-sm text-white";
   }

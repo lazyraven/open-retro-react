@@ -4,18 +4,13 @@ import notesService from "@/services/notes.service";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { toast } from "react-toastify";
+import { getLocalStorage } from "@/utils/common.util";
 
 export default function NewNotes(props) {
-  // const { notes } = props;
   const params = useParams();
-
-  const [notesModel, setNotesModel] = useState({
-    createdBy: localStorage.getItem("name"),
-    createdDate: new Date().toDateString(),
-    description: "",
-    tagName: "",
-  });
+  const [notesModel, setNotesModel] = useState(initNewNotesModel());
   const [isOpenTextbox, setisOpenTextbox] = useState(false);
+
   const handleChange = (event) => {
     // event.preventDefault();
     const { name, value } = event.target;
@@ -24,6 +19,15 @@ export default function NewNotes(props) {
       [name]: value,
     });
   };
+
+  function initNewNotesModel() {
+    return {
+      createdBy: getLocalStorage("member")?.name || "",
+      createdDate: new Date().toDateString(),
+      description: "",
+      tagName: "",
+    };
+  }
 
   const getInputClasses = () => {
     const { tagName } = props;
@@ -46,9 +50,9 @@ export default function NewNotes(props) {
         notesModel
       );
       setisOpenTextbox(false);
-      setNotesModel("");
+      setNotesModel(initNewNotesModel());
     } catch (e) {
-      toast.error(`Error occurred, ${e.msg}`);
+      toast.error(`Error occurred, ${e.message}`);
     }
   };
 
