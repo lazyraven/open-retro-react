@@ -91,8 +91,11 @@ export default function NewBoardModal(props) {
         onClick={openModal}
       >
         <div className="flex justify-center items-center gap-2">
-          <BaseIcon iconName={ICONS.Plus} className="flex h-6 w-6 "></BaseIcon>
-          <div className="text-xl">Create Board</div>
+          <BaseIcon
+            iconName={ICONS.Plus}
+            className="flex h-5 w-5 text-zinc-800"
+          ></BaseIcon>
+          <div className="text-lg text-zinc-800">Create Board</div>
         </div>
       </BaseButton>
       {isOpen && (
