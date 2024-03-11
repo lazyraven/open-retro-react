@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { buildQRImage } from "@/helpers/constant";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import memberService from "@/services/member.service";
+import { setLocalStorage } from "@/utils/common.util";
+
 export default function NewBoardModal(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
@@ -45,13 +48,22 @@ export default function NewBoardModal(props) {
       const newBoard = await boardService.createBoard(boardModel);
       if (newBoard && newBoard.id) {
         setNewBoardId(newBoard.id);
+        const addMemberResult = await memberService.addMember(
+          { boardId: newBoard.id },
+          { name: boardModel.createdBy }
+        );
+        setLocalStorage("member", addMemberResult);
+        const boardUpdate = await boardService.updateBoardOwner(
+          { boardId: newBoard.id },
+          { owner: addMemberResult.id }
+        );
         toast.success(
           `${boardModel.createdBy} your board is created Successfully !!`
         );
         setUrl(`${window.location.origin}/boards/${newBoard.id}`);
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e.message);
     }
   };
 

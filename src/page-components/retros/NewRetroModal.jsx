@@ -9,8 +9,9 @@ export default function BaseForm(props) {
   const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
+  const today = new Date().toDateString();
   const [retroModel, setRetroModel] = useState({
-    retroName: "",
+    retroName: `Retro ${today.slice(4, today.length)}`,
     createdDate: new Date().toDateString(),
   });
 
@@ -60,17 +61,11 @@ export default function BaseForm(props) {
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white">
                   <div className="flex gap-2 justify-center items-center">
-                    <BaseIcon
-                      iconName={ICONS.rocket}
-                      className="flex w-5 h-5 text-blue-500"
-                    ></BaseIcon>{" "}
-                    <h1 className="text-2xl text-zinc-200">
-                      Open <b className=" text-zinc-400">Retro</b>
-                    </h1>
+                    <h6 className="text-2xl text-zinc-200">Create New Retro</h6>
                   </div>
                   <form
                     onSubmit={handleSave}
-                    className="flex flex-col gap-y-4 px-8"
+                    className="flex flex-col gap-y-4 px-8 mt-8 mb-4"
                   >
                     <div className="flex flex-col gap-y-1">
                       <label htmlFor="" className="text-zinc-300">

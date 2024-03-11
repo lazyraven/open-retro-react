@@ -6,6 +6,8 @@ import Retros from "@/pages/boards/boardId/retros/index";
 import RetroId from "@/pages/boards/boardId/retros/retroId";
 import BoardId from "@/pages/boards/boardId/index";
 import Reports from "@/pages/boards/boardId/reports/index";
+import ScrumPoker from "@/pages/boards/boardId/scrum-poker/index";
+import Members from "@/pages/boards/boardId/members/index";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +24,6 @@ const router = createBrowserRouter([
         element: <BoardId />,
         children: [
           {
-            path: "members",
-            element: <h1>Members</h1>,
-          },
-          {
             path: "reports",
             element: <Reports></Reports>,
           },
@@ -37,20 +35,18 @@ const router = createBrowserRouter([
             path: "retros/:retroId",
             element: <RetroId />,
           },
+          {
+            path: "scrum-poker",
+            element: <ScrumPoker></ScrumPoker>,
+          },
+          {
+            path: "members",
+            element: <Members />,
+          },
         ],
       },
     ],
   },
-
-  // {
-  //   path: "/:OpenRetroId",
-  //   element: <OpenRetroId />,
-  // },
-  // {
-  //   path: "/boards/:boardId",
-  //   element: <OpenRetros />,
-  // },
-  // {
 ]);
 
 export default router;

@@ -51,7 +51,7 @@ export default function RetroId() {
         fileName: `${params.retroId}.pdf`,
         htmlInput: input,
       });
-      toast.success("Generate pdf is Updated!");
+      toast.success("PDF report generated successfully. Check reports tab.");
       updateGenratePdf();
     } catch (error) {
       toast.error("Error occurred, while uploading file.");

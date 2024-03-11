@@ -125,7 +125,7 @@ export default function RetroDescription(props) {
               <p className="text-zinc-300">{note.description}</p>
               <div className="flex justify-between items-center gap-2 border-zinc-700">
                 <div className="flex gap-1 items-center">
-                  <BaseFirstChar note={note}></BaseFirstChar>
+                  <BaseFirstChar word={note?.createdBy}></BaseFirstChar>
                   <p className="text-zinc-200 text-xs">{note.createdBy}</p>
                 </div>
                 <div className="child flex ">
