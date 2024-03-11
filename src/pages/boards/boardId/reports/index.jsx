@@ -1,4 +1,4 @@
-// import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
@@ -6,9 +6,11 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 
 export default function Reports() {
+  const [pdfSrc, setPdfSrc] = useState("");
   const [reportRetros, setReportRetros] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const storage = getStorage();
   const params = useParams();
 
   const getBoardRetros = async () => {
@@ -26,8 +28,22 @@ export default function Reports() {
       console.log(e);
     }
   };
-  const viewReport = () => {
+
+  async function setPdfReports(starsRef) {
+    try {
+      const pdf = await getDownloadURL(starsRef);
+      if (pdf) {
+        setPdfSrc(pdf);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const viewReport = (event, pathRetroSrc) => {
     setIsOpen(true);
+    const starsRef = ref(storage, `${pathRetroSrc}.pdf`);
+    setPdfReports(starsRef);
   };
 
   const closeModal = () => {
@@ -62,7 +78,9 @@ export default function Reports() {
                   <button
                     type="button"
                     className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-600 hover:bg-zinc-700"
-                    onClick={viewReport}
+                    onClick={(event) => {
+                      viewReport(event, retroDetails.pathRetroSrc);
+                    }}
                   >
                     View
                   </button>
@@ -95,7 +113,8 @@ export default function Reports() {
             <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 to-zinc-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg p-3">
+                {/* <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg p-3"> */}
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all p-3">
                   <button
                     type="button"
                     onClick={(event) => {
@@ -108,10 +127,9 @@ export default function Reports() {
                       className=" flex h-6 w-6 text-zinc-600"
                     ></BaseIcon>
                   </button>
-                  <h2>PDF Display</h2>
-                  <h2>PDF Display</h2>
-                  <h2>PDF Display</h2>
-                  <h2>PDF Display</h2>
+                  {pdfSrc && (
+                    <embed src={pdfSrc} width="600px" height="650px" />
+                  )}
                 </div>
               </div>
             </div>
