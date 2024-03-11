@@ -7,9 +7,7 @@ function Root() {
   return (
     <div>
       <BaseNavbar></BaseNavbar>
-      <div className="container mx-auto px-6 md:px-12">
-        <Outlet />
-      </div>
+      <Outlet />
       <ToastContainer
         position="bottom-right"
         autoClose={2000}

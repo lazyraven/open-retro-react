@@ -1,42 +1,31 @@
 import screenshot from "@/assets/images/screenshot.png";
 export default function Retrospectives() {
   return (
-    <div className="mt-6 mb-8">
-      <h1 className="text-center text-[2.5rem] py-5 font-semibold text-zinc-200">
-        What Is A Fun Retrospective?
-      </h1>
-      <div className="flex flex-col lg:flex-row gap-5 lg:px-40">
-        <div className="lg:w-1/2 flex justify-end py-5 px-3">
+    <div className="flex flex-col py-6 md:py-12">
+      <div className="flex justify-center">
+        <h2 className="text-center uppercase text-2xl py-5 font-semibold text-zinc-900 px-2">
+          📷 Get a Preview
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-5">
+        <div className="col-span-1 md:col-span-2 flex justify-end py-5 md:px-3 z-20">
           <img
             src={screenshot}
             alt=""
-            className="h-80  lg:w-[36rem] sm:w-full rounded-lg img"
+            className="shadow-lg w-full rounded-lg md:rounded-3xl md:p-3 bg-zinc-900"
           />
         </div>
-        <div className=" lg:w-1/2 px-3">
-          <div className="text-zinc-400 flex flex-col gap-4 leading-8">
-            <h3 className="text-lg pt-4 ">
-              A retrospective is an opportunity to learn and improve, in a fun
-              environment. To break it down in the simplest way you should
-              cover:
-            </h3>
+        <div className="col-span-1 px-3 flex items-center ">
+          <div className="text-zinc-100 flex flex-col gap-4 leading-8 shadow-sm bg-blue-600 pr-5 pl-8 md:pl-12 py-8 rounded-2xl md:-translate-x-16">
+            <h3 className="text-xl md:text-3xl font-medium">Retro Board</h3>
             <ul className="list-disc bullet-points">
-              <li className="ml-5">What worked well?</li>
-              <li className="ml-5">What didn't work well?</li>
-              <li className="ml-5">
+              <li className="ml-5 !text-zinc-100">What worked well?</li>
+              <li className="ml-5 !text-zinc-100">What didn't work well?</li>
+              <li className="ml-5 !text-zinc-100">
                 What actionable items can we do to improve the situation?
               </li>
             </ul>
-            <h3 className="text-lg ">
-              These are generally quick sessions that are not only informative
-              and contribute to the team's functionality and efficiency, but
-              also do something most ‘Retrospectives’ forget to do: Engage the
-              team.
-            </h3>
-            <h3 className="text-lg ">
-              Our OpenRetro tool ensures you maintain high team morale by making
-              these team collaboration opportunities effortless and fun.
-            </h3>
           </div>
         </div>
       </div>

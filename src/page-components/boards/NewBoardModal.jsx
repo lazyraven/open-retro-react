@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
@@ -8,9 +8,9 @@ import { useRef } from "react";
 import { toast } from "react-toastify";
 import memberService from "@/services/member.service";
 import { setLocalStorage } from "@/utils/common.util";
+import BaseButton from "@/components/BaseButton";
 
 export default function NewBoardModal(props) {
-  const { children } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [boardModel, setBoardModel] = useState({
     boardName: "",
@@ -84,7 +84,17 @@ export default function NewBoardModal(props) {
 
   return (
     <>
-      <div onClick={openModal}>{children}</div>
+      <BaseButton
+        radius="rounded-none"
+        theme="PRIMARY"
+        size="XL"
+        onClick={openModal}
+      >
+        <div className="flex justify-center items-center gap-2">
+          <BaseIcon iconName={ICONS.Plus} className="flex h-6 w-6 "></BaseIcon>
+          <div className="text-xl">Create Board</div>
+        </div>
+      </BaseButton>
       {isOpen && (
         <div
           className="relative z-10 "

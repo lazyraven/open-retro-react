@@ -4,50 +4,48 @@ import CompanyCollaborations from "@/components/CompanyCollaboration";
 import Retrospectives from "@/components/RetroSpective";
 import About from "@/components/About";
 import NewBoardModal from "@/page-components/boards/NewBoardModal";
-import BaseIcon from "@/components/BaseIcon";
-import { ICONS } from "@/helpers/constant";
 
 function HomePage() {
   return (
     <>
-      <div className="flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 py-2">
-          <div className="flex flex-col  gap-3 mb-14 pt-10 ">
-            <div className="flex flex-col py-5 text-zinc-200">
-              <span className="text-[2.5rem] font-sans font-bold">
-                Improve with
-              </span>
-              <span className="text-[2.5rem] font-sans font-bold">
-                Fun Sprint
-              </span>
-              <span className="text-[2.5rem] font-sans font-bold">
-                Retrospectives
-              </span>
-            </div>
-            <p className="text-xl font-sans text-zinc-400">
-              Collaborate with your remote team and get better at what you do
-              with a simple, intuitive and beautiful tool
-            </p>
-          </div>
+      <div className="bg-zinc-950">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="flex flex-col lg:flex-row">
+            <div className="w-full lg:w-1/2 py-2">
+              <div className="flex flex-col my-6 md:my-14">
+                <h1 className="uppercase text-3xl md:text-5xl text-zinc-100 font-bold tracking-wider !leading-snug">
+                  📋Free Retrospective
+                </h1>
+                <h1 className="uppercase text-3xl md:text-5xl text-zinc-100 font-bold tracking-wider !leading-snug">
+                  & 🃏Scrum Poker
+                </h1>
+                <p className="text-xl mt-8 md:text-2xl text-zinc-400">
+                  Reflect and improve effortlessly with a user-friendly
+                  interface. Perfect for all teams! 🚀
+                </p>
+              </div>
 
-          <NewBoardModal>
-            <button className="flex gap-3 px-8 py-3 items-center font-mono border border-zinc-600 text-zinc-200 font-semibold bg-zinc-900 hover:bg-zinc-900">
-              <div className="">Create Board</div>
-              <BaseIcon
-                iconName={ICONS.Plus}
-                className=" flex h-4 w-4 text-white"
-              ></BaseIcon>
-            </button>
-          </NewBoardModal>
-        </div>
-        <div className="w-full lg:w-1/2 flex justify-center py-5">
-          <div>
-            <img src={image} alt="" className="h-[32rem]" />
+              <NewBoardModal></NewBoardModal>
+            </div>
+            <div className="w-full lg:w-1/2 flex justify-center py-5">
+              <div>
+                <img
+                  src={image}
+                  alt=""
+                  className="max-h-[32rem] min-h-[28rem]"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <CompanyCollaborations></CompanyCollaborations>
-      <Retrospectives></Retrospectives>
+      <div className="bg-white">
+        <div className="container mx-auto px-2 md:px-12">
+          <Retrospectives></Retrospectives>
+        </div>
+      </div>
+
       <About></About>
     </>
   );

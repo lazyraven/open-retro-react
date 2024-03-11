@@ -11,6 +11,7 @@ export const ICONS = {
   Edit: "pencil-square",
   Close: "close",
   SolidCheckCircle: "solid-check-circle",
+  PlusCircle: "plus-circle",
 };
 
 export const buildQRImage = (dataUrl) =>
