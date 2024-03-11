@@ -6,27 +6,10 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 
 export default function Reports() {
-  // const [pdfSrc, setPdfSrc] = useState("");
-  const [retros, setRetros] = useState([]);
+  const [reportRetros, setReportRetros] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // const storage = getStorage();
-  // const starsRef = ref(
-  //   storage,
-  //   "IA3OkEgf7lATECtpo65c/NyXVGiXbgMPF246wl6vH.pdf"
-  // );
-
   const params = useParams();
-  // async function setPdfReports() {
-  //   try {
-  //     const pdf = await getDownloadURL(starsRef);
-  //     if (pdf) {
-  //       setPdfSrc(pdf);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   const getBoardRetros = async () => {
     try {
@@ -34,12 +17,14 @@ export default function Reports() {
         boardId: params.boardId,
       });
       if (boardRetros && boardRetros.length) {
-        setRetros(boardRetros);
+        const filteredRetros = boardRetros.filter(
+          (retro) => retro.pathRetroSrc
+        );
+        setReportRetros(filteredRetros);
       }
     } catch (e) {
       console.log(e);
     }
-    // getRetroDetails();
   };
   const viewReport = () => {
     setIsOpen(true);
@@ -49,19 +34,15 @@ export default function Reports() {
     setIsOpen(false);
   };
   useEffect(() => {
-    // setPdfReports();
     getBoardRetros();
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col my-4">
       <div className="flex flex-wrap gap-3 text-white">
-        {/* {pdfSrc && <embed src={pdfSrc} width="800px" height="1600px" />} */}
-
-        {/* <input type="file" /> */}
-        {retros.map((retroDetails, index) => {
-          return (
-            retroDetails.pathRetroSrc && (
+        {reportRetros.length ? (
+          reportRetros.map((retroDetails, index) => {
+            return (
               <div
                 key={retroDetails.retroName + index}
                 className="flex flex-col border-solid w-72 rounded-md p-3 bg-zinc-800"
@@ -93,45 +74,50 @@ export default function Reports() {
                   </button>
                 </div>
               </div>
-            )
-          );
-        })}
+            );
+          })
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full">
+            <span className="text-4xl">📊</span>
+            <h6 className="text-zinc-300">No reports generated !</h6>
+          </div>
+        )}
+      </div>
 
-        {isOpen && (
-          <div>
-            <div
-              className="relative z-10 text-black"
-              aria-labelledby="modal-title"
-              role="dialog"
-              aria-modal="true"
-            >
-              <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 to-zinc-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
-              <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg p-3">
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        closeModal(event);
-                      }}
-                      className=" top-2"
-                    >
-                      <BaseIcon
-                        iconName={ICONS.Close}
-                        className=" flex h-6 w-6 text-zinc-600"
-                      ></BaseIcon>
-                    </button>
-                    <h2>PDF Display</h2>
-                    <h2>PDF Display</h2>
-                    <h2>PDF Display</h2>
-                    <h2>PDF Display</h2>
-                  </div>
+      {isOpen && (
+        <div>
+          <div
+            className="relative z-10 text-black"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 to-zinc-850 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
+            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg p-3">
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      closeModal(event);
+                    }}
+                    className=" top-2"
+                  >
+                    <BaseIcon
+                      iconName={ICONS.Close}
+                      className=" flex h-6 w-6 text-zinc-600"
+                    ></BaseIcon>
+                  </button>
+                  <h2>PDF Display</h2>
+                  <h2>PDF Display</h2>
+                  <h2>PDF Display</h2>
+                  <h2>PDF Display</h2>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 }

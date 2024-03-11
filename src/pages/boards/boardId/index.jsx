@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Outlet, NavLink } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Outlet, NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
