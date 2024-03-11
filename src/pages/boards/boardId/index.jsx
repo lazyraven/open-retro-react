@@ -105,7 +105,8 @@ export default function BoardId() {
               <div className="fixed inset-0 bg-zinc-700 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
               <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  {/* <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all sm:my-8 sm:w-full sm:max-w-lg"> */}
+                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all">
                     <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white relative">
                       <button
                         onClick={handelCloseShareModal}
@@ -197,7 +198,7 @@ export default function BoardId() {
             <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full">
                   <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white">
                     <div className="flex gap-2 justify-center items-center">
                       <BaseIcon
