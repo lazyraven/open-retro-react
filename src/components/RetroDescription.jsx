@@ -1,11 +1,9 @@
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useState } from "react";
-import boardService from "../services/board.service";
-import { db } from "@/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import BaseFirstChar from "./BaseFirstChar";
+import notesService from "@/services/notes.service";
 
 export default function RetroDescription(props) {
   const { note } = props;
@@ -46,8 +44,8 @@ export default function RetroDescription(props) {
     };
     e.preventDefault();
     try {
-      await boardService.updateNote(
-        { boardId: params.boardId, retroId: params.retroId, noteId: note.id },
+      await notesService.updateRetroNote(
+        { retroId: params.retroId, noteId: note.id },
         noteDetail
       );
       setEditDescription(false);
@@ -59,17 +57,10 @@ export default function RetroDescription(props) {
   const deleteNote = async (e) => {
     e.preventDefault();
     try {
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          params.boardId,
-          "retros",
-          params.retroId,
-          "notes",
-          note.id
-        )
-      );
+      await notesService.deleteRetroNote({
+        retroId: params.retroId,
+        noteId: note.id,
+      });
     } catch (e) {
       console.log(e);
     }

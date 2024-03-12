@@ -66,7 +66,6 @@ export default function BoardId() {
         { boardId: params.boardId },
         memberModel
       );
-      console.log(`addMemberResponse`, addMemberResult);
       setLocalStorage("member", addMemberResult);
       setIsOpen(false);
     } catch (error) {
@@ -78,9 +77,6 @@ export default function BoardId() {
   const handleMemberModelChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(`memberModel`);
-    console.log(memberModel);
-
     setMemberModel({
       ...memberModel,
       [name]: value,
