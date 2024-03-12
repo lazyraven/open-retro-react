@@ -8,6 +8,8 @@ import { buildQRImage } from "@/helpers/constant";
 import memberService from "@/services/member.service";
 import { getLocalStorage, setLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
+import ExportBoard from "@/components/ExportBoard";
+// import BaseButton from "@/components/BaseButton";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
@@ -71,6 +73,7 @@ export default function BoardId() {
       toast.error(error.message);
     }
   };
+  // console.log("board", board);
 
   const handleMemberModelChange = (event) => {
     event.preventDefault();
@@ -87,7 +90,7 @@ export default function BoardId() {
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  console.log("board", board);
   return (
     <div className="container mx-auto px-6 md:px-12">
       <div className="flex flex-col gap-1 min-h-screen ">
@@ -96,7 +99,16 @@ export default function BoardId() {
             <h1 className="text-2xl text-zinc-200">📋{board.boardName}</h1>
             <h3 className="text-zinc-500">{board.createdBy}</h3>
           </div>
-          <div className="flex">
+          <div className="flex  gap-2">
+            <ExportBoard board={board}></ExportBoard>
+            {/* <BaseButton
+              radius="rounded-none"
+              theme="SECONDARY"
+              size="XL"
+              // onClick={openModal}
+            >
+              Export Board
+            </BaseButton> */}
             <button
               type="button"
               onClick={handelOpenShareModal}
@@ -108,6 +120,7 @@ export default function BoardId() {
               ></BaseIcon>
               Share
             </button>
+
             {shareBoard && (
               <div
                 className="relative z-10"
