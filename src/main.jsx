@@ -5,7 +5,7 @@ import "./index.css";
 import ReactGA from "react-ga4";
 import BoardProvider from "@/contexts/BoardProvider";
 
-const TRACKING_ID = "G-G8XKH37LMH";
+const TRACKING_ID = "G-ES9G3MB3NN";
 ReactGA.initialize(TRACKING_ID);
 
 ReactGA.send({
