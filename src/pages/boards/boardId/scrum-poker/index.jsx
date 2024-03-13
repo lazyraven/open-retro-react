@@ -7,18 +7,17 @@ import BaseButton from "@/components/BaseButton";
 import memberService from "@/services/member.service";
 import pokerService from "@/services/poker.service";
 import { ICONS } from "@/helpers/constant";
-import { getLocalStorage } from "@/utils/common.util";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
 
 export default function ScrumPoker() {
-  const points = ["?", 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
-  const storedMember = getLocalStorage("member");
-
   const params = useParams();
+  const { board } = useContext(BoardContext);
   const [members, setMembers] = useState([]);
   const [memberVoteMap, setMemberVoteMap] = useState({});
   const [pokerUIState, setPokerUIState] = useState({});
-  const { board } = useContext(BoardContext);
+  const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
+  const points = ["?", 0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
   function listenMemberChange() {
     memberService.listenMemberChange({ boardId: params.boardId }, (docs) => {
@@ -126,7 +125,7 @@ export default function ScrumPoker() {
                     ></BaseIcon>
                   )}
                   <button
-                    className={`flex items-center justify-center text-white h-56 w-36 text-2xl rounded-md ${
+                    className={`flex items-center justify-center text-white h-48 w-32 text-2xl rounded-md ${
                       memberVoteMap[storedMember.id]?.point === point
                         ? "bg-blue-800 hover:bg-blue-700"
                         : "bg-zinc-800 hover:bg-zinc-700"
@@ -172,7 +171,7 @@ export default function ScrumPoker() {
                   </div>
                   <div className="flex justify-center items-center min-h-[4rem] basis-16">
                     {pokerUIState.show ? (
-                      <span className="flex items-center justify-center h-10 w-10 text-xl font-medium bg-white rounded-full text-zinc-800">
+                      <span className="flex items-center justify-center h-12 w-10 text-xl font-medium bg-white rounded-xl text-zinc-800">
                         {memberVoteMap[member.id]?.point}
                       </span>
                     ) : (

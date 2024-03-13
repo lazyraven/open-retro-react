@@ -1,6 +1,6 @@
 import caremetx from "@/assets/images/caremetx.png";
-import cisco from "@/assets/images/cisco.png";
-import relic from "@/assets/images/relic.png";
+// import cisco from "@/assets/images/cisco.png";
+// import relic from "@/assets/images/relic.png";
 import rsystems from "@/assets/images/rsystems.png";
 import fyndster from "@/assets/images/fyndster.png";
 
@@ -15,8 +15,8 @@ export default function CompanyCollaborations() {
         <img src={fyndster} alt="" className="w-28" />
         <img src={rsystems} alt="" className="w-28" />
         <img src={caremetx} alt="" className="w-28" />
-        <img src={cisco} alt="" className="h-24  mr-3" />
-        <img src={relic} alt="" className="h-6 " />
+        {/* <img src={cisco} alt="" className="h-24  mr-3" />
+        <img src={relic} alt="" className="h-6 " /> */}
       </div>
     </div>
   );

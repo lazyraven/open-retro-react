@@ -76,7 +76,7 @@ export default function BaseForm(props) {
                         name="retroName"
                         required
                         value={retroModel.retroName}
-                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
+                        className="bg-zinc-800 border-zinc-700 border rounded-sm py-1.5 px-3"
                         onChange={handleChange}
                       />
                     </div>
