@@ -4,7 +4,7 @@ import notesService from "@/services/notes.service";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { toast } from "react-toastify";
-import { getLocalStorage } from "@/utils/common.util";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
 
 export default function NewNotes(props) {
   const params = useParams();
@@ -22,7 +22,8 @@ export default function NewNotes(props) {
 
   function initNewNotesModel() {
     return {
-      createdBy: getLocalStorage("member")?.name || "",
+      createdBy:
+        getBoardMemberLocalStorage({ boardId: params.boardId })?.name || "",
       createdDate: new Date().toDateString(),
       description: "",
       tagName: "",

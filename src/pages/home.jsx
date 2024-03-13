@@ -1,5 +1,4 @@
 import dashboardImage from "@/assets/images/dashboard.svg";
-// import { Link } from "react-router-dom";
 import CompanyCollaborations from "@/components/CompanyCollaboration";
 import Retrospectives from "@/components/RetroSpective";
 import About from "@/components/About";

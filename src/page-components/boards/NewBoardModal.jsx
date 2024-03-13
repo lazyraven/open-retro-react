@@ -4,22 +4,27 @@ import { ICONS } from "@/helpers/constant";
 import boardService from "@/services/board.service";
 import { useNavigate } from "react-router-dom";
 import { buildQRImage } from "@/helpers/constant";
-import { useRef } from "react";
 import { toast } from "react-toastify";
 import memberService from "@/services/member.service";
-import { setLocalStorage } from "@/utils/common.util";
+import { setBoardMemberLocalStorage } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
 
 export default function NewBoardModal(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [boardModel, setBoardModel] = useState({
-    boardName: "",
-    createdBy: "",
-    createdDate: new Date().toDateString(),
-  });
+  const [boardModel, setBoardModel] = useState(initBoardModel());
+
+  function initBoardModel() {
+    return {
+      boardName: "",
+      createdBy: "",
+      createdDate: new Date().toDateString(),
+    };
+  }
 
   const [newBoardId, setNewBoardId] = useState("");
-  const [url, setUrl] = useState("");
+  const [boardRetroUrl, setBoardRetroUrl] = useState(
+    "http://localhost:5173/boards"
+  );
 
   const navigate = useNavigate();
 
@@ -52,7 +57,10 @@ export default function NewBoardModal(props) {
           { boardId: newBoard.id },
           { name: boardModel.createdBy }
         );
-        setLocalStorage("member", addMemberResult);
+        setBoardMemberLocalStorage({
+          boardId: newBoard.id,
+          member: addMemberResult,
+        });
         const boardUpdate = await boardService.updateBoardOwner(
           { boardId: newBoard.id },
           { owner: addMemberResult.id }
@@ -60,26 +68,22 @@ export default function NewBoardModal(props) {
         toast.success(
           `${boardModel.createdBy} your board is created Successfully !!`
         );
-        setUrl(`${window.location.origin}/boards/${newBoard.id}`);
+        setBoardRetroUrl(
+          `${window.location.origin}/boards/${newBoard.id}/retros`
+        );
       }
     } catch (e) {
       toast.error(e.message);
     }
   };
 
-  const handleInputChange = (event) => {
-    setUrl(event.target.value);
+  const navigateToBoardRetro = () => {
+    navigate(`/boards/${newBoardId}/retros`);
   };
-
-  const navigateTOBoardPage = () => {
-    navigate(`/boards/${newBoardId}`);
-  };
-
-  const inputRef = useRef(null);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-    toast.success(`url Copied !!`);
+    toast.success(`URL copied!`);
   };
 
   return (
@@ -126,20 +130,17 @@ export default function NewBoardModal(props) {
                     <div className="flex gap-2 justify-center">
                       <input
                         type="text"
-                        name=""
                         disabled
-                        onChange={handleInputChange}
-                        value={url}
-                        ref={inputRef}
-                        className="bg-zinc-900 border-zinc-700 border rounded-sm py-1 px-3 w-full"
+                        value={boardRetroUrl}
+                        className="bg-zinc-800 grow border-zinc-700 border rounded-sm py-1.5 px-3 text-zinc-400"
                       />
-                      <button
+                      <BaseButton
+                        theme="SECONDARY"
                         type="button"
-                        onClick={() => copyToClipboard(url)}
-                        className="px-4 py-1 items-center border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-zinc-200"
+                        onClick={() => copyToClipboard(boardRetroUrl)}
                       >
                         COPY
-                      </button>
+                      </BaseButton>
                     </div>
                     <span className="text-center text-zinc-300">OR</span>
                     <h2 className="text-center text-zinc-300">
@@ -147,19 +148,20 @@ export default function NewBoardModal(props) {
                     </h2>
 
                     <img
-                      src={buildQRImage(url)}
+                      src={buildQRImage(boardRetroUrl)}
                       alt=""
                       className="w-32 m-auto"
                     />
-                    <h2 className="text-center text-zinc-300">
-                      Everyone with this URL will be able to access the board.
-                    </h2>
-                    <button
-                      onClick={navigateTOBoardPage}
-                      className="px-4 py-2 w-40 m-auto border border-zinc-600 text-zinc-950  bg-zinc-300 hover:bg-zinc-200"
-                    >
-                      Go To Board
-                    </button>
+                    <div className="flex justify-center mt-3">
+                      <BaseButton
+                        theme="PRIMARY"
+                        type="button"
+                        size="XL"
+                        onClick={navigateToBoardRetro}
+                      >
+                        Go To Board
+                      </BaseButton>
+                    </div>
                   </div>
                 ) : (
                   <div className="justify-center p-8 bg-zinc-900  text-white">
@@ -196,7 +198,7 @@ export default function NewBoardModal(props) {
                           name="boardName"
                           required
                           value={boardModel.boardName}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
+                          className="bg-zinc-800 border-zinc-700 border rounded-sm py-1.5 px-3"
                           onChange={handleChange}
                         />
                       </div>
@@ -211,7 +213,7 @@ export default function NewBoardModal(props) {
                           name="createdBy"
                           required
                           value={boardModel.createdBy}
-                          className="bg-zinc-900 border-zinc-700 border rounded-sm py-1.5 px-3"
+                          className="bg-zinc-800 border-zinc-700 border rounded-sm py-1.5 px-3"
                           onChange={handleChange}
                         />
                       </div>
