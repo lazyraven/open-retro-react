@@ -1,5 +1,5 @@
 import screenshot from "@/assets/images/screenshot.png";
-import ScrumPokerPreview from "@/assets/images/scrum-poker-preview.png";
+import ScrumPokerPng from "@/assets/images/scrum-poker.png";
 
 export default function GetAPreview() {
   return (
@@ -37,7 +37,7 @@ export default function GetAPreview() {
       <div className="flex flex-col lg:flex-row-reverse gap-1 lg:gap-5 items-center justify-center">
         <div className="basis-2/3 flex justify-center items-center py-5 lg:px-3 z-20">
           <img
-            src={ScrumPokerPreview}
+            src={ScrumPokerPng}
             alt=""
             className="shadow-lg w-full rounded-lg lg:rounded-3xl lg:p-3 bg-zinc-900"
           />
