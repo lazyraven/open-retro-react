@@ -1,8 +1,8 @@
 import dashboardImage from "@/assets/images/dashboard.svg";
 import CompanyCollaborations from "@/components/CompanyCollaboration";
-import Retrospectives from "@/components/RetroSpective";
-import About from "@/components/About";
+import GetAPreview from "@/components/GetAPreview";
 import NewBoardModal from "@/page-components/boards/NewBoardModal";
+import Footer from "@/page-components/Footer";
 
 function HomePage() {
   return (
@@ -38,13 +38,17 @@ function HomePage() {
         </div>
       </div>
       <CompanyCollaborations></CompanyCollaborations>
-      <div className="bg-white">
-        <div className="container mx-auto px-2 md:px-12">
-          <Retrospectives></Retrospectives>
+
+      <div className=" bg-gradient-to-b from-blue-500 bg-pink-600 backdrop-blur-3xl relative overflow-hidden">
+        <div className="relative z-10 backdrop-blur-2xl bg-white/50">
+          <div className="container mx-auto px-2 md:px-12">
+            <GetAPreview></GetAPreview>
+          </div>
         </div>
+        <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-yellow-500 from-20% via-pink-500 via-30% to-blue-500 to-80% rounded-full"></div>
       </div>
 
-      <About></About>
+      <Footer></Footer>
     </>
   );
 }

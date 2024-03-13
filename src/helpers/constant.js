@@ -12,6 +12,9 @@ export const ICONS = {
   Close: "close",
   SolidCheckCircle: "solid-check-circle",
   PlusCircle: "plus-circle",
+  Map: "map",
+  Phone: "phone",
+  Envelope: "envelope",
 };
 
 export const buildQRImage = (dataUrl) =>
