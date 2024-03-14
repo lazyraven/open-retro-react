@@ -11,7 +11,7 @@ import {
   setBoardMemberLocalStorage,
 } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
-// import ExportBoard from "@/components/ExportBoard";
+import ExportBoard from "@/components/ExportBoard";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
@@ -91,7 +91,7 @@ export default function BoardId() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log("board", board);
+  // console.log("board", board);
   return (
     <>
       {isLoading ? (
@@ -123,7 +123,6 @@ export default function BoardId() {
                 <h3 className="text-zinc-500">{board.createdBy}</h3>
               </div>
               <div className="flex  gap-2">
-                {/* <ExportBoard board={board}></ExportBoard> */}
                 <button
                   type="button"
                   onClick={handelOpenShareModal}
@@ -147,7 +146,7 @@ export default function BoardId() {
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                       <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                          <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white relative">
+                          <div className="flex gap-y-5 flex-col justify-center p-8 bg-zinc-900  text-white relative">
                             <button
                               onClick={handelCloseShareModal}
                               className="absolute right-6 top-5"
@@ -187,6 +186,8 @@ export default function BoardId() {
                               alt=""
                               className="w-32 m-auto"
                             />
+                            <hr className="mt-2" />
+                            <ExportBoard board={board}></ExportBoard>
                           </div>
                         </div>
                       </div>

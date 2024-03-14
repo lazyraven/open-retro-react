@@ -8,10 +8,14 @@ import { toast } from "react-toastify";
 import memberService from "@/services/member.service";
 import { setBoardMemberLocalStorage } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
+import { logCreateCardAnalytics, logSignUpAnalytics } from "@/firebase";
 
 export default function NewBoardModal(props) {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [boardModel, setBoardModel] = useState(initBoardModel());
+  const [newBoardId, setNewBoardId] = useState("");
+  const [boardRetroUrl, setBoardRetroUrl] = useState("");
 
   function initBoardModel() {
     return {
@@ -21,14 +25,8 @@ export default function NewBoardModal(props) {
     };
   }
 
-  const [newBoardId, setNewBoardId] = useState("");
-  const [boardRetroUrl, setBoardRetroUrl] = useState(
-    "http://localhost:5173/boards"
-  );
-
-  const navigate = useNavigate();
-
   const openModal = () => {
+    logCreateCardAnalytics();
     setIsOpen(true);
   };
 
@@ -52,6 +50,7 @@ export default function NewBoardModal(props) {
     try {
       const newBoard = await boardService.createBoard(boardModel);
       if (newBoard && newBoard.id) {
+        logSignUpAnalytics();
         setNewBoardId(newBoard.id);
         const addMemberResult = await memberService.addMember(
           { boardId: newBoard.id },

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
-
+import { getAnalytics, logEvent } from "firebase/analytics";
 const {
   VITE_FIRBASE_API_KEY,
   VITE_FIRBASE_AUTH_DOMAIN,
@@ -28,3 +28,16 @@ const app = initializeApp(firebaseConfig);
 
 export const rtdb = getDatabase(app);
 export const db = getFirestore(app);
+export const analytics = getAnalytics(app);
+
+export function logCreateCardAnalytics() {
+  return logEvent(analytics, "create_board", {
+    date: new Date(),
+  });
+}
+
+export function logSignUpAnalytics() {
+  return logEvent(analytics, "sign_up", {
+    method: "CreateBoardModal",
+  });
+}

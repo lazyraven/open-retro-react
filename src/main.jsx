@@ -5,8 +5,9 @@ import "./index.css";
 import ReactGA from "react-ga4";
 import BoardProvider from "@/contexts/BoardProvider";
 
-const TRACKING_ID = "G-ES9G3MB3NN";
-ReactGA.initialize(TRACKING_ID);
+const { VITE_FIRBASE_MEASUREMENT_ID } = import.meta.env;
+console.log("VITE_FIRBASE_MEASUREMENT_ID", VITE_FIRBASE_MEASUREMENT_ID);
+ReactGA.initialize(VITE_FIRBASE_MEASUREMENT_ID);
 
 ReactGA.send({
   hitType: "pageview",
