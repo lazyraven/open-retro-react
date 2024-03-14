@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - prod
+      - stg
 
 jobs:
   deploy:
@@ -13,26 +14,54 @@ jobs:
       - name: Install Dependencies 🔰
         run: npm i
       - name: Run Build 🛠
-        run: npm run build
+        run: |
+          if [ "${GITHUB_REF}" = "refs/heads/prod" ]; then
+            npm run build
+          elif [ "${GITHUB_REF}" = "refs/heads/stg" ]; then
+            npm run build-stg
+          fi
         env:
           CI: false
 
-      - name: S3 Sync
+      - name: S3 Sync (Staging)
+        if: github.ref == 'refs/heads/stg'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STG }} # Use stg bucket for stg branch
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-south-1" # optional: defaults to us-east-1
           SOURCE_DIR: "dist" # optional: defaults to entire repository
 
-        # Invalidate Cloudfront
-      - name: Cloudfront Invalidation
+      - name: S3 Sync (Production)
+        if: github.ref == 'refs/heads/prod'
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_PROD }} # Use prod bucket for prod branch
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-south-1" # optional: defaults to us-east-1
+          SOURCE_DIR: "dist" # optional: defaults to entire repository
+
+      - name: Cloudfront Invalidation (Staging)
+        if: github.ref == 'refs/heads/stg' # Only run Cloudfront Invalidation for stg branch
         uses: chetan/invalidate-cloudfront-action@master
         env:
-          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_STG }} # Use stg distribution ID for stg branch
+          PATHS: "/*"
+          AWS_REGION: "ap-south-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Cloudfront Invalidation (Production)
+        if: github.ref == 'refs/heads/prod' # Only run Cloudfront Invalidation for prod branch
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_PROD }} # Use prod distribution ID for prod branch
           PATHS: "/*"
           AWS_REGION: "ap-south-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
