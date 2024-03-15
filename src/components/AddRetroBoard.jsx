@@ -1,4 +1,4 @@
-import NewBoardModal from "@/page-components/boards/NewBoardModal";
+import CreateBoardModal from "@/page-components/boards/CreateBoardModal";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 export default function AddRetroBoard() {
@@ -6,7 +6,7 @@ export default function AddRetroBoard() {
     <div className="bg-[#F1F2F5] px-8 py-8">
       <h1 className="text-2xl font-bold text-zinc-600">Dashboard</h1>
       <div className=" flex  py-4 ">
-        <NewBoardModal>
+        <CreateBoardModal>
           <button
             type="button"
             className="border-2 border-zinc-600 hover:border-blue-500 hover:text-blue-500 border-dashed h-40 w-60 flex flex-col gap-1 justify-center items-center rounded-md"
@@ -19,7 +19,7 @@ export default function AddRetroBoard() {
             </div>
             <h1 className="text-sm">Add boards</h1>
           </button>
-        </NewBoardModal>
+        </CreateBoardModal>
       </div>
     </div>
   );
