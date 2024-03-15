@@ -153,7 +153,7 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
               }
               type="INFO"
               title="Email Board Link"
-              text="Don't lose the board link. We encourage you to email it to yourself."
+              text="Bookmark or save the board link somewhere. We also encourage you to email it to yourself."
             ></BaseAlert>
 
             <form
