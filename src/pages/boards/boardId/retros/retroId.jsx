@@ -7,10 +7,12 @@ import NewNotes from "@/components/NewNotes";
 import RetroDescription from "@/components/RetroDescription";
 import { toast } from "react-toastify";
 import notesService from "@/services/notes.service";
+import TimeSlide from "@/components/TimeSlide";
 
 export default function RetroId() {
   const [notes, setNotes] = useState([]);
   const [retro, setRetro] = useState({});
+  const [openSlide, setOpenSlide] = useState(false);
 
   const params = useParams();
 
@@ -70,12 +72,28 @@ export default function RetroId() {
     }
   };
 
+  const openSlideDisplay = () => {
+    console.log("open slide");
+    setOpenSlide(true);
+  };
+
   return (
     <div className="relative">
-      <h1 className="mb-4 text-zinc-200">
-        {retro.retroName}
-        <span className="text-zinc-500 text-sm"> | {retro.createdDate}</span>
-      </h1>
+      <div className="flex gap-1">
+        <div className="flex mb-4 text-zinc-200">
+          {retro.retroName}
+          <span className="text-zinc-500 text-sm"> | {retro.createdDate}</span>
+        </div>
+        <div className="flex-auto w-64"></div>
+        <button type="button" className="flex-1" onClick={openSlideDisplay}>
+          <BaseIcon
+            iconName={ICONS.ClockCircle}
+            className="flex h-5 w-5 text-white"
+          ></BaseIcon>
+        </button>
+        {openSlide && <TimeSlide></TimeSlide>}
+      </div>
+
       <div
         // id="content"
         ref={pdfRef}
