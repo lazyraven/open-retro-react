@@ -4,12 +4,18 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import BaseFirstChar from "./BaseFirstChar";
 import notesService from "@/services/notes.service";
+import BaseTextarea from "@/components/form-inputs/BaseTextarea";
+import BaseButton from "@/components/BaseButton";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
 
-export default function RetroDescription(props) {
-  const { note } = props;
-  const [editDescription, setEditDescription] = useState(false);
+export default function EditNote(props) {
+  const { note, boardId } = props;
+  const storedMember = getBoardMemberLocalStorage({ boardId });
+
+  const [isEditMode, setEditMode] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
   const params = useParams();
+  const isMemberCreator = storedMember && storedMember.id === note.createdById;
 
   const descriptionClasses = () => {
     const { tagName } = note;
@@ -30,11 +36,12 @@ export default function RetroDescription(props) {
   };
 
   const editDescriptionModal = () => {
-    setEditDescription(true);
+    setEditMode(true);
   };
 
   const closeEditDescription = () => {
-    setEditDescription(false);
+    setEditedDescription(note.description);
+    setEditMode(false);
   };
 
   const handleSubmit = async (e) => {
@@ -48,7 +55,7 @@ export default function RetroDescription(props) {
         { retroId: params.retroId, noteId: note.id },
         noteDetail
       );
-      setEditDescription(false);
+      setEditMode(false);
     } catch (e) {
       console.log(e);
     }
@@ -68,38 +75,37 @@ export default function RetroDescription(props) {
 
   return (
     <>
-      {editDescription ? (
+      {isEditMode ? (
         <div className="flex border border-zinc-700 rounded-md">
           <div
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
           <div className="grow">
-            <form onSubmit={handleSubmit} className=" w-full">
+            <form onSubmit={handleSubmit} className="w-full p-1 bg-zinc-800">
               <div className="grow">
-                <textarea
-                  type="text"
-                  rows="4"
-                  cols="7"
+                <BaseTextarea
                   name="editedDescription"
                   value={editedDescription}
                   onChange={handleChange}
-                  className={`py-2 px-2 w-full resize-none text-sm rounded-sm text-zinc-200 outline-none bg-transparent`}
-                />
+                  className={`p-2 w-full bg-zinc-800 rounded-sm text-zinc-200 outline-none`}
+                ></BaseTextarea>
               </div>
 
-              <div className="flex justify-end gap-2 px-2 py-1">
-                <button
-                  type="submit"
-                  className={`flex justify-center text-zinc-200 items-center rounded-sm  bg-zinc-700 hover:bg-zinc-800 text-xs px-1`}
-                >
-                  Save
-                </button>
+              <div className="flex justify-end gap-3 p-1">
                 <button type="button" onClick={closeEditDescription}>
                   <BaseIcon
                     iconName={ICONS.Close}
-                    className="flex h-4 w-4 text-zinc-300"
+                    className="flex h-5 w-5 text-zinc-200"
                   ></BaseIcon>
                 </button>
+                <BaseButton
+                  theme="PRIMARY"
+                  type="submit"
+                  radius="rounded-full"
+                  size="S"
+                >
+                  Save
+                </BaseButton>
               </div>
             </form>
           </div>
@@ -112,27 +118,29 @@ export default function RetroDescription(props) {
             <div
               className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
             ></div>
-            <div className="flex flex-col gap-y-3 px-3 pt-2 pb-3 w-full parent relative">
+            <div className="flex flex-col gap-y-3 px-3 py-2 w-full parent relative">
               <p className="text-zinc-300">{note.description}</p>
-              <div className="flex justify-between items-center gap-2 border-zinc-700">
+              <div className="flex justify-between p-1 items-center gap-2 border-zinc-700">
                 <div className="flex gap-1 items-center">
                   <BaseFirstChar word={note?.createdBy}></BaseFirstChar>
                   <p className="text-zinc-200 text-xs">{note.createdBy}</p>
                 </div>
-                <div className="child flex ">
-                  <button onClick={editDescriptionModal} className="">
-                    <BaseIcon
-                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                      iconName={ICONS.Edit}
-                    ></BaseIcon>
-                  </button>
-                  <button onClick={deleteNote} className="">
-                    <BaseIcon
-                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-300"
-                      iconName={ICONS.Delete}
-                    ></BaseIcon>
-                  </button>
-                </div>
+                {isMemberCreator && (
+                  <div className="child flex gap-3">
+                    <button onClick={editDescriptionModal} className="">
+                      <BaseIcon
+                        className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                        iconName={ICONS.Edit}
+                      ></BaseIcon>
+                    </button>
+                    <button onClick={deleteNote} className="">
+                      <BaseIcon
+                        className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                        iconName={ICONS.Delete}
+                      ></BaseIcon>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

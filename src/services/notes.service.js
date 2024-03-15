@@ -1,4 +1,12 @@
-import { ref, push, set, update, onValue } from "firebase/database";
+import {
+  ref,
+  push,
+  set,
+  update,
+  onValue,
+  query,
+  orderByChild,
+} from "firebase/database";
 
 import { rtdb } from "@/firebase";
 
@@ -25,7 +33,10 @@ export default {
   },
 
   listenRetroNotesChange({ retroId }, listenerFn) {
-    const notesRef = ref(rtdb, `notes/${retroId}`);
+    const notesRef = query(
+      ref(rtdb, `notes/${retroId}`),
+      orderByChild("createdDate", "desc")
+    );
     onValue(notesRef, (snapshot) => {
       let docs = [];
       snapshot.forEach((childSnapshot) => {
