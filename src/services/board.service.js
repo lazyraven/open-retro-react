@@ -9,7 +9,9 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  query,
   updateDoc,
+  orderBy,
 } from "firebase/firestore";
 
 export default {
@@ -48,9 +50,9 @@ export default {
   },
 
   async getBoardRetros({ boardId }) {
-    const querySnapshot = await getDocs(
-      collection(db, "boards", boardId, "retros")
-    );
+    const retrosRef = collection(db, "boards", boardId, "retros");
+    const q = query(retrosRef, orderBy("createdDate", "desc"));
+    const querySnapshot = await getDocs(q);
     const docs = [];
     querySnapshot.forEach((doc) => {
       docs.push({ id: doc.id, path: doc.ref.path, ...doc.data() });
