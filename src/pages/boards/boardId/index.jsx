@@ -115,7 +115,7 @@ export default function BoardId() {
           <p className="text-white text-center">Loading...</p>
         </div>
       ) : (
-        <div className="container mx-auto px-6 md:px-12">
+        <div className="container mx-auto px-4 md:px-12">
           <div className="flex flex-col gap-1 min-h-screen ">
             <div className="flex justify-between mt-2 items-center py-1 gap-3">
               <div className="flex flex-col gap-1">

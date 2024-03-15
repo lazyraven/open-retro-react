@@ -21,7 +21,7 @@ export default function NewBoardModal(props) {
     return {
       boardName: "",
       createdBy: "",
-      createdDate: new Date().toDateString(),
+      createdDate: new Date().getTime(),
     };
   }
 

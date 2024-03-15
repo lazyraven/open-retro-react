@@ -18,3 +18,9 @@ export function setBoardMemberLocalStorage({ boardId, member }) {
 export function getBoardMemberLocalStorage({ boardId }) {
   return getLocalStorage("boardMember")[boardId] || getLocalStorage("member");
 }
+
+export function parseDateTime(timeNumber) {
+  return typeof timeNumber === "number"
+    ? new Date(timeNumber).toDateString()
+    : timeNumber;
+}

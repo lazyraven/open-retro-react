@@ -28,7 +28,7 @@ export default function BaseButton(props) {
       classes += " px-6 py-1.5";
       break;
     case "S":
-      classes += " px-3 py-0.5";
+      classes += " px-3 py-0.5 text-sm";
       break;
     default:
       classes += " px-4 py-1";

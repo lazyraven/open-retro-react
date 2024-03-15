@@ -12,7 +12,7 @@ export default function BaseForm(props) {
   const today = new Date().toDateString();
   const [retroModel, setRetroModel] = useState({
     retroName: `Retro ${today.slice(4, today.length)}`,
-    createdDate: new Date().toDateString(),
+    createdDate: new Date().getTime(),
   });
 
   const openModal = () => {

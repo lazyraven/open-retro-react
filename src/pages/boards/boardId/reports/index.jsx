@@ -4,6 +4,7 @@ import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
+import { parseDateTime } from "@/utils/common.util";
 
 export default function Reports() {
   const [pdfSrc, setPdfSrc] = useState("");
@@ -72,7 +73,7 @@ export default function Reports() {
                   </div>
                 </div>
                 <div className="text-xs text-zinc-400 py-2 gap-2">
-                  {retroDetails.createdDate}
+                  {parseDateTime(retroDetails.createdDate)}
                 </div>
                 <div className="flex justify-end gap-2 mt-5">
                   <button
