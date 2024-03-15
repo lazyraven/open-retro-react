@@ -1,26 +1,21 @@
 import { useEffect, useState, useContext } from "react";
 import { Outlet, NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BaseIcon from "@/components/BaseIcon";
-import BaseButton from "@/components/BaseButton";
-import { ICONS } from "@/helpers/constant";
-import { buildQRImage } from "@/helpers/constant";
 import memberService from "@/services/member.service";
 import {
   getBoardMemberLocalStorage,
   setBoardMemberLocalStorage,
 } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
-import ExportBoard from "@/components/ExportBoard";
+import ShareBoardModal from "@/page-components/boards/ShareBoardModal";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
-  const [shareBoard, setShareBoard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const storedMember = getBoardMemberLocalStorage({ boardId: board.id });
   const boardRetroUrl = `${window.location.origin}/boards/${board.id}/retros`;
-
   const [isOpen, setIsOpen] = useState(true);
+
   const params = useParams();
 
   const [memberModel, setMemberModel] = useState({
@@ -47,19 +42,6 @@ export default function BoardId() {
   useEffect(() => {
     getBoardRecord();
   }, []);
-
-  const handelOpenShareModal = () => {
-    setShareBoard(true);
-  };
-
-  const handelCloseShareModal = () => {
-    setShareBoard(false);
-  };
-
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    toast.success(`URL copied!`);
-  };
 
   const handleMemberFormSubmit = async (event) => {
     try {
@@ -91,7 +73,6 @@ export default function BoardId() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  // console.log("board", board);
   return (
     <>
       {isLoading ? (
@@ -115,86 +96,18 @@ export default function BoardId() {
           <p className="text-white text-center">Loading...</p>
         </div>
       ) : (
-        <div className="container mx-auto px-6 md:px-12">
+        <div className="container mx-auto px-4 md:px-12">
           <div className="flex flex-col gap-1 min-h-screen ">
             <div className="flex justify-between mt-2 items-center py-1 gap-3">
               <div className="flex flex-col gap-1">
                 <h1 className="text-2xl text-zinc-200">📋{board.boardName}</h1>
                 <h3 className="text-zinc-500">{board.createdBy}</h3>
               </div>
-              <div className="flex  gap-2">
-                <button
-                  type="button"
-                  onClick={handelOpenShareModal}
-                  className="flex gap-1 items-center px-3 py-1 border border-blue-500  text-blue-500 rounded-md bg-zinc-900 shadow-2xl"
-                >
-                  <BaseIcon
-                    iconName={ICONS.ArrowUpOnSquare}
-                    className="flex h-5 w-5 text-blue-500"
-                  ></BaseIcon>
-                  Share
-                </button>
 
-                {shareBoard && (
-                  <div
-                    className="relative z-10"
-                    aria-labelledby="modal-title"
-                    role="dialog"
-                    aria-modal="true"
-                  >
-                    <div className="fixed inset-0 bg-zinc-700 bg-opacity-70 backdrop-blur-sm transition-opacity"></div>
-                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div className="relative transform overflow-hidden rounded-lg bg-white text-left transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                          <div className="flex gap-y-5 flex-col justify-center p-8 bg-zinc-900  text-white relative">
-                            <button
-                              onClick={handelCloseShareModal}
-                              className="absolute right-6 top-5"
-                            >
-                              <BaseIcon
-                                iconName={ICONS.Close}
-                                className="flex text-zinc-200 h-6 w-6"
-                              ></BaseIcon>
-                            </button>
-                            <h4 className="text-zinc-200 text-xl text-center">
-                              Share Board
-                            </h4>
-                            <div className="flex items-stretch w-full gap-2 justify-center">
-                              <input
-                                type="text"
-                                disabled
-                                value={boardRetroUrl}
-                                className="bg-zinc-800 grow border-zinc-700 border rounded-sm py-1.5 px-3 text-zinc-400"
-                              />
-                              <BaseButton
-                                theme="SECONDARY"
-                                type="button"
-                                onClick={() => copyToClipboard(boardRetroUrl)}
-                              >
-                                COPY
-                              </BaseButton>
-                            </div>
-                            <span className="text-center text-zinc-200">
-                              OR
-                            </span>
-                            <h2 className="text-center text-zinc-200">
-                              People can also join with QR Code:
-                            </h2>
-
-                            <img
-                              src={buildQRImage(boardRetroUrl)}
-                              alt=""
-                              className="w-32 m-auto"
-                            />
-                            <hr className="mt-2" />
-                            <ExportBoard board={board}></ExportBoard>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <ShareBoardModal
+                boardRetroUrl={boardRetroUrl}
+                board={board}
+              ></ShareBoardModal>
             </div>
 
             {storedMember?.name ? (
