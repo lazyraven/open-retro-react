@@ -1,7 +1,7 @@
 import dashboardImage from "@/assets/images/dashboard.svg";
 import CompanyCollaborations from "@/components/CompanyCollaboration";
 import GetAPreview from "@/components/GetAPreview";
-import NewBoardModal from "@/page-components/boards/NewBoardModal";
+import CreateBoardModal from "@/page-components/boards/CreateBoardModal";
 import Footer from "@/page-components/Footer";
 
 function HomePage() {
@@ -23,7 +23,7 @@ function HomePage() {
                   interface. Perfect for all teams! 🚀
                 </p>
               </div>
-              <NewBoardModal></NewBoardModal>
+              <CreateBoardModal></CreateBoardModal>
             </div>
             <div className="w-full flex justify-center py-5">
               <div>

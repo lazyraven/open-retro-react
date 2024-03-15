@@ -6,7 +6,10 @@ import BaseFirstChar from "./BaseFirstChar";
 import notesService from "@/services/notes.service";
 import BaseTextarea from "@/components/form-inputs/BaseTextarea";
 import BaseButton from "@/components/BaseButton";
+import BaseConfirm from "@/components/BaseConfirm";
+
 import { getBoardMemberLocalStorage } from "@/utils/common.util";
+import { toast } from "react-toastify";
 
 export default function EditNote(props) {
   const { note, boardId } = props;
@@ -61,13 +64,13 @@ export default function EditNote(props) {
     }
   };
 
-  const deleteNote = async (e) => {
-    e.preventDefault();
+  const deleteNote = async () => {
     try {
       await notesService.deleteRetroNote({
         retroId: params.retroId,
         noteId: note.id,
       });
+      toast.success("Note deleted successfully.");
     } catch (e) {
       console.log(e);
     }
@@ -133,12 +136,18 @@ export default function EditNote(props) {
                         iconName={ICONS.Edit}
                       ></BaseIcon>
                     </button>
-                    <button onClick={deleteNote} className="">
-                      <BaseIcon
-                        className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
-                        iconName={ICONS.Delete}
-                      ></BaseIcon>
-                    </button>
+                    <BaseConfirm
+                      confirmTitle="Delete Note"
+                      confirmText="Are you sure? you want to delete this note."
+                      onConfirm={deleteNote}
+                    >
+                      <button type="button">
+                        <BaseIcon
+                          className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                          iconName={ICONS.Delete}
+                        ></BaseIcon>
+                      </button>
+                    </BaseConfirm>
                   </div>
                 )}
               </div>
