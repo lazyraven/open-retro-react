@@ -87,33 +87,38 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
 
   return (
     <>
-      <button
+      <BaseButton
+        theme="SECONDARY"
+        size="M"
         type="button"
         onClick={showShareModal}
-        className="flex gap-1 items-center px-3 py-1 border border-blue-500  text-blue-500 rounded-md bg-zinc-900 shadow-2xl"
       >
-        <BaseIcon
-          iconName={ICONS.ArrowUpOnSquare}
-          className="flex h-5 w-5 text-blue-500"
-        ></BaseIcon>
-        Share
-      </button>
+        <div className="flex gap-1">
+          <BaseIcon
+            iconName={ICONS.ArrowUpOnSquare}
+            className="flex h-5 w-5 text-zinc-200"
+          ></BaseIcon>
+          Share
+        </div>
+      </BaseButton>
+
       <BaseModal isOpen={isOpen} setIsOpen={closeShareModal}>
-        <div className="flex gap-y-6 flex-col justify-center p-6 md:p-8 bg-zinc-900  text-zinc-50">
+        <div className="flex flex-col gap-y-6 justify-center p-4 md:p-6 bg-zinc-900 text-zinc-50">
           <div className="flex flex-col gap-y-1">
             <div className="flex justify-center mb-6 relative">
               <h4 className="text-zinc-200 text-xl text-center">Share Board</h4>
-              <button
-                onClick={closeShareModal}
+              <BaseButton
+                theme="TRANSPARENT"
                 className="absolute right-0 p-1"
+                onClick={closeShareModal}
               >
                 <BaseIcon
                   iconName={ICONS.Close}
-                  className="flex text-zinc-200 h-6 w-6"
+                  className="flex text-zinc-200 hover:text-zinc-100 h-6 w-6"
                 ></BaseIcon>
-              </button>
+              </BaseButton>
             </div>
-            <div className="flex flex-col gap-y-3">
+            <div className="flex flex-col gap-y-2">
               <div className="flex items-stretch w-full gap-2 justify-center">
                 <input
                   type="text"
@@ -124,6 +129,7 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
                 <BaseButton
                   theme="SECONDARY"
                   type="button"
+                  size="M"
                   onClick={() => copyToClipboard(boardRetroUrl)}
                 >
                   Copy
@@ -137,13 +143,13 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
               <img
                 src={buildQRImage(boardRetroUrl)}
                 alt=""
-                className="w-32 m-auto"
+                className="w-24 md:w-28 m-auto"
               />
             </div>
           </div>
 
-          <div className="flex flex-col px-4 py-6 border rounded-xl border-zinc-700 bg-blue-50">
-            <h3 className="text-center text-xl text-zinc-800 font-semibold mb-3">
+          <div className="flex flex-col px-4 py-3 md:py-5 border rounded-xl border-zinc-700 bg-blue-50">
+            <h3 className="text-center text-xl text-zinc-800 font-semibold mb-2">
               Hi {board.createdBy} 👋
             </h3>
 
@@ -156,12 +162,12 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
               text="Bookmark or save the board link somewhere. We also encourage you to email it to yourself."
             ></BaseAlert>
 
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-y-4 px-3"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col px-3">
               <div className="flex flex-col gap-y-1 w-full">
-                <label htmlFor="" className="text-zinc-800 font-semibold">
+                <label
+                  htmlFor=""
+                  className="text-zinc-800 text-sm font-semibold"
+                >
                   Email
                 </label>
                 <input
@@ -170,20 +176,27 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
                   value={email}
                   onChange={handleEmailChange}
                   required
-                  placeholder="example@gmail.com"
+                  placeholder="user@gmail.com"
                   className=" border-zinc-300 border rounded-sm py-1.5 px-3 w-full text-zinc-800"
                 />
               </div>
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              {errorMessage && (
+                <p className="text-sm" style={{ color: "red" }}>
+                  {errorMessage}
+                </p>
+              )}
 
-              <div className="flex justify-end">
-                <button
+              <div className="flex justify-end mt-3">
+                <BaseButton
+                  theme="DARK"
                   type="submit"
+                  size="L"
+                  radius="rounded-full"
                   disabled={!isValidEmail}
-                  className="px-5 py-2 rounded-full font-semibold text-zinc-50 bg-zinc-800 hover:bg-zinc-700"
+                  title={isValidEmail ? "Send" : "Enter email"}
                 >
                   Send
-                </button>
+                </BaseButton>
               </div>
             </form>
           </div>

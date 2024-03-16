@@ -8,6 +8,7 @@ import EditNote from "@/components/EditNote";
 import { toast } from "react-toastify";
 import notesService from "@/services/notes.service";
 import { parseDateTime } from "@/utils/common.util";
+import BaseButton from "@/components/BaseButton";
 
 export default function RetroId() {
   const tileSectionConfigs = {
@@ -164,17 +165,21 @@ export default function RetroId() {
           </div>
         ))}
       </div>
-      <button
-        type="button"
+
+      <BaseButton
+        theme="PRIMARY"
+        size="XL"
+        className="fixed right-4 bottom-4 !bg-blue-500 shadow-2xl"
         onClick={downloadPdf}
-        className="flex gap-1 items-center px-4 fixed right-4 bottom-4 py-2 border border-blue-500  text-white rounded-md bg-blue-500 shadow-2xl"
       >
-        <BaseIcon
-          iconName={ICONS.Bolt}
-          className="flex h-5 w-5 text-white"
-        ></BaseIcon>
-        Generate Report
-      </button>
+        <div className="flex gap-1 items-center">
+          <BaseIcon
+            iconName={ICONS.Bolt}
+            className="flex h-5 w-5 text-zinc-50"
+          ></BaseIcon>
+          <span className="text-zinc-50">Generate Report</span>
+        </div>
+      </BaseButton>
     </div>
   );
 }
