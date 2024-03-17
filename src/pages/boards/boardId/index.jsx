@@ -1,26 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import { Outlet, NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import memberService from "@/services/member.service";
-import {
-  getBoardMemberLocalStorage,
-  setBoardMemberLocalStorage,
-} from "@/utils/common.util";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
 import ShareBoardModal from "@/page-components/boards/ShareBoardModal";
+import JoinBoardModal from "@/page-components/boards/JoinBoardModal";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
   const [isLoading, setIsLoading] = useState(true);
   const storedMember = getBoardMemberLocalStorage({ boardId: board.id });
   const boardRetroUrl = `${window.location.origin}/boards/${board.id}/retros`;
-  const [isOpen, setIsOpen] = useState(true);
 
   const params = useParams();
-
-  const [memberModel, setMemberModel] = useState({
-    name: "",
-  });
 
   const tabs = [
     { name: "Retros", to: "retros" },
@@ -43,36 +35,6 @@ export default function BoardId() {
     getBoardRecord();
   }, []);
 
-  const handleMemberFormSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      const addMemberResult = await memberService.addMember(
-        { boardId: params.boardId },
-        memberModel
-      );
-
-      setBoardMemberLocalStorage({
-        boardId: board.id,
-        member: addMemberResult,
-      });
-      setIsOpen(false);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const handleMemberModelChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setMemberModel({
-      ...memberModel,
-      [name]: value,
-    });
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
   return (
     <>
       {isLoading ? (
@@ -119,8 +81,8 @@ export default function BoardId() {
                         to={tab.to}
                         className={({ isActive }) =>
                           isActive
-                            ? "px-4 py-4 text-sm font-medium text-blue-500 whitespace-nowrap border-b border-blue-500"
-                            : "px-4 py-4 text-sm text-zinc-200 whitespace-nowrap font-medium"
+                            ? "px-4 py-4 text-sm font-semibold text-blue-500 whitespace-nowrap border-b border-blue-500"
+                            : "px-4 py-4 text-sm text-zinc-200 whitespace-nowrap font-semibold"
                         }
                       >
                         {tab.name}
@@ -131,68 +93,7 @@ export default function BoardId() {
                 <Outlet></Outlet>
               </>
             ) : (
-              isOpen && (
-                <div
-                  className="relative z-10"
-                  aria-labelledby="modal-title"
-                  role="dialog"
-                  aria-modal="true"
-                >
-                  <div className="fixed inset-0 bg-gradient-to-b from-zinc-600 bg-opacity-75 backdrop-blur-sm transition-opacity"></div>
-                  <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                      <div className="relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                        <div className="flex gap-5 flex-col justify-center p-8 bg-zinc-900  text-white">
-                          <div className="flex flex-col gap-y-1 justify-center items-center">
-                            <h3 className="text-2xl text-zinc-200">Hi 👋</h3>
-                            <p className="text-zinc-300 mt-4">
-                              Please enter your name to access.
-                            </p>
-                            <h6 className="text-2xl text-zinc-100">
-                              📋 {board.boardName}
-                            </h6>
-                          </div>
-                          <form
-                            onSubmit={handleMemberFormSubmit}
-                            className="flex flex-col gap-y-4 px-8"
-                          >
-                            <div className="flex flex-col gap-2">
-                              <div className="">
-                                <label htmlFor="" className="text-zinc-200">
-                                  Name*
-                                </label>
-                              </div>
-                              <input
-                                type="text"
-                                name="name"
-                                required
-                                value={memberModel.name}
-                                onChange={handleMemberModelChange}
-                                className="bg-zinc-800 border-zinc-700 border rounded-sm py-1.5 px-3"
-                              />
-                            </div>
-                            <div className="flex gap-3 items-center justify-end mt-4 text-white">
-                              <button
-                                type="button"
-                                onClick={closeModal}
-                                className="px-4 py-1 rounded-sm text-white"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                type="submit"
-                                className="px-4 py-1 rounded-sm text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
-                              >
-                                Submit
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
+              <JoinBoardModal board={board}></JoinBoardModal>
             )}
           </div>
         </div>

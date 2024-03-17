@@ -83,7 +83,7 @@ export default function BaseAlert({ type, title, text, alertIcon }) {
       </div>
       <div className={"flex flex-col gap-y-1 " + classes.text}>
         <h6 className={"font-semibold " + classes.title}>{title}</h6>
-        <p className={classes.text}>{text}</p>
+        <p className={"text-sm " + classes.text}>{text}</p>
       </div>
     </div>
   );

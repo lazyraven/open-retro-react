@@ -20,7 +20,7 @@ export default function GetAPreview() {
         </div>
         <div className="basis-1/3 px-5 flex items-center justify-center">
           <div className="text-zinc-100 flex flex-col gap-4 leading-8 shadow-sm rounded-lg bg-zinc-50 pr-5 pl-6 lg:pl-10 pt-8 pb-4 lg:pb-8 -translate-y-10 lg:translate-y-0 lg:-translate-x-16">
-            <h3 className="text-xl lg:text-3xl text-zinc-800 font-medium">
+            <h3 className="text-xl lg:text-3xl text-zinc-800 font-semibold">
               Retro Board 📋
             </h3>
             <ul className="list-disc bullet-points">
@@ -44,7 +44,7 @@ export default function GetAPreview() {
         </div>
         <div className="basis-1/3 px-5 flex items-center justify-center">
           <div className="text-zinc-100 flex flex-col gap-4 leading-8 shadow-sm rounded-lg bg-zinc-50 pl-5 pr-6 lg:pr-10 pt-8 pb-4 lg:pb-8 -translate-y-10 lg:translate-y-0 lg:translate-x-20">
-            <h3 className="text-xl lg:text-3xl text-zinc-800 font-medium">
+            <h3 className="text-xl lg:text-3xl text-zinc-800 font-semibold">
               Scrum Poker 🃏
             </h3>
             <ul className="list-disc bullet-points">

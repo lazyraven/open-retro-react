@@ -47,65 +47,55 @@ export default function EditNote(props) {
     setEditMode(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const noteDetail = {
       description: editedDescription,
       noteId: note.id,
     };
-    e.preventDefault();
-    try {
-      await notesService.updateRetroNote(
-        { retroId: params.retroId, noteId: note.id },
-        noteDetail
-      );
-      setEditMode(false);
-    } catch (e) {
-      console.log(e);
-    }
+    await notesService.updateRetroNote(
+      { retroId: params.retroId, noteId: note.id },
+      noteDetail
+    );
+    setEditMode(false);
   };
 
   const deleteNote = async () => {
-    try {
-      await notesService.deleteRetroNote({
-        retroId: params.retroId,
-        noteId: note.id,
-      });
-      toast.success("Note deleted successfully.");
-    } catch (e) {
-      console.log(e);
-    }
+    await notesService.deleteRetroNote({
+      retroId: params.retroId,
+      noteId: note.id,
+    });
+    toast.success("Note deleted successfully.");
   };
 
   return (
     <>
       {isEditMode ? (
-        <div className="flex border border-zinc-700 rounded-md">
+        <div className="flex rounded-md border border-zinc-700 bg-zinc-800 ">
           <div
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
           <div className="grow">
-            <form onSubmit={handleSubmit} className="w-full p-1 bg-zinc-800">
-              <div className="grow">
-                <BaseTextarea
-                  name="editedDescription"
-                  value={editedDescription}
-                  onChange={handleChange}
-                  className={`p-2 w-full bg-zinc-800 rounded-sm text-zinc-200 outline-none`}
-                ></BaseTextarea>
-              </div>
+            <form className="w-full px-3 py-2 bg-zinc-800">
+              <BaseTextarea
+                name="editedDescription"
+                value={editedDescription}
+                onChange={handleChange}
+                className={`w-full bg-zinc-800 rounded-sm text-zinc-200 outline-none`}
+              ></BaseTextarea>
 
-              <div className="flex justify-end gap-3 p-1">
-                <button type="button" onClick={closeEditDescription}>
+              <div className="flex justify-end gap-2 p-1">
+                <BaseButton theme="TRANSPARENT" onClick={closeEditDescription}>
                   <BaseIcon
                     iconName={ICONS.Close}
                     className="flex h-5 w-5 text-zinc-200"
                   ></BaseIcon>
-                </button>
+                </BaseButton>
+
                 <BaseButton
                   theme="PRIMARY"
-                  type="submit"
                   radius="rounded-full"
                   size="S"
+                  onClick={handleSubmit}
                 >
                   Save
                 </BaseButton>
@@ -114,43 +104,43 @@ export default function EditNote(props) {
           </div>
         </div>
       ) : (
-        <div
-          className={` flex flex-col w-full justify-between rounded-md border-zinc-300 relative bg-zinc-800`}
-        >
-          <div className="flex">
-            <div
-              className={` flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md h-34 w-2`}
-            ></div>
-            <div className="flex flex-col gap-y-3 px-3 py-2 w-full parent relative">
-              <p className="text-zinc-300">{note.description}</p>
-              <div className="flex justify-between p-1 items-center gap-2 border-zinc-700">
-                <div className="flex gap-1 items-center">
-                  <BaseFirstChar word={note?.createdBy}></BaseFirstChar>
-                  <p className="text-zinc-200 text-xs">{note.createdBy}</p>
-                </div>
-                {isMemberCreator && (
-                  <div className="child flex gap-3">
-                    <button onClick={editDescriptionModal} className="">
+        <div className="flex justify-between rounded-md border border-zinc-700 bg-zinc-800">
+          <div
+            className={`flex-none ${descriptionClasses()} rounded-tl-md rounded-bl-md w-1.5`}
+          ></div>
+          <div className="flex flex-col gap-y-3 px-3 py-2 w-full parent relative">
+            <p className="text-zinc-300">{note.description}</p>
+            <div className="flex justify-between items-center gap-2">
+              <div className="flex gap-1 items-center min-h-[26px]">
+                <BaseFirstChar word={note?.createdBy}></BaseFirstChar>
+                <p className="text-zinc-200 text-xs">{note.createdBy}</p>
+              </div>
+              {isMemberCreator && (
+                <div className="child flex gap-1">
+                  <BaseButton
+                    theme="TRANSPARENT"
+                    onClick={editDescriptionModal}
+                  >
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                      iconName={ICONS.Edit}
+                    ></BaseIcon>
+                  </BaseButton>
+
+                  <BaseConfirm
+                    confirmTitle="Delete Note"
+                    confirmText="Are you sure? you want to delete this note."
+                    onConfirm={deleteNote}
+                  >
+                    <BaseButton theme="TRANSPARENT">
                       <BaseIcon
                         className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
-                        iconName={ICONS.Edit}
+                        iconName={ICONS.Delete}
                       ></BaseIcon>
-                    </button>
-                    <BaseConfirm
-                      confirmTitle="Delete Note"
-                      confirmText="Are you sure? you want to delete this note."
-                      onConfirm={deleteNote}
-                    >
-                      <button type="button">
-                        <BaseIcon
-                          className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
-                          iconName={ICONS.Delete}
-                        ></BaseIcon>
-                      </button>
-                    </BaseConfirm>
-                  </div>
-                )}
-              </div>
+                    </BaseButton>
+                  </BaseConfirm>
+                </div>
+              )}
             </div>
           </div>
         </div>

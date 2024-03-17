@@ -13,24 +13,15 @@
 }
 
 #content{
-    /* padding: 4px; */
     width: 100%;
     height:100%;
-    /* color:black; */
-    /* background-color: aliceblue; */
 }
 
-/* .parent {
-    position: relative;
-  } */
+.child {
+  display: none;
+}
 
-  .child {
-    /* position: absolute; */
-    /* right: 2%; */
-    display: none;
-  }
-
-  .parent:hover .child {
-    display: flex;
-    gap: 6px;
-  }
+.parent:hover .child {
+  display: flex;
+  gap: 6px;
+}
