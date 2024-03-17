@@ -47,18 +47,11 @@ export default function BaseForm(props) {
     }
   }, [isOpen]);
 
-  const handleSave = async (done) => {
-    try {
-      await boardService.createRetro({ boardId: params.boardId }, retroModel);
-      closeModal();
-      props.getBoardRetros();
-      toast.success("Successfully retro created !!");
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log("hanlde save caled");
-      done();
-    }
+  const handleSave = async () => {
+    await boardService.createRetro({ boardId: params.boardId }, retroModel);
+    closeModal();
+    props.getBoardRetros();
+    toast.success("Retro created successfully.");
   };
 
   return (
@@ -73,7 +66,9 @@ export default function BaseForm(props) {
             <BaseButton
               theme="TRANSPARENT"
               className="absolute right-0 p-1"
-              onClick={closeModal}
+              onClick={() => {
+                closeModal();
+              }}
             >
               <BaseIcon
                 iconName={ICONS.Close}

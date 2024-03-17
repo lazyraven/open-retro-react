@@ -47,33 +47,24 @@ export default function EditNote(props) {
     setEditMode(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const noteDetail = {
       description: editedDescription,
       noteId: note.id,
     };
-    e.preventDefault();
-    try {
-      await notesService.updateRetroNote(
-        { retroId: params.retroId, noteId: note.id },
-        noteDetail
-      );
-      setEditMode(false);
-    } catch (e) {
-      console.log(e);
-    }
+    await notesService.updateRetroNote(
+      { retroId: params.retroId, noteId: note.id },
+      noteDetail
+    );
+    setEditMode(false);
   };
 
   const deleteNote = async () => {
-    try {
-      await notesService.deleteRetroNote({
-        retroId: params.retroId,
-        noteId: note.id,
-      });
-      toast.success("Note deleted successfully.");
-    } catch (e) {
-      console.log(e);
-    }
+    await notesService.deleteRetroNote({
+      retroId: params.retroId,
+      noteId: note.id,
+    });
+    toast.success("Note deleted successfully.");
   };
 
   return (
@@ -84,10 +75,7 @@ export default function EditNote(props) {
             className={`flex-none w-2 ${descriptionClasses()} rounded-tl-md rounded-bl-md`}
           ></div>
           <div className="grow">
-            <form
-              onSubmit={handleSubmit}
-              className="w-full px-3 py-2 bg-zinc-800"
-            >
+            <form className="w-full px-3 py-2 bg-zinc-800">
               <BaseTextarea
                 name="editedDescription"
                 value={editedDescription}
@@ -105,9 +93,9 @@ export default function EditNote(props) {
 
                 <BaseButton
                   theme="PRIMARY"
-                  type="submit"
                   radius="rounded-full"
                   size="S"
+                  onClick={handleSubmit}
                 >
                   Save
                 </BaseButton>

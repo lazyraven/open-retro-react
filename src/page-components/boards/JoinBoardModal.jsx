@@ -14,23 +14,18 @@ export default function JoinBoardModal({ board }) {
     name: "",
   });
 
-  const handleMemberFormSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      const addMemberResult = await memberService.addMember(
-        { boardId: board.id },
-        memberModel
-      );
+  const handleMemberFormSubmit = async () => {
+    const addMemberResult = await memberService.addMember(
+      { boardId: board.id },
+      memberModel
+    );
 
-      setBoardMemberLocalStorage({
-        boardId: board.id,
-        member: addMemberResult,
-      });
-      setIsOpen(false);
-      location.reload(true);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    setBoardMemberLocalStorage({
+      boardId: board.id,
+      member: addMemberResult,
+    });
+    setIsOpen(false);
+    location.reload(true);
   };
 
   const handleMemberModelChange = (event) => {
@@ -60,10 +55,7 @@ export default function JoinBoardModal({ board }) {
           </p>
           <h6 className="text-xl text-zinc-100 mb-2">📋 {board.boardName}</h6>
         </div>
-        <form
-          onSubmit={handleMemberFormSubmit}
-          className="flex flex-col gap-y-4 px-3 md:px-6 w-full"
-        >
+        <form className="flex flex-col gap-y-4 px-3 md:px-6 w-full">
           <BaseInput
             ref={memberNameInputRef}
             labelName="Name*"
@@ -75,10 +67,10 @@ export default function JoinBoardModal({ board }) {
 
           <div className="flex gap-4 items-center justify-end mt-4">
             <BaseButton
-              type="submit"
               theme="PRIMARY"
               size="XL"
               radius="rounded-full"
+              onClick={handleMemberFormSubmit}
             >
               Submit
             </BaseButton>

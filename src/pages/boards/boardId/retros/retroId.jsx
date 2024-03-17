@@ -95,18 +95,14 @@ export default function RetroId() {
 
   const downloadPdf = async () => {
     const input = pdfRef.current;
-    try {
-      const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
-      const pdfResult = await boardService.generateAndUploadPdf({
-        storagePath: reportSrc,
-        fileName: `${params.retroId}.pdf`,
-        htmlInput: input,
-      });
-      toast.success("PDF report generated successfully. Check reports tab.");
-      updateGenratePdf();
-    } catch (error) {
-      toast.error("Error occurred, while uploading file.");
-    }
+    const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
+    const pdfResult = await boardService.generateAndUploadPdf({
+      storagePath: reportSrc,
+      fileName: `${params.retroId}.pdf`,
+      htmlInput: input,
+    });
+    toast.success("PDF report generated successfully. Check reports tab.");
+    await updateGenratePdf();
   };
 
   const updateGenratePdf = async () => {

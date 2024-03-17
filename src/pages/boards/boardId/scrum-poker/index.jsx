@@ -58,21 +58,17 @@ export default function ScrumPoker() {
   }
 
   const resetScrumPoker = async () => {
-    try {
-      await pokerService.deleteAllPokerVote({
-        boardId: params.boardId,
-      });
-      await pokerService.updatePokerState(
-        { boardId: params.boardId },
-        {
-          ...pokerUIState,
-          show: false,
-        }
-      );
-      toast.success("Scrum Poker reset successfully.");
-    } catch (error) {
-      toast.error(error.message);
-    }
+    await pokerService.deleteAllPokerVote({
+      boardId: params.boardId,
+    });
+    await pokerService.updatePokerState(
+      { boardId: params.boardId },
+      {
+        ...pokerUIState,
+        show: false,
+      }
+    );
+    toast.success("Scrum Poker was reset successfully.");
   };
 
   useEffect(() => {

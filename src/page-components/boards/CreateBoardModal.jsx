@@ -42,31 +42,26 @@ export default function CreateBoardModal(props) {
     });
   };
 
-  const handleCreateBoard = async (e) => {
-    e.preventDefault();
-    try {
-      const newBoard = await boardService.createBoard(boardModel);
-      if (newBoard && newBoard.id) {
-        logSignUpAnalytics();
-        const addMemberResult = await memberService.addMember(
-          { boardId: newBoard.id },
-          { name: boardModel.createdBy }
-        );
-        setBoardMemberLocalStorage({
-          boardId: newBoard.id,
-          member: addMemberResult,
-        });
-        const boardUpdate = await boardService.updateBoardOwner(
-          { boardId: newBoard.id },
-          { owner: addMemberResult.id }
-        );
-        toast.success(
-          `${boardModel.createdBy} your board is created Successfully !!`
-        );
-        navigate(`/boards/${newBoard.id}/retros?share=true`);
-      }
-    } catch (e) {
-      toast.error(e.message);
+  const handleCreateBoard = async () => {
+    const newBoard = await boardService.createBoard(boardModel);
+    if (newBoard && newBoard.id) {
+      logSignUpAnalytics();
+      const addMemberResult = await memberService.addMember(
+        { boardId: newBoard.id },
+        { name: boardModel.createdBy }
+      );
+      setBoardMemberLocalStorage({
+        boardId: newBoard.id,
+        member: addMemberResult,
+      });
+      const boardUpdate = await boardService.updateBoardOwner(
+        { boardId: newBoard.id },
+        { owner: addMemberResult.id }
+      );
+      toast.success(
+        `${boardModel.createdBy} your board is created Successfully !!`
+      );
+      navigate(`/boards/${newBoard.id}/retros?share=true`);
     }
   };
 
@@ -107,10 +102,7 @@ export default function CreateBoardModal(props) {
             </BaseButton>
           </div>
 
-          <form
-            onSubmit={handleCreateBoard}
-            className="flex flex-col gap-y-4 px-8"
-          >
+          <form className="flex flex-col gap-y-4 px-8">
             <BaseInput
               labelName="Date"
               name="createdDate"
@@ -137,10 +129,10 @@ export default function CreateBoardModal(props) {
 
             <div className="flex gap-4 items-center justify-end mt-4">
               <BaseButton
-                type="submit"
                 theme="PRIMARY"
                 size="XL"
                 radius="rounded-full"
+                onClick={handleCreateBoard}
               >
                 Create
               </BaseButton>

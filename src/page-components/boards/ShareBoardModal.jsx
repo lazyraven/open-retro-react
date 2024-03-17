@@ -45,8 +45,7 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
     toast.success(`URL copied!`);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     const data = {
       to: email,
       boardUrl: boardRetroUrl,
@@ -54,27 +53,22 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
       createdBy: board.createdBy,
       boardName: board.boardName,
     };
-
-    try {
-      const response = await fetch(
-        " https://api.justvegan.fit/mail/send-open-retro-welcome-mail",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send email data");
+    const response = await fetch(
+      " https://api.justvegan.fit/mail/send-open-retro-welcome-mail",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       }
-      setEmail("");
-      toast.success(`A mail has been sent successfully to ${email}`);
-    } catch (error) {
-      console.error("Error:", error.message);
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to send email data");
     }
+    setEmail("");
+    toast.success(`A mail has been sent successfully to ${email}`);
   };
 
   useEffect(() => {
@@ -130,7 +124,9 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
                   theme="SECONDARY"
                   type="button"
                   size="M"
-                  onClick={() => copyToClipboard(boardRetroUrl)}
+                  onClick={() => {
+                    copyToClipboard(boardRetroUrl);
+                  }}
                 >
                   Copy
                 </BaseButton>
@@ -162,7 +158,7 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
               text="Bookmark or save the board link somewhere. We also encourage you to email it to yourself."
             ></BaseAlert>
 
-            <form onSubmit={handleSubmit} className="flex flex-col px-3">
+            <form className="flex flex-col px-3">
               <div className="flex flex-col gap-y-1 w-full">
                 <label
                   htmlFor=""
@@ -189,10 +185,10 @@ export default function ShareBoardModal({ boardRetroUrl, board }) {
               <div className="flex justify-end mt-3">
                 <BaseButton
                   theme="DARK"
-                  type="submit"
                   size="L"
                   radius="rounded-full"
                   disabled={!isValidEmail}
+                  onClick={handleSubmit}
                   title={isValidEmail ? "Send" : "Enter email"}
                 >
                   Send

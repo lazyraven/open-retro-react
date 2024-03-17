@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function BaseButton(props) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const {
     theme,
     type,
@@ -15,6 +16,8 @@ export default function BaseButton(props) {
   } = props;
 
   let classes = "";
+  let spinnerClasses =
+    "text-gray-300 animate-spin dark:text-gray-600 fill-blue-600";
 
   if (radius) {
     classes += ` ${radius}`;
@@ -49,6 +52,9 @@ export default function BaseButton(props) {
       classes +=
         " text-red-700 border border-red-700 hover:border-red-600 hover:text-red-600 font-semibold";
       break;
+    case "DANGER-SOLID":
+      classes += " bg-red-600 hover:bg-red-500 text-zinc-50 font-semibold";
+      break;
     default:
       classes += " text-white";
   }
@@ -56,29 +62,41 @@ export default function BaseButton(props) {
   switch (size) {
     case "2XL":
       classes += " px-8 py-3";
+      spinnerClasses += " w-6 h-6";
       break;
     case "XL":
       classes += " px-7 py-2";
+      spinnerClasses += " w-6 h-6";
       break;
     case "L":
       classes += " px-6 py-1.5";
+      spinnerClasses += " w-6 h-6";
       break;
     case "M":
-      classes += " px-3 py-1";
+      classes += " px-3 py-1.5 text-sm";
+      spinnerClasses += " w-5 h-5";
       break;
     case "S":
       classes += " px-3 py-0.5 text-sm";
+      spinnerClasses += " w-4 h-4";
       break;
     default:
       classes += " p-1";
+      spinnerClasses += " w-4 h-4";
   }
 
   const onButtonClick = async (event) => {
-    event.prevenDefault();
-    setLoading(true);
-    onClick(() => {
-      setLoading(false);
-    });
+    try {
+      event.preventDefault();
+      if (typeof onClick === "function") {
+        setLoading(() => true);
+        await onClick();
+      }
+    } catch (error) {
+      toast.error(`Error occurred, ${error.message}`);
+    } finally {
+      setLoading(() => false);
+    }
   };
 
   return (
@@ -94,7 +112,7 @@ export default function BaseButton(props) {
           <div className="absolute flex items-center left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10">
             <svg
               aria-hidden="true"
-              className=" text-blue-500 inline w-5 h-5 animate-spin dark:text-gray-600 fill-blue-600"
+              className={spinnerClasses}
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
