@@ -93,6 +93,7 @@ export default function BaseForm(props) {
                 theme="PRIMARY"
                 size="XL"
                 radius="rounded-full"
+                disabled={!retroModel.retroName}
                 onClick={handleSave}
               >
                 Create
