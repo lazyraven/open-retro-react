@@ -71,6 +71,7 @@ export default function JoinBoardModal({ board }) {
               size="XL"
               radius="rounded-full"
               onClick={handleMemberFormSubmit}
+              disabled={!memberModel.name}
             >
               Submit
             </BaseButton>
