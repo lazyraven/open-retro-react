@@ -8,21 +8,21 @@ export default function SideNavbar() {
     { name: "Members", to: "members" },
   ];
   return (
-    <div className="flex flex-col gap-y-12 text-zinc-200">
-      <div className="py-2 text-white w-full">
+    <div className="flex flex-col gap-y-12 py-4 text-zinc-200 border-r border-zinc-700 min-h-screen shadow-lg">
+      <div className="py-4 text-white w-full px-4">
         <Link to="/" className="">
-          <img src={OpenRetroBanner} alt="" className="" />
+          <img src={OpenRetroBanner} alt="" className="max-w-[10rem]" />
         </Link>
       </div>
       <ul className="flex flex-col gap-3  border-zinc-700 mb-4 overflow-auto">
         {tabs.map((tab, index) => (
-          <li key={`tab-index-${index}`} className="flex">
+          <li key={`tab-index-${index}`} className="flex px-4">
             <NavLink
               to={tab.to}
               className={({ isActive }) =>
                 isActive
-                  ? "px-4 w-full py-2 text-sm font-medium text-zinc-200 bg-zinc-800 rounded-md whitespace-nowrap"
-                  : "px-4 w-full py-4 text-sm text-zinc-200 whitespace-nowrap font-medium"
+                  ? "px-4 w-full py-3 text-sm font-medium text-zinc-200 bg-zinc-800 rounded-md whitespace-nowrap border-r-4 border-blue-500"
+                  : "px-4 w-full py-3 text-sm text-zinc-200 whitespace-nowrap font-medium"
               }
             >
               {tab.name}
