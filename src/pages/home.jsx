@@ -3,10 +3,12 @@ import CompanyCollaborations from "@/components/CompanyCollaboration";
 import GetAPreview from "@/components/GetAPreview";
 import CreateBoardModal from "@/page-components/boards/CreateBoardModal";
 import Footer from "@/page-components/Footer";
+import BaseNavbar from "@/components/BaseNavbar";
 
 function HomePage() {
   return (
     <>
+      <BaseNavbar></BaseNavbar>
       <div className="bg-zinc-950">
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-col lg:flex-row-reverse">
