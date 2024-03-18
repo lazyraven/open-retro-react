@@ -58,21 +58,17 @@ export default function ScrumPoker() {
   }
 
   const resetScrumPoker = async () => {
-    try {
-      await pokerService.deleteAllPokerVote({
-        boardId: params.boardId,
-      });
-      await pokerService.updatePokerState(
-        { boardId: params.boardId },
-        {
-          ...pokerUIState,
-          show: false,
-        }
-      );
-      toast.success("Scrum Poker reset successfully.");
-    } catch (error) {
-      toast.error(error.message);
-    }
+    await pokerService.deleteAllPokerVote({
+      boardId: params.boardId,
+    });
+    await pokerService.updatePokerState(
+      { boardId: params.boardId },
+      {
+        ...pokerUIState,
+        show: false,
+      }
+    );
+    toast.success("Scrum Poker was reset successfully.");
   };
 
   useEffect(() => {
@@ -149,9 +145,13 @@ export default function ScrumPoker() {
           <div className="col-span-1 md:col-span-3 flex flex-col">
             <ul className="flex flex-col gap-1 p-2 items-center border border-zinc-700 rounded-md">
               <div className="flex justify-between w-full items-center p-2">
-                <span className="text-zinc-300 font-medium">Members</span>
+                <span className="text-zinc-300 font-semibold">Members</span>
                 {board?.owner == storedMember.id && (
-                  <BaseButton theme="SECONDARY" onClick={updatePokerState}>
+                  <BaseButton
+                    theme="SECONDARY"
+                    size="M"
+                    onClick={updatePokerState}
+                  >
                     {pokerUIState.show ? "Hide" : "Show"}
                   </BaseButton>
                 )}
@@ -171,7 +171,7 @@ export default function ScrumPoker() {
                   </div>
                   <div className="flex justify-center items-center min-h-[4rem] basis-16">
                     {pokerUIState.show ? (
-                      <span className="flex items-center justify-center h-12 w-10 text-xl font-medium bg-white rounded-xl text-zinc-800">
+                      <span className="flex items-center justify-center h-12 w-10 text-xl font-semibold bg-white rounded-xl text-zinc-800">
                         {memberVoteMap[member.id]?.point}
                       </span>
                     ) : (
@@ -183,7 +183,7 @@ export default function ScrumPoker() {
                 </li>
               ))}
               <div className="flex flex-col mt-12 mb-3">
-                <BaseButton theme="DANGER" onClick={resetScrumPoker}>
+                <BaseButton theme="DANGER" size="M" onClick={resetScrumPoker}>
                   Reset All
                 </BaseButton>
               </div>

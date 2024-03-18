@@ -31,31 +31,14 @@ export default function NewNote(props) {
     };
   }
 
-  // const getInputClasses = () => {
-  //   const { tagName } = props;
-  //   switch (tagName) {
-  //     case "went-well":
-  //       return "bg-teal-600";
-  //     case "to-improve":
-  //       return "bg-pink-600";
-  //     case "action-item":
-  //       return "bg-fuchsia-600";
-  //   }
-  // };
-
-  const handleSubmit = async (e, tagOption) => {
+  const handleSubmit = async (tagOption) => {
     notesModel.tagName = tagOption;
-    e.preventDefault();
-    try {
-      await notesService.createRetroNotes(
-        { boardId, retroId: params.retroId },
-        notesModel
-      );
-      setIsInputActive(false);
-      setNotesModel(initNewNotesModel());
-    } catch (e) {
-      toast.error(`Error occurred, ${e.message}`);
-    }
+    await notesService.createRetroNotes(
+      { boardId, retroId: params.retroId },
+      notesModel
+    );
+    setIsInputActive(false);
+    setNotesModel(initNewNotesModel());
   };
 
   return (
@@ -65,12 +48,7 @@ export default function NewNote(props) {
           className={`flex-none w-2 ${getInputClasses()} rounded-tl-md rounded-bl-md`}
         ></div> */}
         <div className="grow">
-          <form
-            onSubmit={(event) => {
-              handleSubmit(event, props.tagName);
-            }}
-            className="w-full p-1 bg-zinc-800"
-          >
+          <form className="w-full p-1 bg-zinc-800">
             <BaseTextarea
               name="description"
               value={notesModel.description}
@@ -88,9 +66,11 @@ export default function NewNote(props) {
               <div className="flex justify-end gap-2 p-1">
                 <BaseButton
                   theme="PRIMARY"
-                  type="submit"
                   radius="rounded-full"
                   size="S"
+                  onClick={async () => {
+                    await handleSubmit(props.tagName);
+                  }}
                 >
                   Save
                 </BaseButton>
