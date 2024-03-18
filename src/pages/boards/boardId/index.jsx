@@ -5,6 +5,7 @@ import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
 import ShareBoardModal from "@/page-components/boards/ShareBoardModal";
 import JoinBoardModal from "@/page-components/boards/JoinBoardModal";
+import SideNavbar from "@/components/SideNavbar";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
@@ -13,13 +14,6 @@ export default function BoardId() {
   const boardRetroUrl = `${window.location.origin}/boards/${board.id}/retros`;
 
   const params = useParams();
-
-  const tabs = [
-    { name: "Retros", to: "retros" },
-    { name: "Scrum Poker", to: "scrum-poker" },
-    { name: "Reports", to: "reports" },
-    { name: "Members", to: "members" },
-  ];
 
   const getBoardRecord = async function () {
     try {
@@ -58,45 +52,40 @@ export default function BoardId() {
           <p className="text-white text-center">Loading...</p>
         </div>
       ) : (
-        <div className="container mx-auto px-4 md:px-12">
-          <div className="flex flex-col gap-1 min-h-screen ">
-            <div className="flex justify-between mt-2 items-center py-1 gap-3">
-              <div className="flex flex-col gap-1">
-                <h1 className="text-2xl text-zinc-200">📋{board.boardName}</h1>
-                <h3 className="text-zinc-500">{board.createdBy}</h3>
-              </div>
-
-              <ShareBoardModal
-                boardRetroUrl={boardRetroUrl}
-                board={board}
-              ></ShareBoardModal>
+        <>
+          <div className="flex gap-x-6 w-full">
+            <div className="basis-52 shrink-0">
+              <SideNavbar></SideNavbar>
             </div>
+            <div className="basis-full px-3 py-4">
+              <div className="container mx-auto">
+                <div className="flex flex-col gap-1 min-h-screen ">
+                  <div className="flex justify-between mt-2 items-center p-3 gap-3 bg-zinc-800 border border-zinc-700 rounded-lg">
+                    <div className="flex flex-col gap-1">
+                      <h1 className="text-2xl text-zinc-200">
+                        📋{board.boardName}
+                      </h1>
+                      <h3 className="text-zinc-500">{board.createdBy}</h3>
+                    </div>
 
-            {storedMember?.name ? (
-              <>
-                <ul className="flex gap-3 border-b border-zinc-700 mb-4 overflow-auto">
-                  {tabs.map((tab, index) => (
-                    <li key={`tab-index-${index}`} className="flex">
-                      <NavLink
-                        to={tab.to}
-                        className={({ isActive }) =>
-                          isActive
-                            ? "px-4 py-4 text-sm font-semibold text-blue-500 whitespace-nowrap border-b border-blue-500"
-                            : "px-4 py-4 text-sm text-zinc-200 whitespace-nowrap font-semibold"
-                        }
-                      >
-                        {tab.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-                <Outlet></Outlet>
-              </>
-            ) : (
-              <JoinBoardModal board={board}></JoinBoardModal>
-            )}
+                    <ShareBoardModal
+                      boardRetroUrl={boardRetroUrl}
+                      board={board}
+                    ></ShareBoardModal>
+                  </div>
+
+                  {storedMember?.name ? (
+                    <div className="py-2">
+                      <Outlet></Outlet>
+                    </div>
+                  ) : (
+                    <JoinBoardModal board={board}></JoinBoardModal>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

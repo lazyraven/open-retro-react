@@ -121,8 +121,8 @@ export default function RetroId() {
     <div className="flex flex-col relative">
       <div className="flex gap-1 items-center mb-4">
         <h1 className="text-zinc-200">{retro.retroName}</h1>
-        <span className="text-zinc-500 text-sm">
-          | {parseDateTime(retro.createdDate)}
+        <span className="text-zinc-400 text-sm">
+          • {parseDateTime(retro.createdDate)}
         </span>
       </div>
 
