@@ -10,7 +10,6 @@ import notesService from "@/services/notes.service";
 import TimerSlide from "@/components/TimerSlide";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
-import CountDownTimer from "@/components/CountDownTimer";
 
 export default function RetroId() {
   const tileSectionConfigs = {
@@ -40,9 +39,6 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-  const [openSlide, setOpenSlide] = useState(false);
-  const [countDown, setCountDown] = useState(false);
-  const [query, setQuery] = useState("");
 
   const [displayTime, setDisplayTime] = useState("");
 
@@ -124,11 +120,6 @@ export default function RetroId() {
     }
   };
 
-  const openSlideDisplay = () => {
-    setOpenSlide(true);
-    console.log("openslide 2", openSlide);
-  };
-
   return (
     <div className="flex flex-col relative">
       <div className="flex gap-1 items-center mb-4 justify-between">
@@ -138,38 +129,7 @@ export default function RetroId() {
           {parseDateTime(retro.createdDate)}
         </span>
 
-        {query && (
-          <CountDownTimer
-            // setCountDownDisplay={setCountDown}
-            queryTime={query}
-          ></CountDownTimer>
-        )}
-        {/* <span className="text-white">query ::::: {query}</span> */}
-
-        <BaseButton
-          theme="SECONDARY"
-          size="M"
-          type="button"
-          onClick={openSlideDisplay}
-        >
-          <div className="flex gap-1">
-            <BaseIcon
-              iconName={ICONS.ClockCircle}
-              className="flex h-5 w-5 text-white"
-            ></BaseIcon>
-            Timer
-          </div>
-        </BaseButton>
-
-        {openSlide && (
-          <div>
-            <TimerSlide
-              setOpenSlide={setOpenSlide}
-              // setCountDownDisplay={setCountDown}
-              onQuery={setQuery}
-            ></TimerSlide>
-          </div>
-        )}
+        <TimerSlide></TimerSlide>
       </div>
 
       <div
