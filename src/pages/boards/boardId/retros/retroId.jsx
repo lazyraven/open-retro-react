@@ -7,7 +7,6 @@ import NewNote from "@/components/NewNote";
 import EditNote from "@/components/EditNote";
 import { toast } from "react-toastify";
 import notesService from "@/services/notes.service";
-import TimerSlide from "@/components/TimerSlide";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
 
@@ -128,8 +127,6 @@ export default function RetroId() {
           <span className="text-zinc-200">{retro.retroName} </span>•{" "}
           {parseDateTime(retro.createdDate)}
         </span>
-
-        <TimerSlide></TimerSlide>
       </div>
 
       <div

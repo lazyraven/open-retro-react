@@ -24,8 +24,8 @@ export default function TimerSlide(props) {
     setOpen(false);
   };
 
-  const handleSetTimerLimit = (event, clock) => {
-    setTimerValue(clock);
+  const handleRadioChange = (event) => {
+    setTimerValue(event.target.value);
   };
 
   return (
@@ -75,7 +75,7 @@ export default function TimerSlide(props) {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+                  <Dialog.Panel className="pointer-events-auto relative w-screen max-w-xs">
                     <Transition.Child
                       as={Fragment}
                       enter="ease-in-out duration-500"
@@ -97,34 +97,34 @@ export default function TimerSlide(props) {
                         </button>
                       </div>
                     </Transition.Child>
-                    <div className="flex h-full flex-col overflow-y-scroll py-6 shadow-xl divide-y-2 gap-1 bg-zinc-900">
-                      <div className="px-4 sm:px-6">
-                        <Dialog.Title className="text-base font-semibold leading-6 text-white">
+                    <div className="grid grid-cols-1 h-full content-between overflow-y-scroll py-6 px-2 shadow-xl gap-1 bg-zinc-900">
+                      <div className="col-span-1 px-4">
+                        <Dialog.Title className="text-base font-semibold leading-6 text-white mb-4">
                           Timer
                         </Dialog.Title>
+                        <div className="flex flex-wrap gap-3">
+                          {timeArray.map((rec, index) => {
+                            return (
+                              <>
+                                <input
+                                  id={rec.id}
+                                  type="radio"
+                                  name="runtime"
+                                  value={rec.clock}
+                                  onChange={handleRadioChange}
+                                />
+                                <label
+                                  className="text-zinc-200 my-radio-button"
+                                  htmlFor={rec.id}
+                                >
+                                  {rec.time}
+                                </label>
+                              </>
+                            );
+                          })}
+                        </div>
                       </div>
-                      <div className="relative flex flex-wrap gap-3 mt-6 px-4 sm:px-6">
-                        {/* Your content */}
-                        {/* {timeClock.map((time, index) => { */}
-                        {timeArray.map((rec, index) => {
-                          return (
-                            <div className="mb-2" key={"rec.id" + index}>
-                              <BaseButton
-                                theme="SECONDARY"
-                                size="M"
-                                type="radio"
-                                className={`mt-2`}
-                                onClick={(event) => {
-                                  handleSetTimerLimit(event, rec.clock);
-                                }}
-                              >
-                                {rec.time}
-                              </BaseButton>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div>
+                      <div className="col-span-1 px-4">
                         <BaseButton
                           type="button"
                           theme="PRIMARY"

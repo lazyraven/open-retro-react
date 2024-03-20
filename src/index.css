@@ -40,3 +40,31 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+
+
+input[type="radio"] {
+  display: none;
+}
+
+/* Style for the label */
+.my-radio-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #27272A;
+  color: #E4E4E7;
+  /* border: 1px solid #ccc; */
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* Style for when radio button is checked */
+input[type="radio"]:checked + .my-radio-button {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+/* Optional: Add some margin between radio buttons */
+.my-radio-button + .my-radio-button {
+  margin-left: 10px;
+}
