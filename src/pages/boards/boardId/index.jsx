@@ -6,6 +6,7 @@ import BoardContext from "@/contexts/BoardContext";
 import ShareBoardModal from "@/page-components/boards/ShareBoardModal";
 import JoinBoardModal from "@/page-components/boards/JoinBoardModal";
 import SideNavbar from "@/components/SideNavbar";
+import TimerSlide from "@/components/TimerSlide";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
@@ -67,11 +68,13 @@ export default function BoardId() {
                       </h1>
                       <h3 className="text-zinc-500">{board.createdBy}</h3>
                     </div>
-
-                    <ShareBoardModal
-                      boardRetroUrl={boardRetroUrl}
-                      board={board}
-                    ></ShareBoardModal>
+                    <div className="flex gap-x-2">
+                      <TimerSlide></TimerSlide>
+                      <ShareBoardModal
+                        boardRetroUrl={boardRetroUrl}
+                        board={board}
+                      ></ShareBoardModal>
+                    </div>
                   </div>
 
                   <div className="py-2">

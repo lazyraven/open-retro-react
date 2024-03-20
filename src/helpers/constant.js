@@ -15,6 +15,7 @@ export const ICONS = {
   Map: "map",
   Phone: "phone",
   Envelope: "envelope",
+  ClockCircle: "clock",
 };
 
 export const buildQRImage = (dataUrl) =>
