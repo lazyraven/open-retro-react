@@ -132,6 +132,7 @@ export default function CreateBoardModal(props) {
                 theme="PRIMARY"
                 size="XL"
                 radius="rounded-full"
+                disabled={!boardModel.boardName || !boardModel.createdBy}
                 onClick={handleCreateBoard}
               >
                 Create

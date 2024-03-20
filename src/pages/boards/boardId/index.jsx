@@ -54,11 +54,11 @@ export default function BoardId() {
         </div>
       ) : (
         <>
-          <div className="flex gap-x-6 w-full">
-            <div className="basis-52 shrink-0">
+          <div className="flex flex-col md:flex-row gap-x-6 w-full">
+            <div className="w-full md:basis-52 md:shrink-0 ">
               <SideNavbar></SideNavbar>
             </div>
-            <div className="basis-full px-3 py-4">
+            <div className="w-full md:basis-full px-3 py-4">
               <div className="container mx-auto">
                 <div className="flex flex-col gap-1 min-h-screen ">
                   <div className="flex justify-between mt-2 items-center p-3 gap-3 bg-zinc-800 border border-zinc-700 rounded-lg">
@@ -77,13 +77,15 @@ export default function BoardId() {
                     </div>
                   </div>
 
-                  {storedMember?.name ? (
-                    <div className="py-2">
-                      <Outlet></Outlet>
-                    </div>
-                  ) : (
-                    <JoinBoardModal board={board}></JoinBoardModal>
-                  )}
+                  <div className="py-2">
+                    {storedMember?.name ? (
+                      <div className="py-2">
+                        <Outlet></Outlet>
+                      </div>
+                    ) : (
+                      <JoinBoardModal board={board}></JoinBoardModal>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
