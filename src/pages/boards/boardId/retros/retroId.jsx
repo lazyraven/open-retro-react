@@ -41,7 +41,6 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-
   const params = useParams();
 
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
