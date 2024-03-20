@@ -20,3 +20,9 @@ export const ICONS = {
 
 export const buildQRImage = (dataUrl) =>
   `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${dataUrl}`;
+
+export const RETRO_STATES = {
+  Write: "WRITE",
+  Vote: "VOTE",
+  Discuss: "DISCUSS",
+};

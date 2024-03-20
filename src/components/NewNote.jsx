@@ -28,6 +28,7 @@ export default function NewNote(props) {
       createdDate: new Date().getTime(),
       description: "",
       tagName: "",
+      vote: 0,
     };
   }
 
