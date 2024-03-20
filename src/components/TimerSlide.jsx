@@ -1,53 +1,56 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import BaseButton from "@/components/BaseButton";
 
-export default function Example() {
+export default function Example(props) {
   const [open, setOpen] = useState(true);
   const [timeClock, setTimeClock] = useState([]);
   const [color, setColor] = useState("");
+  const { setOpenSlide, setCountDownDisplay, onQuery } = props;
+
   // const [isActiveColor, setIsActiveColor] = useState(false);
 
   useEffect(() => {
-    // const timeArray = [
-    //   { id: 1, time: "5  minutes" },
-    //   { id: 2, time: "10  minutes" },
-    //   { id: 3, time: "15  minutes" },
-    //   { id: 4, time: "20  minutes" },
-    //   { id: 5, time: "25  minutes" },
-    //   { id: 6, time: "custom" },
-    // ];
     const timeArray = [
-      "5  minutes",
-      "10  minutes",
-      "15  minutes",
-      "20  minutes",
-      "25  minutes",
-      "custom",
+      { id: 1, time: "5  minutes", clock: 5 },
+      { id: 2, time: "10  minutes", clock: 10 },
+      { id: 3, time: "15  minutes", clock: 15 },
+      { id: 4, time: "20  minutes", clock: 20 },
+      { id: 5, time: "25  minutes", clock: 25 },
+      { id: 6, time: "custom", clock: "custom" },
     ];
+    // let timeArray = [
+    //   "5  minutes",
+    //   "10  minutes",
+    //   "15  minutes",
+    //   "20  minutes",
+    //   "25  minutes",
+    //   "custom",
+    // ];
     setTimeClock(timeArray);
   }, []);
 
-  // let buttonClass = "";
-
   const handleClick = (e, rec) => {
+    console.log("props", props);
     console.log("buttonClick called", e, rec);
-    setColor("bg-orange-500");
-    // setIsActiveColor(true);
-    //   this.setState({
-    //     isClassActive: !this.state.isClassActive,
-    // });
+    setOpenSlide(false);
+    // setCountDownDisplay(true);
+    // setQuery(rec);
+    onQuery(rec);
   };
 
-  //   handleClick(e) {
-  //     if(e.target.class === 'is-active'){
-  //         e.target.className = '';
-  //         console.log('remove')
-  //     }else{
-  //         e.target.className = 'is-active';
-  //         console.log('add class')
-  //     }
-  // }
+  const closeTimerSlide = () => {
+    console.log("closeTimerSlide", props);
+    setOpen(false);
+    setOpenSlide(false);
+  };
+
+  const startTimer = (event) => {
+    console.log("startTimer", event);
+    setOpen(false);
+    setOpenSlide(false);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -90,7 +93,11 @@ export default function Example() {
                       <button
                         type="button"
                         className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => setOpen(false)}
+                        onClick={
+                          closeTimerSlide
+
+                          // () => setOpen(false)
+                        }
                       >
                         <span className="absolute -inset-2.5" />
                         <span className="sr-only">Close panel</span>
@@ -98,47 +105,55 @@ export default function Example() {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl divide-y-4 gap-1">
+                  <div className="flex h-full flex-col overflow-y-scroll py-6 shadow-xl divide-y-2 gap-1 bg-zinc-900">
                     <div className="px-4 sm:px-6">
-                      <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
+                      <Dialog.Title className="text-base font-semibold leading-6 text-white">
                         Timer
                       </Dialog.Title>
                     </div>
                     <div className="relative flex flex-wrap gap-3 mt-6 px-4 sm:px-6">
                       {/* Your content */}
-                      {timeClock.map((time, index) => {
+                      {/* {timeClock.map((time, index) => { */}
+                      {timeClock.map((rec, index) => {
                         return (
-                          <div className="mb-2" key={"rec" + index}>
-                            <button
+                          <div className="mb-2" key={"rec.id" + index}>
+                            {/* <button
                               type="submit"
-                              className={`border-2 border-zinc-50 rounded-full text-zinc-900 items-center text-sm px-5  py-2 mt-2 ${color}`}
+                              className={`border-2 border-zinc-600 rounded-full items-center text-sm px-5 py-2 mt-2 ${color} text-white`}
                               onClick={(event) => {
                                 handleClick(event, time);
                               }}
-                              //   className={
-                              //     isActiveColor
-                              //         ? "active"
-                              //         : ""
-                              // }
-                              // className={({ isActive }) =>
-                              //   isActive
-                              //     ? `px-4 py-4 text-sm font-medium text-blue-500 whitespace-nowrap border-b border-blue-500 ${color}`
-                              //     : "px-4 py-4 text-sm text-zinc-200 whitespace-nowrap font-medium"
-                              // }
                             >
                               {time}
-                            </button>
+                            </button> */}
+                            <BaseButton
+                              theme="SECONDARY"
+                              size="M"
+                              type="radio"
+                              className={`mt-2`}
+                              onClick={(event) => {
+                                handleClick(event, rec.clock);
+                              }}
+                            >
+                              {rec.time}
+                            </BaseButton>
                           </div>
                         );
                       })}
                     </div>
                     <div>
-                      <button
-                        type="submit"
-                        className={`border-2 border-zinc-50 rounded-full text-zinc-900 items-center text-sm px-5 py-2 mt-2 bg-orange-500 w-full bottom-0`}
+                      <BaseButton
+                        type="button"
+                        theme="PRIMARY"
+                        size="XL"
+                        radius="rounded-full"
+                        className="w-full mt-2"
+                        onClick={(event) => {
+                          startTimer(event);
+                        }}
                       >
                         Start Timer
-                      </button>
+                      </BaseButton>
                     </div>
                   </div>
                 </Dialog.Panel>

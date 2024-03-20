@@ -7,9 +7,10 @@ import NewNote from "@/components/NewNote";
 import EditNote from "@/components/EditNote";
 import { toast } from "react-toastify";
 import notesService from "@/services/notes.service";
-import TimeSlide from "@/components/TimeSlide";
+import TimerSlide from "@/components/TimerSlide";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
+import CountDownTimer from "@/components/CountDownTimer";
 
 export default function RetroId() {
   const tileSectionConfigs = {
@@ -40,6 +41,10 @@ export default function RetroId() {
 
   const [retro, setRetro] = useState({});
   const [openSlide, setOpenSlide] = useState(false);
+  const [countDown, setCountDown] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const [displayTime, setDisplayTime] = useState("");
 
   const params = useParams();
 
@@ -120,25 +125,51 @@ export default function RetroId() {
   };
 
   const openSlideDisplay = () => {
-    console.log("open slide");
     setOpenSlide(true);
+    console.log("openslide 2", openSlide);
   };
 
   return (
     <div className="flex flex-col relative">
-      <div className="flex gap-1 items-center mb-4">
-        <h1 className="text-zinc-200">{retro.retroName}</h1>
+      <div className="flex gap-1 items-center mb-4 justify-between">
+        {/* <h1 className="text-zinc-200">{retro.retroName}</h1> */}
         <span className="text-zinc-400 text-sm">
-          • {parseDateTime(retro.createdDate)}
+          <span className="text-zinc-200">{retro.retroName} </span>•{" "}
+          {parseDateTime(retro.createdDate)}
         </span>
-        <div className="flex-auto w-64"></div>
-        <button type="button" className="flex-1" onClick={openSlideDisplay}>
-          <BaseIcon
-            iconName={ICONS.ClockCircle}
-            className="flex h-5 w-5 text-white"
-          ></BaseIcon>
-        </button>
-        {openSlide && <TimeSlide></TimeSlide>}
+
+        {query && (
+          <CountDownTimer
+            // setCountDownDisplay={setCountDown}
+            queryTime={query}
+          ></CountDownTimer>
+        )}
+        {/* <span className="text-white">query ::::: {query}</span> */}
+
+        <BaseButton
+          theme="SECONDARY"
+          size="M"
+          type="button"
+          onClick={openSlideDisplay}
+        >
+          <div className="flex gap-1">
+            <BaseIcon
+              iconName={ICONS.ClockCircle}
+              className="flex h-5 w-5 text-white"
+            ></BaseIcon>
+            Timer
+          </div>
+        </BaseButton>
+
+        {openSlide && (
+          <div>
+            <TimerSlide
+              setOpenSlide={setOpenSlide}
+              // setCountDownDisplay={setCountDown}
+              onQuery={setQuery}
+            ></TimerSlide>
+          </div>
+        )}
       </div>
 
       <div
