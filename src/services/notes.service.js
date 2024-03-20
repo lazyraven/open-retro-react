@@ -24,6 +24,13 @@ export default {
     await update(rtdbRef, updates);
     return body;
   },
+  async updateRetroVote({ retroId, noteId }, { vote }) {
+    const updates = {};
+    updates[`notes/${retroId}/${noteId}/vote`] = vote;
+    const rtdbRef = ref(rtdb);
+    await update(rtdbRef, updates);
+    return vote;
+  },
   async deleteRetroNote({ retroId, noteId }) {
     const updates = {};
     updates[`notes/${retroId}/${noteId}`] = null;
@@ -34,8 +41,8 @@ export default {
 
   listenRetroNotesChange({ retroId }, listenerFn) {
     const notesRef = query(
-      ref(rtdb, `notes/${retroId}`),
-      orderByChild("createdDate", "desc")
+      ref(rtdb, `notes/${retroId}`)
+      // orderByChild("createdDate", "desc")
     );
     onValue(notesRef, (snapshot) => {
       let docs = [];

@@ -9,8 +9,11 @@ import { toast } from "react-toastify";
 import notesService from "@/services/notes.service";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
+import { RETRO_STATES } from "@/helpers/constant";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 export default function RetroId() {
+  const [activeTab, setActiveTab] = useState(RETRO_STATES.Write);
   const tileSectionConfigs = {
     wentWell: {
       tagName: "went-well",
@@ -117,15 +120,77 @@ export default function RetroId() {
     }
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleArrowClick = (direction) => {
+    if (direction === "left") {
+      setActiveTab((prevTab) => {
+        switch (prevTab) {
+          case RETRO_STATES.Write:
+            return RETRO_STATES.Discuss;
+          case RETRO_STATES.Vote:
+            return RETRO_STATES.Write;
+          case RETRO_STATES.Discuss:
+            return RETRO_STATES.Vote;
+          default:
+            return RETRO_STATES.Write;
+        }
+      });
+    } else if (direction === "right") {
+      setActiveTab((prevTab) => {
+        switch (prevTab) {
+          case RETRO_STATES.Write:
+            return RETRO_STATES.Vote;
+          case RETRO_STATES.Vote:
+            return RETRO_STATES.Discuss;
+          case RETRO_STATES.Discuss:
+            return RETRO_STATES.Write;
+          default:
+            return RETRO_STATES.Write;
+        }
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col relative">
-      <div className="flex gap-1 items-center mb-4">
+    <div className="flex flex-col gap-y-3 relative">
+      <div className="flex gap-1 items-center">
         <h1 className="text-zinc-200">{retro.retroName}</h1>
         <span className="text-zinc-400 text-sm">
           • {parseDateTime(retro.createdDate)}
         </span>
       </div>
-
+      <div className="flex justify-center gap-4 mb-2">
+        {Object.keys(RETRO_STATES).map((state, index) => {
+          const modifiedIndex = index + 1;
+          return (
+            <div key={"state" + index} className="flex gap-2 items-center">
+              <button
+                onClick={() => handleTabChange(RETRO_STATES[state], index)}
+                className={
+                  activeTab === RETRO_STATES[state]
+                    ? "px-3 py-1 text-zinc-200 bg-blue-500 rounded-full"
+                    : "active text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
+                }
+              >
+                {modifiedIndex}
+              </button>
+              <span className="text-zinc-200">{state}</span>
+            </div>
+          );
+        })}
+        <span className="text-zinc-200 flex items-center">|</span>
+        <div className="flex items-center gap-2">
+          <button onClick={() => handleArrowClick("left")}>
+            <ChevronLeftIcon className="w-4 h-4 text-zinc-200"></ChevronLeftIcon>
+          </button>
+          <button onClick={() => handleArrowClick("right")}>
+            <ChevronRightIcon className="w-4 h-4 text-zinc-200"></ChevronRightIcon>
+          </button>
+        </div>
+      </div>
       <div
         // id="content"
         ref={pdfRef}
@@ -142,21 +207,31 @@ export default function RetroId() {
                   {tile.title}
                 </h5>
               </div>
-              <NewNote
-                tagName={tile.tagName}
-                placeholder={tile.placeholder}
-                boardId={params.boardId}
-              ></NewNote>
+              {activeTab !== RETRO_STATES.Vote &&
+                activeTab !== RETRO_STATES.Discuss && (
+                  <NewNote
+                    tagName={tile.tagName}
+                    placeholder={tile.placeholder}
+                    boardId={params.boardId}
+                  ></NewNote>
+                )}
             </div>
             <div>
-              {tileNotes[tile.tagName].reverse().map((note, index) => {
-                if (!note || note.tagName !== tile.tagName) return null;
-                return (
-                  <div className="mb-2" key={"note" + index}>
-                    <EditNote note={note} boardId={params.boardId}></EditNote>
-                  </div>
-                );
-              })}
+              {tileNotes[tile.tagName]
+                .slice()
+                .reverse()
+                .map((note, index) => {
+                  if (!note || note.tagName !== tile.tagName) return null;
+                  return (
+                    <div className="mb-2" key={"edit-note-" + note.id + index}>
+                      <EditNote
+                        activeTab={activeTab}
+                        note={note}
+                        boardId={params.boardId}
+                      ></EditNote>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         ))}
