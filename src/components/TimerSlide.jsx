@@ -6,14 +6,13 @@ import CountDownTimer from "@/components/CountDownTimer";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 
-export default function TimerSlide(props) {
+export default function TimerSlide() {
   const timeArray = [
-    { id: 1, time: "5  minutes", clock: 300 },
-    { id: 2, time: "10  minutes", clock: 600 },
-    { id: 3, time: "15  minutes", clock: 900 },
-    { id: 4, time: "20  minutes", clock: 1200 },
-    { id: 5, time: "25  minutes", clock: 1500 },
-    // { id: 6, time: "custom", clock: "custom" },
+    { id: 1, time: "5  minutes", seconds: 300 },
+    { id: 2, time: "10  minutes", seconds: 600 },
+    { id: 3, time: "15  minutes", seconds: 900 },
+    { id: 4, time: "20  minutes", seconds: 1200 },
+    { id: 5, time: "25  minutes", seconds: 1500 },
   ];
   const [open, setOpen] = useState(false);
   const [runtime, setRuntime] = useState(0);
@@ -105,12 +104,12 @@ export default function TimerSlide(props) {
                         <div className="flex flex-wrap gap-3">
                           {timeArray.map((rec, index) => {
                             return (
-                              <>
+                              <div key={"timer-value-" + index}>
                                 <input
                                   id={rec.id}
                                   type="radio"
                                   name="runtime"
-                                  value={rec.clock}
+                                  value={rec.seconds}
                                   onChange={handleRadioChange}
                                 />
                                 <label
@@ -119,7 +118,7 @@ export default function TimerSlide(props) {
                                 >
                                   {rec.time}
                                 </label>
-                              </>
+                              </div>
                             );
                           })}
                         </div>
