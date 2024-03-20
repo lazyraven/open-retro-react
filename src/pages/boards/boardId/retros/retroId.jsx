@@ -38,9 +38,6 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-
-  const [displayTime, setDisplayTime] = useState("");
-
   const params = useParams();
 
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
@@ -121,11 +118,10 @@ export default function RetroId() {
 
   return (
     <div className="flex flex-col relative">
-      <div className="flex gap-1 items-center mb-4 justify-between">
-        {/* <h1 className="text-zinc-200">{retro.retroName}</h1> */}
+      <div className="flex gap-1 items-center mb-4">
+        <h1 className="text-zinc-200">{retro.retroName} </h1>
         <span className="text-zinc-400 text-sm">
-          <span className="text-zinc-200">{retro.retroName} </span>•{" "}
-          {parseDateTime(retro.createdDate)}
+          • {parseDateTime(retro.createdDate)}
         </span>
       </div>
 
