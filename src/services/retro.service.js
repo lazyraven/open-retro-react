@@ -1,5 +1,5 @@
 import { db, rtdb } from "@/firebase";
-import { ref, update } from "firebase/database";
+import { ref, update, onValue } from "firebase/database";
 
 import {
   collection,
@@ -56,5 +56,12 @@ export default {
     const rtdbRef = ref(rtdb);
     await update(rtdbRef, updates);
     return stage;
+  },
+
+  listenRetroStageChange({ retroId }, listenerFn) {
+    const pokerStateRef = ref(rtdb, `retro-state/${retroId}`);
+    onValue(pokerStateRef, (snapshot) => {
+      listenerFn(snapshot.val());
+    });
   },
 };

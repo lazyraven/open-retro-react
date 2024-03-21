@@ -14,8 +14,12 @@ import BaseButton from "@/components/BaseButton";
 import { RETRO_STATES } from "@/helpers/constant";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import BoardContext from "@/contexts/BoardContext";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
+import BaseConfirm from "@/components/BaseConfirm";
 
 export default function RetroId() {
+  const params = useParams();
+  const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
   const { board } = useContext(BoardContext);
   const tileSectionConfigs = {
     wentWell: {
@@ -44,11 +48,8 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-  const [retroState, setRetroState] = useState({
-    stage: RETRO_STATES.Write,
-  });
+  const [retroState, setRetroState] = useState({});
 
-  const params = useParams();
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
     const tempTileNotes = initTileNotes();
     if (retroNotes && retroNotes.length) {
@@ -94,9 +95,18 @@ export default function RetroId() {
     }
   }
 
+  function listenRetroStageChange() {
+    retroService.listenRetroStageChange({ retroId: params.retroId }, (doc) => {
+      if (doc) {
+        setRetroState(doc);
+      }
+    });
+  }
+
   useEffect(() => {
     getRetro({ boardId: params.boardId, retroId: params.retroId });
     listenRetroNotesChange({ retroId: params.retroId });
+    listenRetroStageChange();
   }, []);
 
   const pdfRef = useRef();
@@ -123,10 +133,6 @@ export default function RetroId() {
     } catch (error) {
       toast.error("Error occurred, while uploading file.");
     }
-  };
-
-  const handleTabChange = (tab) => {
-    setRetroState(tab);
   };
 
   const handleArrowClick = async (direction) => {
@@ -165,8 +171,8 @@ export default function RetroId() {
       { retroId: params.retroId },
       { stage: retroStage }
     );
-    console.log(retroState, "retrostate");
   };
+  // console.log(board, "board");
   return (
     <div className="flex flex-col gap-y-3 relative">
       <div className="flex gap-1 items-center">
@@ -176,13 +182,17 @@ export default function RetroId() {
           • {parseDateTime(retro.createdDate)}
         </span>
       </div>
-      <div className="flex justify-center gap-4 mb-2">
+      <div className="flex justify-center items-center gap-4 mb-2">
+        {board?.owner == storedMember.id && (
+          <button onClick={() => handleArrowClick("left")}>
+            <ChevronLeftIcon className="w-5 h-5 text-zinc-200"></ChevronLeftIcon>
+          </button>
+        )}
         {Object.keys(RETRO_STATES).map((state, index) => {
           const modifiedIndex = index + 1;
           return (
             <div key={"state" + index} className="flex gap-2 items-center">
-              <button
-                onClick={() => handleTabChange(RETRO_STATES[state], index)}
+              <div
                 className={
                   retroState.stage === RETRO_STATES[state]
                     ? "px-3 py-1 text-zinc-200 bg-blue-500 rounded-full"
@@ -190,20 +200,30 @@ export default function RetroId() {
                 }
               >
                 {modifiedIndex}
-              </button>
+              </div>
               <span className="text-zinc-200">{state}</span>
             </div>
           );
         })}
-        <span className="text-zinc-200 flex items-center">|</span>
-        <div className="flex items-center gap-2">
-          <button onClick={() => handleArrowClick("left")}>
-            <ChevronLeftIcon className="w-4 h-4 text-zinc-200"></ChevronLeftIcon>
-          </button>
-          <button onClick={() => handleArrowClick("right")}>
-            <ChevronRightIcon className="w-4 h-4 text-zinc-200"></ChevronRightIcon>
-          </button>
-        </div>
+        {board?.owner == storedMember.id && (
+          <BaseConfirm
+            theme="INFO"
+            btnText="Yes"
+            confirmText={
+              <>
+                <h5 className="text-xl text-zinc-200">
+                  Hi {storedMember.name} 👋,
+                </h5>
+                <h6>Are you sure? you want to move to voting stage.</h6>
+              </>
+            }
+            onConfirm={() => handleArrowClick("right")}
+          >
+            <BaseButton theme="TRANSPARENT" className="items-center ">
+              <ChevronRightIcon className="w-5 h-5 text-zinc-200"></ChevronRightIcon>
+            </BaseButton>
+          </BaseConfirm>
+        )}
       </div>
       <div
         // id="content"

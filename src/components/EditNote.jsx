@@ -81,7 +81,7 @@ export default function EditNote(props) {
     switch (retroState.stage) {
       case RETRO_STATES.Vote:
         return (
-          <BaseButton theme="SECONDARY" onClick={voteForNotes}>
+          <BaseButton theme="TRANSPARENT" onClick={voteForNotes}>
             <div className="flex gap-2 items-center">
               <span>{note.vote}</span>
               <HandThumbUpIcon className="flex h-4 w-4 text-zinc-200"></HandThumbUpIcon>
@@ -103,6 +103,7 @@ export default function EditNote(props) {
                 </BaseButton>
 
                 <BaseConfirm
+                  theme="DANGER"
                   confirmTitle="Delete Note"
                   confirmText="Are you sure? you want to delete this note."
                   onConfirm={deleteNote}
