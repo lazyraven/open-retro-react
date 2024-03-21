@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { RETRO_STATES } from "@/helpers/constant";
 
 export default function EditNote(props) {
-  const { note, boardId, activeTab } = props;
+  const { note, boardId, retroState } = props;
   // const [vote, setVote] = useState(0);
   const storedMember = getBoardMemberLocalStorage({ boardId });
 
@@ -78,7 +78,7 @@ export default function EditNote(props) {
   };
 
   const RenderTileActions = () => {
-    switch (activeTab) {
+    switch (retroState.stage) {
       case RETRO_STATES.Vote:
         return (
           <BaseButton theme="SECONDARY" onClick={voteForNotes}>

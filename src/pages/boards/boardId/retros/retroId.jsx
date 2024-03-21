@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import retroService from "@/services/retro.service";
@@ -6,14 +6,17 @@ import { useParams } from "react-router-dom";
 import NewNote from "@/components/NewNote";
 import EditNote from "@/components/EditNote";
 import { toast } from "react-toastify";
+
+import pdfService from "@/services/pdf.service";
 import notesService from "@/services/notes.service";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
 import { RETRO_STATES } from "@/helpers/constant";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import BoardContext from "@/contexts/BoardContext";
 
 export default function RetroId() {
-  const [activeTab, setActiveTab] = useState(RETRO_STATES.Write);
+  const { board } = useContext(BoardContext);
   const tileSectionConfigs = {
     wentWell: {
       tagName: "went-well",
@@ -41,8 +44,11 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-  const params = useParams();
+  const [retroState, setRetroState] = useState({
+    stage: RETRO_STATES.Write,
+  });
 
+  const params = useParams();
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
     const tempTileNotes = initTileNotes();
     if (retroNotes && retroNotes.length) {
@@ -98,7 +104,7 @@ export default function RetroId() {
   const downloadPdf = async () => {
     const input = pdfRef.current;
     const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
-    const pdfResult = await retroService.generateAndUploadPdf({
+    const pdfResult = await pdfService.generateAndUploadPdf({
       storagePath: reportSrc,
       fileName: `${params.retroId}.pdf`,
       htmlInput: input,
@@ -120,39 +126,47 @@ export default function RetroId() {
   };
 
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
+    setRetroState(tab);
   };
 
-  const handleArrowClick = (direction) => {
+  const handleArrowClick = async (direction) => {
+    let retroStage = "";
     if (direction === "left") {
-      setActiveTab((prevTab) => {
-        switch (prevTab) {
-          case RETRO_STATES.Write:
-            return RETRO_STATES.Discuss;
-          case RETRO_STATES.Vote:
-            return RETRO_STATES.Write;
-          case RETRO_STATES.Discuss:
-            return RETRO_STATES.Vote;
-          default:
-            return RETRO_STATES.Write;
-        }
-      });
+      switch (retroState.stage) {
+        case RETRO_STATES.Write:
+          retroStage = RETRO_STATES.Discuss;
+          break;
+        case RETRO_STATES.Vote:
+          retroStage = RETRO_STATES.Write;
+          break;
+        case RETRO_STATES.Discuss:
+          retroStage = RETRO_STATES.Vote;
+          break;
+        default:
+          retroStage = RETRO_STATES.Write;
+      }
     } else if (direction === "right") {
-      setActiveTab((prevTab) => {
-        switch (prevTab) {
-          case RETRO_STATES.Write:
-            return RETRO_STATES.Vote;
-          case RETRO_STATES.Vote:
-            return RETRO_STATES.Discuss;
-          case RETRO_STATES.Discuss:
-            return RETRO_STATES.Write;
-          default:
-            return RETRO_STATES.Write;
-        }
-      });
+      switch (retroState.stage) {
+        case RETRO_STATES.Write:
+          retroStage = RETRO_STATES.Vote;
+          break;
+        case RETRO_STATES.Vote:
+          retroStage = RETRO_STATES.Discuss;
+          break;
+        case RETRO_STATES.Discuss:
+          retroStage = RETRO_STATES.Write;
+          break;
+        default:
+          retroStage = RETRO_STATES.Write;
+      }
     }
-  };
 
+    await retroService.updateRetroState(
+      { retroId: params.retroId },
+      { stage: retroStage }
+    );
+    console.log(retroState, "retrostate");
+  };
   return (
     <div className="flex flex-col gap-y-3 relative">
       <div className="flex gap-1 items-center">
@@ -170,7 +184,7 @@ export default function RetroId() {
               <button
                 onClick={() => handleTabChange(RETRO_STATES[state], index)}
                 className={
-                  activeTab === RETRO_STATES[state]
+                  retroState.stage === RETRO_STATES[state]
                     ? "px-3 py-1 text-zinc-200 bg-blue-500 rounded-full"
                     : "active text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
                 }
@@ -207,8 +221,8 @@ export default function RetroId() {
                   {tile.title}
                 </h5>
               </div>
-              {activeTab !== RETRO_STATES.Vote &&
-                activeTab !== RETRO_STATES.Discuss && (
+              {retroState.stage !== RETRO_STATES.Vote &&
+                retroState.stage !== RETRO_STATES.Discuss && (
                   <NewNote
                     tagName={tile.tagName}
                     placeholder={tile.placeholder}
@@ -225,7 +239,7 @@ export default function RetroId() {
                   return (
                     <div className="mb-2" key={"edit-note-" + note.id + index}>
                       <EditNote
-                        activeTab={activeTab}
+                        retroState={retroState}
                         note={note}
                         boardId={params.boardId}
                       ></EditNote>
