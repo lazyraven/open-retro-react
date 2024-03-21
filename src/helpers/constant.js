@@ -18,6 +18,7 @@ export const ICONS = {
   ClockCircle: "clock",
   Play: "play",
   Pause: "pause",
+  Stopwatch: "stopwatch",
 };
 
 export const buildQRImage = (dataUrl) =>

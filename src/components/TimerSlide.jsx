@@ -84,9 +84,9 @@ export default function TimerSlide() {
           type="button"
           onClick={() => setOpen(true)}
         >
-          <div className="flex gap-1">
+          <div className="flex items-center gap-1">
             <BaseIcon
-              iconName={ICONS.ClockCircle}
+              iconName={ICONS.Stopwatch}
               className="flex h-5 w-5 text-white"
             ></BaseIcon>
             Stopwatch
