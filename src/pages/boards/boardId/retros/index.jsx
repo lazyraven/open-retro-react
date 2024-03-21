@@ -4,7 +4,7 @@ import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import NewRetroModal from "@/page-components/retros/NewRetroModal";
 import { useNavigate } from "react-router-dom";
-import boardService from "@/services/board.service";
+import retroService from "@/services/retro.service";
 import { parseDateTime } from "@/utils/common.util";
 
 export default function Retros() {
@@ -14,7 +14,7 @@ export default function Retros() {
 
   const getBoardRetros = async () => {
     try {
-      const boardRetros = await boardService.getBoardRetros({
+      const boardRetros = await retroService.getBoardRetros({
         boardId: params.boardId,
       });
       if (boardRetros && boardRetros.length) {

@@ -1,10 +1,10 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
-import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { parseDateTime } from "@/utils/common.util";
+import retroService from "@/services/retro.service";
 
 export default function Reports() {
   const [pdfSrc, setPdfSrc] = useState("");
@@ -16,7 +16,7 @@ export default function Reports() {
 
   const getBoardRetros = async () => {
     try {
-      const boardRetros = await boardService.getBoardRetros({
+      const boardRetros = await retroService.getBoardRetros({
         boardId: params.boardId,
       });
       if (boardRetros && boardRetros.length) {

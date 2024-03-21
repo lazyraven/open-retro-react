@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
-import boardService from "@/services/board.service";
+import retroService from "@/services/retro.service";
 import { useParams } from "react-router-dom";
 import NewNote from "@/components/NewNote";
 import EditNote from "@/components/EditNote";
@@ -79,7 +79,7 @@ export default function RetroId() {
 
   async function getRetro({ boardId, retroId }) {
     try {
-      const result = await boardService.getRetro({ boardId, retroId });
+      const result = await retroService.getRetro({ boardId, retroId });
       if (result && result.id) {
         setRetro(result);
       }
@@ -98,7 +98,7 @@ export default function RetroId() {
   const downloadPdf = async () => {
     const input = pdfRef.current;
     const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
-    const pdfResult = await boardService.generateAndUploadPdf({
+    const pdfResult = await retroService.generateAndUploadPdf({
       storagePath: reportSrc,
       fileName: `${params.retroId}.pdf`,
       htmlInput: input,
@@ -110,9 +110,9 @@ export default function RetroId() {
   const updateGenratePdf = async () => {
     const reportSrcPath = `${params.boardId}/${params.retroId}`;
     try {
-      await boardService.updateRetros(
+      await retroService.updateRetroReportSrc(
         { boardId: params.boardId, retroId: params.retroId },
-        reportSrcPath
+        { reportSrcPath }
       );
     } catch (error) {
       toast.error("Error occurred, while uploading file.");
