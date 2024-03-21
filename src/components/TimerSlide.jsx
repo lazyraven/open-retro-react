@@ -24,10 +24,14 @@ export default function TimerSlide() {
   const { board } = useContext(BoardContext);
   const params = useParams();
   const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
-  const [stopwatchState, setStopwatchState] = useState({
-    runtime: 0,
-    startTime: "",
-  });
+  const [stopwatchState, setStopwatchState] = useState(initStopwatch());
+
+  function initStopwatch() {
+    return {
+      runtime: 0,
+      startTime: "",
+    };
+  }
 
   const handleStartTimer = () => {
     // setRuntime(timerValue);
@@ -40,19 +44,23 @@ export default function TimerSlide() {
   };
 
   function listenStopwatchStateChange() {
-    console.log("listenStopwatchStateChange called");
     stopwatchService.listenStopwatchStateChange(
       { boardId: params.boardId },
       (doc) => {
         if (doc) {
           setStopwatchState(doc);
+        } else {
+          setStopwatchState(initStopwatch());
         }
       }
     );
   }
 
+  async function clearStopwatchState() {
+    await stopwatchService.clearStopwatchState({ boardId: params.boardId });
+  }
+
   async function updateStopwatch() {
-    console.log("updateStopwatch called", stopwatchState, timerValue);
     await stopwatchService.updateStopwatch(
       { boardId: params.boardId },
       {
@@ -61,7 +69,6 @@ export default function TimerSlide() {
         runtime: timerValue,
       }
     );
-    console.log("updateStopwatch called22", stopwatchState, timerValue);
   }
 
   useEffect(() => {
@@ -90,24 +97,14 @@ export default function TimerSlide() {
       {!!stopwatchState?.runtime && (
         <div className="fixed inset-x-0 bottom-10 max-w-max mx-auto">
           <div className="flex gap-2">
-            {/* <BaseButton
-                          type="button"
-                          theme="PRIMARY"
-                          size="XL"
-                          radius="rounded-full"
-                          className="w-full mt-2"
-                          onClick={handleStartTimer}
-                        >
-                          Start Stopwatch
-                        </BaseButton> */}
-            {/* <button
+            <BaseButton
               type="button"
-              className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-              onClick={closeCountDown}
+              theme="TRANSPARENT"
+              radius="rounded-full"
+              onClick={clearStopwatchState}
             >
-              <span className="sr-only">Close panel</span>
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button> */}
+            </BaseButton>
             <CountDownTimer
               runtime={stopwatchState.runtime}
               setRuntime={setRuntime}
