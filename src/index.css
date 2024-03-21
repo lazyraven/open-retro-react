@@ -26,21 +26,6 @@
   gap: 6px;
 }
 
-.sidebar-active-link { position: relative }
-
-.sidebar-active-link::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  background-color: #3B82F6;
-  border-radius: 4rem;
-  display: inline-block;
-  width: 4px;
-  height: 60%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 input[type="radio"] {
   display: none;
 }
@@ -66,6 +51,8 @@ input[type="radio"]:checked + .my-radio-button {
 .my-radio-button + .my-radio-button {
   margin-left: 10px;
 }
+
+.sidebar-active-link { position: relative }
 
 @media only screen and (min-width: 769px) {
   .sidebar-active-link::before {

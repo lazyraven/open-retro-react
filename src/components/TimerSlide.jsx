@@ -43,10 +43,11 @@ export default function TimerSlide() {
           Timer
         </div>
       </BaseButton>
-
-      <div className="fixed inset-x-0 bottom-10 max-w-max mx-auto">
-        {runtime && <CountDownTimer runtime={runtime}></CountDownTimer>}
-      </div>
+      {!!runtime && (
+        <div className="fixed inset-x-0 bottom-10 max-w-max mx-auto">
+          <CountDownTimer runtime={runtime}></CountDownTimer>
+        </div>
+      )}
 
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={setOpen}>

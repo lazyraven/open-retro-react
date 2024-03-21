@@ -3,16 +3,13 @@ import { Outlet, NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import BoardContext from "@/contexts/BoardContext";
-import ShareBoardModal from "@/page-components/boards/ShareBoardModal";
 import JoinBoardModal from "@/page-components/boards/JoinBoardModal";
 import SideNavbar from "@/components/SideNavbar";
-import TimerSlide from "@/components/TimerSlide";
 
 export default function BoardId() {
   const { board, reFetchBoard } = useContext(BoardContext);
   const [isLoading, setIsLoading] = useState(true);
   const storedMember = getBoardMemberLocalStorage({ boardId: board.id });
-  const boardRetroUrl = `${window.location.origin}/boards/${board.id}/retros`;
 
   const params = useParams();
 
@@ -54,29 +51,13 @@ export default function BoardId() {
         </div>
       ) : (
         <>
-          <div className="flex flex-col md:flex-row gap-x-6 w-full">
-            <div className="w-full md:basis-52 md:shrink-0 ">
-              <SideNavbar></SideNavbar>
+          <div className="flex flex-col md:flex-row gap-x-6">
+            <div className="md:w-64 md:flex-none border-b md:border-r border-zinc-800">
+              <SideNavbar board={board}></SideNavbar>
             </div>
-            <div className="w-full md:basis-full px-3 py-4">
+            <div className="grow px-3 py-4">
               <div className="container mx-auto">
                 <div className="flex flex-col gap-1 min-h-screen ">
-                  <div className="flex justify-between mt-2 items-center p-3 gap-3 bg-zinc-800 border border-zinc-700 rounded-lg">
-                    <div className="flex flex-col gap-1">
-                      <h1 className="text-2xl text-zinc-200">
-                        📋{board.boardName}
-                      </h1>
-                      <h3 className="text-zinc-500">{board.createdBy}</h3>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <TimerSlide></TimerSlide>
-                      <ShareBoardModal
-                        boardRetroUrl={boardRetroUrl}
-                        board={board}
-                      ></ShareBoardModal>
-                    </div>
-                  </div>
-
                   <div className="py-2">
                     {storedMember?.name ? (
                       <div className="py-2">
