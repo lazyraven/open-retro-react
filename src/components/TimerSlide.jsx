@@ -1,10 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import BaseButton from "@/components/BaseButton";
 import CountDownTimer from "@/components/CountDownTimer";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
+import BoardContext from "@/contexts/BoardContext";
+import { useParams } from "react-router-dom";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
+import stopwatchService from "@/services/stopwatch.service";
 
 export default function TimerSlide() {
   const timeArray = [
@@ -17,35 +21,98 @@ export default function TimerSlide() {
   const [open, setOpen] = useState(false);
   const [runtime, setRuntime] = useState(0);
   const [timerValue, setTimerValue] = useState(0);
+  const { board } = useContext(BoardContext);
+  const params = useParams();
+  const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
+  const [stopwatchState, setStopwatchState] = useState({
+    runtime: 0,
+    startTime: "",
+  });
 
   const handleStartTimer = () => {
-    setRuntime(timerValue);
+    // setRuntime(timerValue);
     setOpen(false);
+    updateStopwatch();
   };
 
   const handleRadioChange = (event) => {
     setTimerValue(event.target.value);
   };
 
+  function listenStopwatchStateChange() {
+    console.log("listenStopwatchStateChange called");
+    stopwatchService.listenStopwatchStateChange(
+      { boardId: params.boardId },
+      (doc) => {
+        if (doc) {
+          setStopwatchState(doc);
+        }
+      }
+    );
+  }
+
+  async function updateStopwatch() {
+    console.log("updateStopwatch called", stopwatchState, timerValue);
+    await stopwatchService.updateStopwatch(
+      { boardId: params.boardId },
+      {
+        ...stopwatchState,
+        startTime: new Date().getTime(),
+        runtime: timerValue,
+      }
+    );
+    console.log("updateStopwatch called22", stopwatchState, timerValue);
+  }
+
+  useEffect(() => {
+    listenStopwatchStateChange();
+  }, []);
+
   return (
     <>
-      <BaseButton
-        theme="SECONDARY"
-        size="M"
-        type="button"
-        onClick={() => setOpen(true)}
-      >
-        <div className="flex gap-1">
-          <BaseIcon
-            iconName={ICONS.ClockCircle}
-            className="flex h-5 w-5 text-white"
-          ></BaseIcon>
-          Timer
-        </div>
-      </BaseButton>
-      {!!runtime && (
+      {board?.owner == storedMember.id && (
+        <BaseButton
+          theme="SECONDARY"
+          size="M"
+          type="button"
+          onClick={() => setOpen(true)}
+        >
+          <div className="flex gap-1">
+            <BaseIcon
+              iconName={ICONS.ClockCircle}
+              className="flex h-5 w-5 text-white"
+            ></BaseIcon>
+            Stopwatch
+          </div>
+        </BaseButton>
+      )}
+
+      {!!stopwatchState?.runtime && (
         <div className="fixed inset-x-0 bottom-10 max-w-max mx-auto">
-          <CountDownTimer runtime={runtime}></CountDownTimer>
+          <div className="flex gap-2">
+            {/* <BaseButton
+                          type="button"
+                          theme="PRIMARY"
+                          size="XL"
+                          radius="rounded-full"
+                          className="w-full mt-2"
+                          onClick={handleStartTimer}
+                        >
+                          Start Stopwatch
+                        </BaseButton> */}
+            {/* <button
+              type="button"
+              className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+              onClick={closeCountDown}
+            >
+              <span className="sr-only">Close panel</span>
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+            </button> */}
+            <CountDownTimer
+              runtime={stopwatchState.runtime}
+              setRuntime={setRuntime}
+            ></CountDownTimer>
+          </div>
         </div>
       )}
 
@@ -100,7 +167,7 @@ export default function TimerSlide() {
                     <div className="grid grid-cols-1 h-full content-between overflow-y-scroll py-6 px-2 shadow-xl gap-1 bg-zinc-900">
                       <div className="col-span-1 px-4">
                         <Dialog.Title className="text-base font-semibold leading-6 text-white mb-4">
-                          Timer
+                          Stopwatch
                         </Dialog.Title>
                         <div className="flex flex-wrap gap-3">
                           {timeArray.map((rec, index) => {
@@ -133,7 +200,7 @@ export default function TimerSlide() {
                           className="w-full mt-2"
                           onClick={handleStartTimer}
                         >
-                          Start Timer
+                          Start Stopwatch
                         </BaseButton>
                       </div>
                     </div>
