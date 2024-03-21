@@ -81,10 +81,14 @@ export default function EditNote(props) {
     switch (retroState.stage) {
       case RETRO_STATES.Vote:
         return (
-          <BaseButton theme="TRANSPARENT" onClick={voteForNotes}>
+          <BaseButton
+            theme="TRANSPARENT"
+            onClick={voteForNotes}
+            disabled={note.vote === 5}
+          >
             <div className="flex gap-2 items-center">
-              <span>{note.vote}</span>
-              <HandThumbUpIcon className="flex h-4 w-4 text-zinc-200"></HandThumbUpIcon>
+              <span className="text-xs">{note.vote}</span>
+              <HandThumbUpIcon className="flex h-4 w-4 text-zinc-300"></HandThumbUpIcon>
             </div>
           </BaseButton>
         );

@@ -172,7 +172,7 @@ export default function RetroId() {
       { stage: retroStage }
     );
   };
-  // console.log(board, "board");
+
   return (
     <div className="flex flex-col gap-y-3 relative">
       <div className="flex gap-1 items-center">
@@ -182,11 +182,15 @@ export default function RetroId() {
           • {parseDateTime(retro.createdDate)}
         </span>
       </div>
-      <div className="flex justify-center items-center gap-4 mb-2">
+      <div className="flex m-auto py-3 px-2 gap-4 justify-center items-center  border-zinc-700 rounded-md bg-zinc-800 mb-2">
         {board?.owner == storedMember.id && (
-          <button onClick={() => handleArrowClick("left")}>
+          <BaseButton
+            theme="ARROWTRANSPARENT"
+            disabled={retroState.stage === RETRO_STATES.Write}
+            onClick={() => handleArrowClick("left")}
+          >
             <ChevronLeftIcon className="w-5 h-5 text-zinc-200"></ChevronLeftIcon>
-          </button>
+          </BaseButton>
         )}
         {Object.keys(RETRO_STATES).map((state, index) => {
           const modifiedIndex = index + 1;
@@ -201,7 +205,15 @@ export default function RetroId() {
               >
                 {modifiedIndex}
               </div>
-              <span className="text-zinc-200">{state}</span>
+              <span
+                className={
+                  retroState.stage === RETRO_STATES[state]
+                    ? " text-blue-500"
+                    : "active text-zinc-200"
+                }
+              >
+                {state}
+              </span>
             </div>
           );
         })}
@@ -214,13 +226,20 @@ export default function RetroId() {
                 <h5 className="text-xl text-zinc-200">
                   Hi {storedMember.name} 👋,
                 </h5>
-                <h6>Are you sure? you want to move to voting stage.</h6>
+                <h6>{`Are you sure? you want to move to ${
+                  retroState.stage === RETRO_STATES.Write
+                    ? RETRO_STATES.Vote
+                    : RETRO_STATES.Discuss
+                } stage.`}</h6>
               </>
             }
             onConfirm={() => handleArrowClick("right")}
           >
-            <BaseButton theme="TRANSPARENT" className="items-center ">
-              <ChevronRightIcon className="w-5 h-5 text-zinc-200"></ChevronRightIcon>
+            <BaseButton
+              theme="ARROWTRANSPARENT"
+              disabled={retroState.stage === RETRO_STATES.Discuss}
+            >
+              <ChevronRightIcon className="w-5 h-5  text-zinc-200"></ChevronRightIcon>
             </BaseButton>
           </BaseConfirm>
         )}
