@@ -57,16 +57,12 @@ export default function BoardId() {
             </div>
             <div className="grow px-3 py-4">
               <div className="container mx-auto">
-                <div className="flex flex-col gap-1 min-h-screen ">
-                  <div className="py-2">
-                    {storedMember?.name ? (
-                      <div className="py-2">
-                        <Outlet></Outlet>
-                      </div>
-                    ) : (
-                      <JoinBoardModal board={board}></JoinBoardModal>
-                    )}
-                  </div>
+                <div className="flex flex-col gap-1 min-h-screen">
+                  {storedMember?.name ? (
+                    <Outlet></Outlet>
+                  ) : (
+                    <JoinBoardModal board={board}></JoinBoardModal>
+                  )}
                 </div>
               </div>
             </div>
