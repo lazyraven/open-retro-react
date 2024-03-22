@@ -1,10 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import BaseButton from "@/components/BaseButton";
 import CountDownTimer from "@/components/CountDownTimer";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
+import BoardContext from "@/contexts/BoardContext";
+import { useParams } from "react-router-dom";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
+import stopwatchService from "@/services/stopwatch.service";
 
 export default function TimerSlide() {
   const timeArray = [
@@ -15,37 +19,98 @@ export default function TimerSlide() {
     { id: 5, time: "25  minutes", seconds: 1500 },
   ];
   const [open, setOpen] = useState(false);
-  const [runtime, setRuntime] = useState(0);
   const [timerValue, setTimerValue] = useState(0);
+  const { board } = useContext(BoardContext);
+  const params = useParams();
+  const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
+  const [stopwatchState, setStopwatchState] = useState(initStopwatch());
+
+  function initStopwatch() {
+    return {
+      runtime: 0,
+      startTime: "",
+    };
+  }
 
   const handleStartTimer = () => {
-    setRuntime(timerValue);
     setOpen(false);
+    updateStopwatch();
   };
 
   const handleRadioChange = (event) => {
     setTimerValue(event.target.value);
   };
 
+  function listenStopwatchStateChange() {
+    stopwatchService.listenStopwatchStateChange(
+      { boardId: params.boardId },
+      (doc) => {
+        if (doc) {
+          setStopwatchState(doc);
+        } else {
+          setStopwatchState(initStopwatch());
+        }
+      }
+    );
+  }
+
+  async function clearStopwatchState() {
+    await stopwatchService.clearStopwatchState({ boardId: params.boardId });
+  }
+
+  async function updateStopwatch() {
+    await stopwatchService.updateStopwatch(
+      { boardId: params.boardId },
+      {
+        ...stopwatchState,
+        startTime: new Date().getTime(),
+        runtime: timerValue,
+      }
+    );
+  }
+
+  useEffect(() => {
+    listenStopwatchStateChange();
+  }, []);
+
+  const timediff = Math.floor(
+    (new Date().getTime() - stopwatchState.startTime) / 1000
+  );
+  const runtimeLeft = stopwatchState.runtime - timediff;
   return (
     <>
-      <BaseButton
-        theme="SECONDARY"
-        size="M"
-        type="button"
-        onClick={() => setOpen(true)}
-      >
-        <div className="flex gap-1">
-          <BaseIcon
-            iconName={ICONS.ClockCircle}
-            className="flex h-5 w-5 text-white"
-          ></BaseIcon>
-          Timer
-        </div>
-      </BaseButton>
-      {!!runtime && (
+      {board?.owner == storedMember.id && (
+        <BaseButton
+          theme="SECONDARY"
+          size="M"
+          type="button"
+          onClick={() => setOpen(true)}
+        >
+          <div className="flex items-center gap-1">
+            <BaseIcon
+              iconName={ICONS.Stopwatch}
+              className="flex h-5 w-5 text-white"
+            ></BaseIcon>
+            Stopwatch
+          </div>
+        </BaseButton>
+      )}
+
+      {!!stopwatchState?.runtime && (
         <div className="fixed inset-x-0 bottom-10 max-w-max mx-auto">
-          <CountDownTimer runtime={runtime}></CountDownTimer>
+          <div className="flex gap-2">
+            <BaseButton
+              type="button"
+              theme="TRANSPARENT"
+              radius="rounded-full"
+              onClick={clearStopwatchState}
+            >
+              {board?.owner == storedMember.id && (
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              )}
+            </BaseButton>
+            <CountDownTimer startSeconds={runtimeLeft}></CountDownTimer>
+          </div>
         </div>
       )}
 
@@ -97,8 +162,8 @@ export default function TimerSlide() {
                     </Transition.Child>
                     <div className="grid grid-cols-1 h-full content-between overflow-y-scroll py-6 px-2 shadow-xl gap-1 bg-zinc-900">
                       <div className="col-span-1 px-4">
-                        <Dialog.Title className="text-center font-semibold leading-6 text-zinc-200 mb-4">
-                          Timer
+                        <Dialog.Title className="text-base font-semibold leading-6 text-white mb-4">
+                          Stopwatch
                         </Dialog.Title>
 
                         <div className="grid grid-cols-2 w-full gap-6">
@@ -132,7 +197,7 @@ export default function TimerSlide() {
                           className="w-full mt-2"
                           onClick={handleStartTimer}
                         >
-                          Start Timer
+                          Start Stopwatch
                         </BaseButton>
                       </div>
                     </div>

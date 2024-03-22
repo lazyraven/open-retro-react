@@ -1,3 +1,4 @@
+import _get from "lodash.get";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useState } from "react";
@@ -14,13 +15,13 @@ import { RETRO_STATES } from "@/helpers/constant";
 
 export default function EditNote(props) {
   const { note, boardId, retroState } = props;
-  // const [vote, setVote] = useState(0);
   const storedMember = getBoardMemberLocalStorage({ boardId });
 
   const [isEditMode, setEditMode] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
   const params = useParams();
   const isMemberCreator = storedMember && storedMember.id === note.createdById;
+  const memberVote = _get(note, `members.${storedMember.id}.vote`, 0);
 
   const descriptionClasses = () => {
     const { tagName } = note;
@@ -70,30 +71,24 @@ export default function EditNote(props) {
   };
 
   const voteForNotes = async () => {
-    // const updatedVoteCount = note.vote + 1;
     await notesService.updateRetroVote(
       { retroId: params.retroId, noteId: note.id, memberId: storedMember.id },
-      { vote: parseInt(note.vote || 0) + 1 }
+      { vote: parseInt(memberVote) + 1 }
     );
   };
 
-  const totalVotes = Object.values(note.members)
-    .map((notes) => notes.vote)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  console.log(totalVotes);
+  const totalVotes = Object.values(note.members || {}).reduce(
+    (acc, curr) => acc + curr.vote,
+    0
+  );
 
   const RenderTileActions = () => {
     switch (retroState.stage) {
       case RETRO_STATES.Vote:
         return (
-          <BaseButton
-            theme="TRANSPARENT"
-            onClick={voteForNotes}
-            disabled={note.vote === 5}
-          >
+          <BaseButton theme="TRANSPARENT" onClick={voteForNotes}>
             <div className="flex gap-2 items-center">
-              <span className="text-xs">{note.vote}</span>
+              <span className="text-xs">{totalVotes}</span>
               <HandThumbUpIcon className="flex h-4 w-4 text-zinc-300"></HandThumbUpIcon>
             </div>
           </BaseButton>
