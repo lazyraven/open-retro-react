@@ -48,7 +48,9 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-  const [retroState, setRetroState] = useState({});
+  const [retroState, setRetroState] = useState({
+    stage: RETRO_STATES.Write,
+  });
 
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
     const tempTileNotes = initTileNotes();
@@ -245,14 +247,13 @@ export default function RetroId() {
         )}
       </div>
       <div
-        // id="content"
         ref={pdfRef}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-16"
+        className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-3 pb-16"
       >
         {Object.values(tileSectionConfigs).map((tile) => (
           <div
             key={"tile-section" + tile.tagName}
-            className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md"
+            className="flex flex-col gap-3 py-2 rounded-md"
           >
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center">
