@@ -19,7 +19,6 @@ export default function TimerSlide() {
     { id: 5, time: "25  minutes", seconds: 1500 },
   ];
   const [open, setOpen] = useState(false);
-  const [runtime, setRuntime] = useState(0);
   const [timerValue, setTimerValue] = useState(0);
   const { board } = useContext(BoardContext);
   const params = useParams();
@@ -34,7 +33,6 @@ export default function TimerSlide() {
   }
 
   const handleStartTimer = () => {
-    // setRuntime(timerValue);
     setOpen(false);
     updateStopwatch();
   };
@@ -75,6 +73,10 @@ export default function TimerSlide() {
     listenStopwatchStateChange();
   }, []);
 
+  const timediff = Math.floor(
+    (new Date().getTime() - stopwatchState.startTime) / 1000
+  );
+  const runtimeLeft = stopwatchState.runtime - timediff;
   return (
     <>
       {board?.owner == storedMember.id && (
@@ -103,12 +105,11 @@ export default function TimerSlide() {
               radius="rounded-full"
               onClick={clearStopwatchState}
             >
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              {board?.owner == storedMember.id && (
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              )}
             </BaseButton>
-            <CountDownTimer
-              runtime={stopwatchState.runtime}
-              setRuntime={setRuntime}
-            ></CountDownTimer>
+            <CountDownTimer startSeconds={runtimeLeft}></CountDownTimer>
           </div>
         </div>
       )}
