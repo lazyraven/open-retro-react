@@ -72,10 +72,16 @@ export default function EditNote(props) {
   const voteForNotes = async () => {
     // const updatedVoteCount = note.vote + 1;
     await notesService.updateRetroVote(
-      { retroId: params.retroId, noteId: note.id },
+      { retroId: params.retroId, noteId: note.id, memberId: storedMember.id },
       { vote: parseInt(note.vote || 0) + 1 }
     );
   };
+
+  const totalVotes = Object.values(note.members)
+    .map((notes) => notes.vote)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  console.log(totalVotes);
 
   const RenderTileActions = () => {
     switch (retroState.stage) {
