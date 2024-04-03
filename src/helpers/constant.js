@@ -15,7 +15,19 @@ export const ICONS = {
   Map: "map",
   Phone: "phone",
   Envelope: "envelope",
+  ClockCircle: "clock",
+  Play: "play",
+  Pause: "pause",
+  Stopwatch: "stopwatch",
 };
 
 export const buildQRImage = (dataUrl) =>
   `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${dataUrl}`;
+
+export const RETRO_STATES = {
+  Write: "WRITE",
+  Vote: "VOTE",
+  Discuss: "DISCUSS",
+};
+
+export const MAX_RETRO_VOTES_ALLOWED = 5;

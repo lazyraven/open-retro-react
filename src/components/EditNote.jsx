@@ -1,3 +1,4 @@
+import _get from "lodash.get";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { useState } from "react";
@@ -7,18 +8,20 @@ import notesService from "@/services/notes.service";
 import BaseTextarea from "@/components/form-inputs/BaseTextarea";
 import BaseButton from "@/components/BaseButton";
 import BaseConfirm from "@/components/BaseConfirm";
-
+import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import { toast } from "react-toastify";
+import { RETRO_STATES, MAX_RETRO_VOTES_ALLOWED } from "@/helpers/constant";
 
 export default function EditNote(props) {
-  const { note, boardId } = props;
+  const { note, boardId, retroState, memberVoteCount } = props;
   const storedMember = getBoardMemberLocalStorage({ boardId });
 
   const [isEditMode, setEditMode] = useState(false);
   const [editedDescription, setEditedDescription] = useState(note.description);
   const params = useParams();
   const isMemberCreator = storedMember && storedMember.id === note.createdById;
+  const memberVote = _get(note, `members.${storedMember.id}.vote`, 0);
 
   const descriptionClasses = () => {
     const { tagName } = note;
@@ -65,6 +68,93 @@ export default function EditNote(props) {
       noteId: note.id,
     });
     toast.success("Note deleted successfully.");
+  };
+
+  const voteForNotes = async () => {
+    if (memberVoteCount < MAX_RETRO_VOTES_ALLOWED) {
+      await notesService.updateRetroVote(
+        { retroId: params.retroId, noteId: note.id, memberId: storedMember.id },
+        { vote: parseInt(memberVote) + 1 }
+      );
+    }
+  };
+
+  const totalVotes = Object.values(note.members || {}).reduce(
+    (acc, curr) => acc + curr.vote,
+    0
+  );
+
+  const RenderTileActions = () => {
+    switch (retroState.stage) {
+      case RETRO_STATES.Vote:
+        return (
+          <BaseButton
+            theme="TRANSPARENT"
+            disabled={memberVoteCount >= MAX_RETRO_VOTES_ALLOWED}
+            onClick={voteForNotes}
+            title={
+              memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                ? "Vote"
+                : `0 remaining votes`
+            }
+          >
+            <div className="flex gap-2 items-center">
+              <span
+                className={`text-xs ${
+                  memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                    ? "text-zinc-300"
+                    : "text-zinc-500"
+                }`}
+              >
+                {totalVotes}
+              </span>
+              <HandThumbUpIcon
+                className={`flex h-4 w-4 ${
+                  memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                    ? "text-zinc-300"
+                    : "text-zinc-500"
+                }`}
+              ></HandThumbUpIcon>
+            </div>
+          </BaseButton>
+        );
+      case RETRO_STATES.Discuss:
+        return (
+          <div className="flex gap-2 items-center">
+            <span className="text-xs text-zinc-500">{totalVotes}</span>
+            <HandThumbUpIcon className="flex h-4 w-4 text-xs text-zinc-500"></HandThumbUpIcon>
+          </div>
+        );
+      default:
+        return (
+          isMemberCreator && (
+            <>
+              <div className="child flex gap-1">
+                <BaseButton theme="TRANSPARENT" onClick={editDescriptionModal}>
+                  <BaseIcon
+                    className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                    iconName={ICONS.Edit}
+                  ></BaseIcon>
+                </BaseButton>
+
+                <BaseConfirm
+                  theme="DANGER"
+                  confirmTitle="Delete Note"
+                  confirmText="Are you sure? you want to delete this note."
+                  onConfirm={deleteNote}
+                >
+                  <BaseButton theme="TRANSPARENT">
+                    <BaseIcon
+                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
+                      iconName={ICONS.Delete}
+                    ></BaseIcon>
+                  </BaseButton>
+                </BaseConfirm>
+              </div>
+            </>
+          )
+        );
+    }
   };
 
   return (
@@ -115,32 +205,7 @@ export default function EditNote(props) {
                 <BaseFirstChar word={note?.createdBy}></BaseFirstChar>
                 <p className="text-zinc-200 text-xs">{note.createdBy}</p>
               </div>
-              {isMemberCreator && (
-                <div className="child flex gap-1">
-                  <BaseButton
-                    theme="TRANSPARENT"
-                    onClick={editDescriptionModal}
-                  >
-                    <BaseIcon
-                      className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
-                      iconName={ICONS.Edit}
-                    ></BaseIcon>
-                  </BaseButton>
-
-                  <BaseConfirm
-                    confirmTitle="Delete Note"
-                    confirmText="Are you sure? you want to delete this note."
-                    onConfirm={deleteNote}
-                  >
-                    <BaseButton theme="TRANSPARENT">
-                      <BaseIcon
-                        className="flex h-4 w-4 text-zinc-200 hover:text-zinc-100"
-                        iconName={ICONS.Delete}
-                      ></BaseIcon>
-                    </BaseButton>
-                  </BaseConfirm>
-                </div>
-              )}
+              <RenderTileActions></RenderTileActions>
             </div>
           </div>
         </div>

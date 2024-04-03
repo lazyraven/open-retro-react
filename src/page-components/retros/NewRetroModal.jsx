@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
-import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BaseButton from "@/components/BaseButton";
 import BaseInput from "@/components/form-inputs/BaseInput";
 import BaseModal from "@/components/BaseModal";
+import retroService from "@/services/retro.service";
 
 export default function BaseForm(props) {
   const { children } = props;
@@ -18,6 +18,7 @@ export default function BaseForm(props) {
   const [retroModel, setRetroModel] = useState({
     retroName: `Retro ${today.slice(4, today.length)}`,
     createdDate: new Date().getTime(),
+    retroState: "write",
   });
 
   const openModal = () => {
@@ -48,7 +49,7 @@ export default function BaseForm(props) {
   }, [isOpen]);
 
   const handleSave = async () => {
-    await boardService.createRetro({ boardId: params.boardId }, retroModel);
+    await retroService.createRetro({ boardId: params.boardId }, retroModel);
     closeModal();
     props.getBoardRetros();
     toast.success("Retro created successfully.");
@@ -93,6 +94,7 @@ export default function BaseForm(props) {
                 theme="PRIMARY"
                 size="XL"
                 radius="rounded-full"
+                disabled={!retroModel.retroName}
                 onClick={handleSave}
               >
                 Create

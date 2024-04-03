@@ -39,11 +39,15 @@ export default function BaseButton(props) {
         " text-zinc-200 bg-transparent hover:text-zinc-100 font-semibold";
       break;
     case "PRIMARY":
-      classes += " text-zinc-900 bg-zinc-100 hover:bg-zinc-200 font-semibold";
+      classes +=
+        " text-zinc-900 bg-zinc-100 hover:bg-zinc-200 font-semibold disabled:bg-zinc-500 disabled:text-zinc-300";
       break;
     case "SECONDARY":
       classes +=
         " text-white border border-zinc-700 hover:bg-zinc-800 font-semibold";
+      break;
+    case "INFO":
+      classes += " text-white bg-indigo-600 hover:bg-indigo-500 font-semibold";
       break;
     case "BLUE":
       classes += " text-white bg-blue-600 hover:bg-blue-500 font-semibold";

@@ -1,10 +1,10 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
-import boardService from "@/services/board.service";
 import { useParams } from "react-router-dom";
 import BaseIcon from "@/components/BaseIcon";
 import { ICONS } from "@/helpers/constant";
 import { parseDateTime } from "@/utils/common.util";
+import retroService from "@/services/retro.service";
 
 export default function Reports() {
   const [pdfSrc, setPdfSrc] = useState("");
@@ -16,12 +16,12 @@ export default function Reports() {
 
   const getBoardRetros = async () => {
     try {
-      const boardRetros = await boardService.getBoardRetros({
+      const boardRetros = await retroService.getBoardRetros({
         boardId: params.boardId,
       });
       if (boardRetros && boardRetros.length) {
         const filteredRetros = boardRetros.filter(
-          (retro) => retro.pathRetroSrc
+          (retro) => retro.reportSrcPath
         );
         setReportRetros(filteredRetros);
       }
@@ -41,9 +41,9 @@ export default function Reports() {
     }
   }
 
-  const viewReport = (event, pathRetroSrc) => {
+  const viewReport = (event, reportSrcPath) => {
     setIsOpen(true);
-    const starsRef = ref(storage, `${pathRetroSrc}.pdf`);
+    const starsRef = ref(storage, `${reportSrcPath}.pdf`);
     setPdfReports(starsRef);
   };
 
@@ -80,7 +80,7 @@ export default function Reports() {
                     type="button"
                     className="px-3 py-1 text-sm items-center border rounded-sm border-zinc-600 hover:bg-zinc-700"
                     onClick={(event) => {
-                      viewReport(event, retroDetails.pathRetroSrc);
+                      viewReport(event, retroDetails.reportSrcPath);
                     }}
                   >
                     View
