@@ -46,6 +46,9 @@ export default function BaseButton(props) {
       classes +=
         " text-white border border-zinc-700 hover:bg-zinc-800 font-semibold";
       break;
+    case "INFO":
+      classes += " text-white bg-indigo-600 hover:bg-indigo-500 font-semibold";
+      break;
     case "BLUE":
       classes += " text-white bg-blue-600 hover:bg-blue-500 font-semibold";
       break;

@@ -24,9 +24,9 @@ export default {
     await update(rtdbRef, updates);
     return body;
   },
-  async updateRetroVote({ retroId, noteId }, { vote }) {
+  async updateRetroVote({ retroId, noteId, memberId }, { vote }) {
     const updates = {};
-    updates[`notes/${retroId}/${noteId}/vote`] = vote;
+    updates[`notes/${retroId}/${noteId}/members/${memberId}/vote`] = vote;
     const rtdbRef = ref(rtdb);
     await update(rtdbRef, updates);
     return vote;

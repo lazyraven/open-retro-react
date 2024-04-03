@@ -1,19 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import _get from "lodash.get";
 import BaseIcon from "@/components/BaseIcon";
-import { ICONS } from "@/helpers/constant";
+import { ICONS, MAX_RETRO_VOTES_ALLOWED } from "@/helpers/constant";
 import retroService from "@/services/retro.service";
 import { useParams } from "react-router-dom";
 import NewNote from "@/components/NewNote";
 import EditNote from "@/components/EditNote";
 import { toast } from "react-toastify";
+
+import pdfService from "@/services/pdf.service";
 import notesService from "@/services/notes.service";
 import { parseDateTime } from "@/utils/common.util";
 import BaseButton from "@/components/BaseButton";
 import { RETRO_STATES } from "@/helpers/constant";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import BoardContext from "@/contexts/BoardContext";
+import { getBoardMemberLocalStorage } from "@/utils/common.util";
+import BaseConfirm from "@/components/BaseConfirm";
+import BaseFirstChar from "@/components/BaseFirstChar";
 
 export default function RetroId() {
-  const [activeTab, setActiveTab] = useState(RETRO_STATES.Write);
+  const params = useParams();
+  const storedMember = getBoardMemberLocalStorage({ boardId: params.boardId });
+  const { board } = useContext(BoardContext);
   const tileSectionConfigs = {
     wentWell: {
       tagName: "went-well",
@@ -31,6 +40,8 @@ export default function RetroId() {
       placeholder: "What action item...",
     },
   };
+  const [memberVoteCount, setMemberVoteCount] = useState(0);
+
   const [tileNotes, setTileNotes] = useState(initTileNotes());
   function initTileNotes() {
     return {
@@ -41,12 +52,34 @@ export default function RetroId() {
   }
 
   const [retro, setRetro] = useState({});
-  const params = useParams();
+  const [retroState, setRetroState] = useState({
+    stage: RETRO_STATES.Write,
+  });
 
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
     const tempTileNotes = initTileNotes();
+    let tempMemberVoteCount = 0;
     if (retroNotes && retroNotes.length) {
       retroNotes.forEach((note, index) => {
+        const noteMemberVoteCount = parseInt(
+          _get(note, `members.${storedMember.id}.vote`, 0)
+        );
+
+        let totalVotes = 0;
+        if (note?.members) {
+          totalVotes = Object.values(note.members).reduce((accum, curr) => {
+            // console.log("curr => ", curr);
+            if (curr?.vote) {
+              accum += parseInt(curr.vote);
+            }
+            return accum;
+          }, 0);
+        }
+        note.totalVotes = totalVotes;
+
+        if (noteMemberVoteCount) {
+          tempMemberVoteCount += noteMemberVoteCount;
+        }
         switch (note.tagName) {
           case tileSectionConfigs.wentWell.tagName:
             tempTileNotes[tileSectionConfigs.wentWell.tagName].push(note);
@@ -64,6 +97,8 @@ export default function RetroId() {
         }
         setTileNotes(tempTileNotes);
       });
+
+      setMemberVoteCount(tempMemberVoteCount);
     }
   }
 
@@ -88,9 +123,18 @@ export default function RetroId() {
     }
   }
 
+  function listenRetroStageChange() {
+    retroService.listenRetroStageChange({ retroId: params.retroId }, (doc) => {
+      if (doc) {
+        setRetroState(doc);
+      }
+    });
+  }
+
   useEffect(() => {
     getRetro({ boardId: params.boardId, retroId: params.retroId });
     listenRetroNotesChange({ retroId: params.retroId });
+    listenRetroStageChange();
   }, []);
 
   const pdfRef = useRef();
@@ -98,7 +142,7 @@ export default function RetroId() {
   const downloadPdf = async () => {
     const input = pdfRef.current;
     const reportSrc = `${params.boardId}/${params.retroId}.pdf`;
-    const pdfResult = await retroService.generateAndUploadPdf({
+    const pdfResult = await pdfService.generateAndUploadPdf({
       storagePath: reportSrc,
       fileName: `${params.retroId}.pdf`,
       htmlInput: input,
@@ -119,42 +163,93 @@ export default function RetroId() {
     }
   };
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
+  const handleArrowClick = async (direction) => {
+    let retroStage = "";
+    if (direction === "left") {
+      switch (retroState.stage) {
+        case RETRO_STATES.Write:
+          retroStage = RETRO_STATES.Discuss;
+          break;
+        case RETRO_STATES.Vote:
+          retroStage = RETRO_STATES.Write;
+          break;
+        case RETRO_STATES.Discuss:
+          retroStage = RETRO_STATES.Vote;
+          break;
+        default:
+          retroStage = RETRO_STATES.Write;
+      }
+    } else if (direction === "right") {
+      switch (retroState.stage) {
+        case RETRO_STATES.Write:
+          retroStage = RETRO_STATES.Vote;
+          break;
+        case RETRO_STATES.Vote:
+          retroStage = RETRO_STATES.Discuss;
+          break;
+        case RETRO_STATES.Discuss:
+          retroStage = RETRO_STATES.Write;
+          break;
+        default:
+          retroStage = RETRO_STATES.Write;
+      }
+    }
+
+    await retroService.updateRetroState(
+      { retroId: params.retroId },
+      { stage: retroStage }
+    );
   };
 
-  const handleArrowClick = (direction) => {
-    if (direction === "left") {
-      setActiveTab((prevTab) => {
-        switch (prevTab) {
-          case RETRO_STATES.Write:
-            return RETRO_STATES.Discuss;
-          case RETRO_STATES.Vote:
-            return RETRO_STATES.Write;
-          case RETRO_STATES.Discuss:
-            return RETRO_STATES.Vote;
-          default:
-            return RETRO_STATES.Write;
-        }
-      });
-    } else if (direction === "right") {
-      setActiveTab((prevTab) => {
-        switch (prevTab) {
-          case RETRO_STATES.Write:
-            return RETRO_STATES.Vote;
-          case RETRO_STATES.Vote:
-            return RETRO_STATES.Discuss;
-          case RETRO_STATES.Discuss:
-            return RETRO_STATES.Write;
-          default:
-            return RETRO_STATES.Write;
-        }
-      });
+  const RetroStateText = () => {
+    switch (retroState.stage) {
+      case RETRO_STATES.Write:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            ✏️ Write down all your notes.
+          </h3>
+        );
+      case RETRO_STATES.Vote:
+        return (
+          <h3 className="text-zinc-200 text-center p-3 bg-zinc-800">
+            🙋‍♂️ Vote for your preferred note to discuss.
+          </h3>
+        );
+      case RETRO_STATES.Discuss:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            💬 Start open discussion now.
+          </h3>
+        );
+      default:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            ✏️ Write down all your notes.
+          </h3>
+        );
+    }
+  };
+
+  const orderedByState = (tile) => {
+    if (!tile || !tileNotes[tile.tagName]) {
+      return [];
+    }
+
+    switch (retroState.stage) {
+      case RETRO_STATES.Write:
+        return tileNotes[tile.tagName].slice().reverse();
+      case RETRO_STATES.Vote:
+        return tileNotes[tile.tagName].slice().reverse();
+      case RETRO_STATES.Discuss:
+        return tileNotes[tile.tagName].slice().sort((a, b) => {
+          console.log("a , b =>", a, b);
+          return b.totalVotes - a.totalVotes;
+        });
     }
   };
 
   return (
-    <div className="flex flex-col gap-y-3 relative">
+    <div className="flex flex-col gap-y-3">
       <div className="flex gap-1 items-center">
         <span className="text-2xl">📝</span>
         <h1 className="text-zinc-200 text-lg">{retro.retroName}</h1>
@@ -162,44 +257,112 @@ export default function RetroId() {
           • {parseDateTime(retro.createdDate)}
         </span>
       </div>
-      <div className="flex justify-center gap-4 mb-2">
-        {Object.keys(RETRO_STATES).map((state, index) => {
-          const modifiedIndex = index + 1;
-          return (
-            <div key={"state" + index} className="flex gap-2 items-center">
-              <button
-                onClick={() => handleTabChange(RETRO_STATES[state], index)}
-                className={
-                  activeTab === RETRO_STATES[state]
-                    ? "px-3 py-1 text-zinc-200 bg-blue-500 rounded-full"
-                    : "active text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
-                }
+      <div className="flex flex-col gap-y-3 justify-center items-center relative">
+        <div className="border border-zinc-700 rounded-md">
+          <div className="flex gap-2 py-3 px-2 md:gap-5 justify-center items-center ">
+            {board?.owner == storedMember.id && (
+              <BaseButton
+                theme="TRANSPARENT"
+                disabled={retroState.stage === RETRO_STATES.Write}
+                onClick={() => handleArrowClick("left")}
               >
-                {modifiedIndex}
-              </button>
-              <span className="text-zinc-200">{state}</span>
-            </div>
-          );
-        })}
-        <span className="text-zinc-200 flex items-center">|</span>
-        <div className="flex items-center gap-2">
-          <button onClick={() => handleArrowClick("left")}>
-            <ChevronLeftIcon className="w-4 h-4 text-zinc-200"></ChevronLeftIcon>
-          </button>
-          <button onClick={() => handleArrowClick("right")}>
-            <ChevronRightIcon className="w-4 h-4 text-zinc-200"></ChevronRightIcon>
-          </button>
+                <ChevronLeftIcon
+                  className={
+                    retroState.stage === RETRO_STATES.Write
+                      ? "w-5 h-5 text-zinc-500"
+                      : "w-5 h-5 text-zinc-200"
+                  }
+                ></ChevronLeftIcon>
+              </BaseButton>
+            )}
+            {Object.keys(RETRO_STATES).map((state, index) => {
+              const modifiedIndex = index + 1;
+              return (
+                <div key={"state" + index} className="flex gap-2 items-center">
+                  <div
+                    className={
+                      retroState.stage === RETRO_STATES[state]
+                        ? "px-3 py-1 text-sm font-medium text-zinc-200 bg-blue-500 rounded-full"
+                        : "active text-sm font-medium text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
+                    }
+                  >
+                    {modifiedIndex}
+                  </div>
+                  <span
+                    className={
+                      retroState.stage === RETRO_STATES[state]
+                        ? " text-blue-500 text-sm font-medium"
+                        : "active text-zinc-200 text-sm font-medium"
+                    }
+                  >
+                    {state}
+                  </span>
+                </div>
+              );
+            })}
+
+            {board?.owner == storedMember.id && (
+              <BaseConfirm
+                theme="INFO"
+                btnText="Yes"
+                confirmText={
+                  <>
+                    <h6 className="text-base text-zinc-300">
+                      Hi {storedMember.name} 👋,
+                    </h6>
+                    <h5 className="text-base text-zinc-100">
+                      Are you sure? you want to move to{" "}
+                      <b>
+                        {retroState.stage === RETRO_STATES.Write
+                          ? RETRO_STATES.Vote
+                          : RETRO_STATES.Discuss}
+                      </b>
+                      &nbsp;stage.
+                    </h5>
+                  </>
+                }
+                onConfirm={() => handleArrowClick("right")}
+              >
+                <BaseButton
+                  theme="TRANSPARENT"
+                  disabled={retroState.stage === RETRO_STATES.Discuss}
+                >
+                  <ChevronRightIcon
+                    className={
+                      retroState.stage === RETRO_STATES.Discuss
+                        ? "w-5 h-5 text-zinc-500"
+                        : "w-5 h-5 text-zinc-200"
+                    }
+                  ></ChevronRightIcon>
+                </BaseButton>
+              </BaseConfirm>
+            )}
+          </div>
+          <RetroStateText></RetroStateText>
         </div>
+        {retroState.stage === RETRO_STATES.Vote && (
+          <div className="absolute left-0 flex flex-col gap-y-1 p-3">
+            <div className="flex gap-1 items-center">
+              <BaseFirstChar word={storedMember?.name}></BaseFirstChar>
+              <p className="text-zinc-200">{storedMember?.name}</p>
+            </div>
+            <span className="text-zinc-400 text-sm">
+              Remaining Votes:{" "}
+              <b className="text-zinc-200">
+                {MAX_RETRO_VOTES_ALLOWED - memberVoteCount}
+              </b>
+            </span>
+          </div>
+        )}
       </div>
       <div
-        // id="content"
         ref={pdfRef}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-16"
+        className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-3 pb-16"
       >
         {Object.values(tileSectionConfigs).map((tile) => (
           <div
             key={"tile-section" + tile.tagName}
-            className="flex flex-col gap-3 py-2 border border-zinc-800 px-3 rounded-md"
+            className="flex flex-col gap-3 py-2 rounded-md"
           >
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center">
@@ -207,8 +370,8 @@ export default function RetroId() {
                   {tile.title}
                 </h5>
               </div>
-              {activeTab !== RETRO_STATES.Vote &&
-                activeTab !== RETRO_STATES.Discuss && (
+              {retroState.stage !== RETRO_STATES.Vote &&
+                retroState.stage !== RETRO_STATES.Discuss && (
                   <NewNote
                     tagName={tile.tagName}
                     placeholder={tile.placeholder}
@@ -217,21 +380,19 @@ export default function RetroId() {
                 )}
             </div>
             <div>
-              {tileNotes[tile.tagName]
-                .slice()
-                .reverse()
-                .map((note, index) => {
-                  if (!note || note.tagName !== tile.tagName) return null;
-                  return (
-                    <div className="mb-2" key={"edit-note-" + note.id + index}>
-                      <EditNote
-                        activeTab={activeTab}
-                        note={note}
-                        boardId={params.boardId}
-                      ></EditNote>
-                    </div>
-                  );
-                })}
+              {orderedByState(tile).map((note, index) => {
+                if (!note || note.tagName !== tile.tagName) return null;
+                return (
+                  <div className="mb-2" key={"edit-note-" + note.id + index}>
+                    <EditNote
+                      retroState={retroState}
+                      memberVoteCount={memberVoteCount}
+                      note={note}
+                      boardId={params.boardId}
+                    ></EditNote>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}

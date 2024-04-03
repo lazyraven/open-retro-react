@@ -150,14 +150,12 @@ export default function TimerSlide() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
+                      <div className="absolute left-1 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
                         <button
                           type="button"
-                          className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                          className="relative rounded-md text-gray-300 hover:text-white "
                           onClick={() => setOpen(false)}
                         >
-                          <span className="absolute -inset-2.5" />
-                          <span className="sr-only">Close panel</span>
                           <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
@@ -167,7 +165,8 @@ export default function TimerSlide() {
                         <Dialog.Title className="text-base font-semibold leading-6 text-white mb-4">
                           Stopwatch
                         </Dialog.Title>
-                        <div className="flex flex-wrap gap-3">
+
+                        <div className="grid grid-cols-2 w-full gap-6">
                           {timeArray.map((rec, index) => {
                             return (
                               <div key={"timer-value-" + index}>
@@ -179,7 +178,7 @@ export default function TimerSlide() {
                                   onChange={handleRadioChange}
                                 />
                                 <label
-                                  className="text-zinc-200 my-radio-button"
+                                  className="text-zinc-200 my-radio-button w-[7.5rem]"
                                   htmlFor={rec.id}
                                 >
                                   {rec.time}
