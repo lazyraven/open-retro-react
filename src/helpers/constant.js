@@ -29,3 +29,5 @@ export const RETRO_STATES = {
   Vote: "VOTE",
   Discuss: "DISCUSS",
 };
+
+export const MAX_RETRO_VOTES_ALLOWED = 5;

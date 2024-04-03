@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import _get from "lodash.get";
 import BaseIcon from "@/components/BaseIcon";
-import { ICONS } from "@/helpers/constant";
+import { ICONS, MAX_RETRO_VOTES_ALLOWED } from "@/helpers/constant";
 import retroService from "@/services/retro.service";
 import { useParams } from "react-router-dom";
 import NewNote from "@/components/NewNote";
@@ -39,6 +40,8 @@ export default function RetroId() {
       placeholder: "What action item...",
     },
   };
+  const [memberVoteCount, setMemberVoteCount] = useState(0);
+
   const [tileNotes, setTileNotes] = useState(initTileNotes());
   function initTileNotes() {
     return {
@@ -55,8 +58,15 @@ export default function RetroId() {
 
   function distributeTileNotes({ tileSectionConfigs, retroNotes }) {
     const tempTileNotes = initTileNotes();
+    let tempMemberVoteCount = 0;
     if (retroNotes && retroNotes.length) {
       retroNotes.forEach((note, index) => {
+        const noteMemberVoteCount = parseInt(
+          _get(note, `members.${storedMember.id}.vote`, 0)
+        );
+        if (noteMemberVoteCount) {
+          tempMemberVoteCount += noteMemberVoteCount;
+        }
         switch (note.tagName) {
           case tileSectionConfigs.wentWell.tagName:
             tempTileNotes[tileSectionConfigs.wentWell.tagName].push(note);
@@ -74,6 +84,8 @@ export default function RetroId() {
         }
         setTileNotes(tempTileNotes);
       });
+
+      setMemberVoteCount(tempMemberVoteCount);
     }
   }
 
@@ -187,7 +199,7 @@ export default function RetroId() {
       case RETRO_STATES.Vote:
         return (
           <h3 className="text-zinc-200 text-center p-3 bg-zinc-800">
-            🙋‍♂️ Vote your preferred note discussion.
+            🙋‍♂️ Vote for your preferred note to discuss.
           </h3>
         );
       case RETRO_STATES.Discuss:
@@ -304,7 +316,10 @@ export default function RetroId() {
               <p className="text-zinc-200">{storedMember?.name}</p>
             </div>
             <span className="text-zinc-400 text-sm">
-              Remaining Votes: <b className="text-zinc-200">4</b>
+              Remaining Votes:{" "}
+              <b className="text-zinc-200">
+                {MAX_RETRO_VOTES_ALLOWED - memberVoteCount}
+              </b>
             </span>
           </div>
         )}
@@ -343,6 +358,7 @@ export default function RetroId() {
                     <div className="mb-2" key={"edit-note-" + note.id + index}>
                       <EditNote
                         retroState={retroState}
+                        memberVoteCount={memberVoteCount}
                         note={note}
                         boardId={params.boardId}
                       ></EditNote>

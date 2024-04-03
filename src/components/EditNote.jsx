@@ -11,10 +11,10 @@ import BaseConfirm from "@/components/BaseConfirm";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import { toast } from "react-toastify";
-import { RETRO_STATES } from "@/helpers/constant";
+import { RETRO_STATES, MAX_RETRO_VOTES_ALLOWED } from "@/helpers/constant";
 
 export default function EditNote(props) {
-  const { note, boardId, retroState } = props;
+  const { note, boardId, retroState, memberVoteCount } = props;
   const storedMember = getBoardMemberLocalStorage({ boardId });
 
   const [isEditMode, setEditMode] = useState(false);
@@ -71,10 +71,12 @@ export default function EditNote(props) {
   };
 
   const voteForNotes = async () => {
-    await notesService.updateRetroVote(
-      { retroId: params.retroId, noteId: note.id, memberId: storedMember.id },
-      { vote: parseInt(memberVote) + 1 }
-    );
+    if (memberVoteCount < MAX_RETRO_VOTES_ALLOWED) {
+      await notesService.updateRetroVote(
+        { retroId: params.retroId, noteId: note.id, memberId: storedMember.id },
+        { vote: parseInt(memberVote) + 1 }
+      );
+    }
   };
 
   const totalVotes = Object.values(note.members || {}).reduce(
@@ -86,10 +88,33 @@ export default function EditNote(props) {
     switch (retroState.stage) {
       case RETRO_STATES.Vote:
         return (
-          <BaseButton theme="TRANSPARENT" onClick={voteForNotes}>
+          <BaseButton
+            theme="TRANSPARENT"
+            disabled={memberVoteCount >= MAX_RETRO_VOTES_ALLOWED}
+            onClick={voteForNotes}
+            title={
+              memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                ? "Vote"
+                : `0 remaining votes`
+            }
+          >
             <div className="flex gap-2 items-center">
-              <span className="text-xs">{totalVotes}</span>
-              <HandThumbUpIcon className="flex h-4 w-4 text-zinc-300"></HandThumbUpIcon>
+              <span
+                className={`text-xs ${
+                  memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                    ? "text-zinc-300"
+                    : "text-zinc-500"
+                }`}
+              >
+                {totalVotes}
+              </span>
+              <HandThumbUpIcon
+                className={`flex h-4 w-4 ${
+                  memberVoteCount < MAX_RETRO_VOTES_ALLOWED
+                    ? "text-zinc-300"
+                    : "text-zinc-500"
+                }`}
+              ></HandThumbUpIcon>
             </div>
           </BaseButton>
         );
