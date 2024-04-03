@@ -16,6 +16,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import BoardContext from "@/contexts/BoardContext";
 import { getBoardMemberLocalStorage } from "@/utils/common.util";
 import BaseConfirm from "@/components/BaseConfirm";
+import BaseFirstChar from "@/components/BaseFirstChar";
 
 export default function RetroId() {
   const params = useParams();
@@ -175,6 +176,35 @@ export default function RetroId() {
     );
   };
 
+  const RetroStateText = () => {
+    switch (retroState.stage) {
+      case RETRO_STATES.Write:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            ✏️ Write down all your notes.
+          </h3>
+        );
+      case RETRO_STATES.Vote:
+        return (
+          <h3 className="text-zinc-200 text-center p-3 bg-zinc-800">
+            🙋‍♂️ Vote your preferred note discussion.
+          </h3>
+        );
+      case RETRO_STATES.Discuss:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            💬 Start open discussion now.
+          </h3>
+        );
+      default:
+        return (
+          <h3 className="text-zinc-200 text-center bg-zinc-800 p-3">
+            ✏️ Write down all your notes.
+          </h3>
+        );
+    }
+  };
+
   return (
     <div className="flex flex-col gap-y-3 relative">
       <div className="flex gap-1 items-center">
@@ -184,66 +214,99 @@ export default function RetroId() {
           • {parseDateTime(retro.createdDate)}
         </span>
       </div>
-      <div className="flex m-auto py-3 px-2 gap-4 justify-center items-center  border-zinc-700 rounded-md bg-zinc-800 mb-2">
-        {board?.owner == storedMember.id && (
-          <BaseButton
-            theme="ARROWTRANSPARENT"
-            disabled={retroState.stage === RETRO_STATES.Write}
-            onClick={() => handleArrowClick("left")}
-          >
-            <ChevronLeftIcon className="w-5 h-5 text-zinc-200"></ChevronLeftIcon>
-          </BaseButton>
-        )}
-        {Object.keys(RETRO_STATES).map((state, index) => {
-          const modifiedIndex = index + 1;
-          return (
-            <div key={"state" + index} className="flex gap-2 items-center">
-              <div
-                className={
-                  retroState.stage === RETRO_STATES[state]
-                    ? "px-3 py-1 text-zinc-200 bg-blue-500 rounded-full"
-                    : "active text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
-                }
+      <div className="flex flex-col gap-y-3 justify-center items-center relative">
+        <div className="border border-zinc-700 rounded-md">
+          <div className="flex gap-2 py-3 px-2 md:gap-5 justify-center items-center ">
+            {board?.owner == storedMember.id && (
+              <BaseButton
+                theme="TRANSPARENT"
+                disabled={retroState.stage === RETRO_STATES.Write}
+                onClick={() => handleArrowClick("left")}
               >
-                {modifiedIndex}
-              </div>
-              <span
-                className={
-                  retroState.stage === RETRO_STATES[state]
-                    ? " text-blue-500"
-                    : "active text-zinc-200"
+                <ChevronLeftIcon
+                  className={
+                    retroState.stage === RETRO_STATES.Write
+                      ? "w-5 h-5 text-zinc-500"
+                      : "w-5 h-5 text-zinc-200"
+                  }
+                ></ChevronLeftIcon>
+              </BaseButton>
+            )}
+            {Object.keys(RETRO_STATES).map((state, index) => {
+              const modifiedIndex = index + 1;
+              return (
+                <div key={"state" + index} className="flex gap-2 items-center">
+                  <div
+                    className={
+                      retroState.stage === RETRO_STATES[state]
+                        ? "px-3 py-1 text-sm font-medium text-zinc-200 bg-blue-500 rounded-full"
+                        : "active text-sm font-medium text-zinc-200 px-3 py-1 rounded-full bg-zinc-600"
+                    }
+                  >
+                    {modifiedIndex}
+                  </div>
+                  <span
+                    className={
+                      retroState.stage === RETRO_STATES[state]
+                        ? " text-blue-500 text-sm font-medium"
+                        : "active text-zinc-200 text-sm font-medium"
+                    }
+                  >
+                    {state}
+                  </span>
+                </div>
+              );
+            })}
+
+            {board?.owner == storedMember.id && (
+              <BaseConfirm
+                theme="INFO"
+                btnText="Yes"
+                confirmText={
+                  <>
+                    <h6 className="text-base text-zinc-300">
+                      Hi {storedMember.name} 👋,
+                    </h6>
+                    <h5 className="text-base text-zinc-100">
+                      Are you sure? you want to move to{" "}
+                      <b>
+                        {retroState.stage === RETRO_STATES.Write
+                          ? RETRO_STATES.Vote
+                          : RETRO_STATES.Discuss}
+                      </b>
+                      &nbsp;stage.
+                    </h5>
+                  </>
                 }
+                onConfirm={() => handleArrowClick("right")}
               >
-                {state}
-              </span>
+                <BaseButton
+                  theme="TRANSPARENT"
+                  disabled={retroState.stage === RETRO_STATES.Discuss}
+                >
+                  <ChevronRightIcon
+                    className={
+                      retroState.stage === RETRO_STATES.Discuss
+                        ? "w-5 h-5 text-zinc-500"
+                        : "w-5 h-5 text-zinc-200"
+                    }
+                  ></ChevronRightIcon>
+                </BaseButton>
+              </BaseConfirm>
+            )}
+          </div>
+          <RetroStateText></RetroStateText>
+        </div>
+        {retroState.stage === RETRO_STATES.Vote && (
+          <div className="absolute left-0 flex flex-col gap-y-1 p-3">
+            <div className="flex gap-1 items-center">
+              <BaseFirstChar word={storedMember?.name}></BaseFirstChar>
+              <p className="text-zinc-200">{storedMember?.name}</p>
             </div>
-          );
-        })}
-        {board?.owner == storedMember.id && (
-          <BaseConfirm
-            theme="INFO"
-            btnText="Yes"
-            confirmText={
-              <>
-                <h5 className="text-xl text-zinc-200">
-                  Hi {storedMember.name} 👋,
-                </h5>
-                <h6>{`Are you sure? you want to move to ${
-                  retroState.stage === RETRO_STATES.Write
-                    ? RETRO_STATES.Vote
-                    : RETRO_STATES.Discuss
-                } stage.`}</h6>
-              </>
-            }
-            onConfirm={() => handleArrowClick("right")}
-          >
-            <BaseButton
-              theme="ARROWTRANSPARENT"
-              disabled={retroState.stage === RETRO_STATES.Discuss}
-            >
-              <ChevronRightIcon className="w-5 h-5  text-zinc-200"></ChevronRightIcon>
-            </BaseButton>
-          </BaseConfirm>
+            <span className="text-zinc-400 text-sm">
+              Remaining Votes: <b className="text-zinc-200">4</b>
+            </span>
+          </div>
         )}
       </div>
       <div
