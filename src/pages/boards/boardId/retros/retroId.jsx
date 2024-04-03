@@ -64,6 +64,19 @@ export default function RetroId() {
         const noteMemberVoteCount = parseInt(
           _get(note, `members.${storedMember.id}.vote`, 0)
         );
+
+        let totalVotes = 0;
+        if (note?.members) {
+          totalVotes = Object.values(note.members).reduce((accum, curr) => {
+            // console.log("curr => ", curr);
+            if (curr?.vote) {
+              accum += parseInt(curr.vote);
+            }
+            return accum;
+          }, 0);
+        }
+        note.totalVotes = totalVotes;
+
         if (noteMemberVoteCount) {
           tempMemberVoteCount += noteMemberVoteCount;
         }
@@ -217,6 +230,24 @@ export default function RetroId() {
     }
   };
 
+  const orderedByState = (tile) => {
+    if (!tile || !tileNotes[tile.tagName]) {
+      return [];
+    }
+
+    switch (retroState.stage) {
+      case RETRO_STATES.Write:
+        return tileNotes[tile.tagName].slice().reverse();
+      case RETRO_STATES.Vote:
+        return tileNotes[tile.tagName].slice().reverse();
+      case RETRO_STATES.Discuss:
+        return tileNotes[tile.tagName].slice().sort((a, b) => {
+          console.log("a , b =>", a, b);
+          return b.totalVotes - a.totalVotes;
+        });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-y-3 relative">
       <div className="flex gap-1 items-center">
@@ -349,22 +380,19 @@ export default function RetroId() {
                 )}
             </div>
             <div>
-              {tileNotes[tile.tagName]
-                .slice()
-                .reverse()
-                .map((note, index) => {
-                  if (!note || note.tagName !== tile.tagName) return null;
-                  return (
-                    <div className="mb-2" key={"edit-note-" + note.id + index}>
-                      <EditNote
-                        retroState={retroState}
-                        memberVoteCount={memberVoteCount}
-                        note={note}
-                        boardId={params.boardId}
-                      ></EditNote>
-                    </div>
-                  );
-                })}
+              {orderedByState(tile).map((note, index) => {
+                if (!note || note.tagName !== tile.tagName) return null;
+                return (
+                  <div className="mb-2" key={"edit-note-" + note.id + index}>
+                    <EditNote
+                      retroState={retroState}
+                      memberVoteCount={memberVoteCount}
+                      note={note}
+                      boardId={params.boardId}
+                    ></EditNote>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}

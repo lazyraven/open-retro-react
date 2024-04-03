@@ -119,7 +119,12 @@ export default function EditNote(props) {
           </BaseButton>
         );
       case RETRO_STATES.Discuss:
-        return <></>;
+        return (
+          <div className="flex gap-2 items-center">
+            <span className="text-xs text-zinc-500">{totalVotes}</span>
+            <HandThumbUpIcon className="flex h-4 w-4 text-xs text-zinc-500"></HandThumbUpIcon>
+          </div>
+        );
       default:
         return (
           isMemberCreator && (
