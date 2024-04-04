@@ -28,6 +28,7 @@ export default function NewNote(props) {
       createdDate: new Date().getTime(),
       description: "",
       tagName: "",
+      vote: 0,
     };
   }
 
@@ -43,10 +44,7 @@ export default function NewNote(props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex border border-zinc-700 rounded-md">
-        {/* <div
-          className={`flex-none w-2 ${getInputClasses()} rounded-tl-md rounded-bl-md`}
-        ></div> */}
+      <div className="flex border border-zinc-700 overflow-hidden rounded-md">
         <div className="grow">
           <form className="w-full p-1 bg-zinc-800">
             <BaseTextarea
