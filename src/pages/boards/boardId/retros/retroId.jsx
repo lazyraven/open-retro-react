@@ -230,6 +230,7 @@ export default function RetroId() {
     }
   };
 
+  console.log("tileNotes", tileNotes);
   const orderedByState = (tile) => {
     if (!tile || !tileNotes[tile.tagName]) {
       return [];

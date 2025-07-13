@@ -8,6 +8,7 @@ import BoardId from "@/pages/boards/boardId/index";
 import Reports from "@/pages/boards/boardId/reports/index";
 import ScrumPoker from "@/pages/boards/boardId/scrum-poker/index";
 import Members from "@/pages/boards/boardId/members/index";
+import LeanCoffee from "@/lean-coffee/LeanCoffee";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: "members",
             element: <Members />,
+          },
+          {
+            path: "lean-coffee",
+            element: <LeanCoffee />,
           },
         ],
       },

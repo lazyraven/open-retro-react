@@ -11,6 +11,7 @@ export default function SideNavbar({ board }) {
     { name: "Scrum Poker", to: "scrum-poker" },
     { name: "Reports", to: "reports" },
     { name: "Members", to: "members" },
+    { name: "Lean Coffee", to: "lean-coffee" },
   ];
 
   return (
