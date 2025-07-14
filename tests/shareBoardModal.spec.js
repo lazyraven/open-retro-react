@@ -2,9 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Share Board Modal (direct URL)", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(
-      "http://localhost:5173/boards/fFvaeZcRVBJ2nK9XBXwN/retros?share=true"
-    );
+    await page.goto("/boards/fFvaeZcRVBJ2nK9XBXwN/retros?share=true");
   });
 
   test("should display modal with correct heading", async ({ page }) => {

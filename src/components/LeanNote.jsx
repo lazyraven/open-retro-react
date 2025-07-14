@@ -30,14 +30,9 @@ export default function LeanNote({ tasks, setTasks }) {
         placeholder="Type note..."
         className={`p-2 w-full bg-zinc-800 rounded-sm text-zinc-200 outline-none`}
       ></BaseTextarea>
-      {/* <input
-      type="text"
-     
-      className="border border-gray-400 rounded-md px-2 py-3 outline-none"
-    /> */}
       <button
         type="submit"
-        className="px-3 py-2 bg-cyan-700 text-white rounded-md"
+        className="px-3 py-2 bg-slate-100 text-black rounded-md hover:bg-slate-200"
       >
         create
       </button>

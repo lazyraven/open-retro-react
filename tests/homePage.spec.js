@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Home Page UI", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://openretro.in/");
+    await page.goto("/");
   });
 
   test("should display logo text 'Open Retro'", async ({ page }) => {

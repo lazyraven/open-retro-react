@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Create Board Modal", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://openretro.in/");
+    await page.goto("/");
     await page.getByRole("button", { name: /create board/i }).click();
   });
 

@@ -76,13 +76,13 @@ export default function LeanCoffee() {
               <div className="flex gap-2 text-sm">
                 <button
                   onClick={() => moveBackToDiscuss(index)}
-                  className="bg-zinc-600 px-2 py-1 rounded hover:bg-zinc-500"
+                  className="bg-zinc-500 px-2 text-white text-xs py-[2px] rounded hover:bg-zinc-600"
                 >
                   Back
                 </button>
                 <button
                   onClick={() => moveToDiscussed(index)}
-                  className="bg-green-600 px-2 py-1 rounded hover:bg-green-500"
+                  className="bg-slate-100 text-black text-xs px-2 py-[2px] rounded hover:bg-slate-200"
                 >
                   Done
                 </button>
@@ -103,7 +103,7 @@ export default function LeanCoffee() {
               <div className="mb-2">{data.name}</div>
               <button
                 onClick={() => moveFromDiscussedToDiscussing(index)}
-                className="bg-blue-600 px-2 py-1 rounded text-sm hover:bg-blue-500"
+                className="bg-blue-600 px-2 text-xs py-[2px] rounded hover:bg-blue-500"
               >
                 Reopen
               </button>
