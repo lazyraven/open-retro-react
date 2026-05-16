@@ -27,19 +27,19 @@ OpenRetro is a modern, collaborative web application designed to facilitate team
 ├─────────────────────────────────────────────────────────────────┤
 │                    Pages & Page Components                      │
 ├─────────────────────────────────────────────────────────────────┤
-│  Components Layer (UI Components, Modals, Forms, Navigation)   │
+│  Components Layer (UI Components, Modals, Forms, Navigation)    │
 ├─────────────────────────────────────────────────────────────────┤
-│  Context API (BoardProvider) - Global State Management         │
+│  Context API (BoardProvider) - Global State Management          │
 ├─────────────────────────────────────────────────────────────────┤
-│                      Services Layer                            │
-│     (board, retro, notes, poker, member, pdf)                 │
+│                      Services Layer                             │
+│     (board, retro, notes, poker, member, pdf)                   │
 ├─────────────────────────────────────────────────────────────────┤
-│                      Firebase Backend                          │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────┐    │
-│  │    Firestore     │  │  Realtime DB     │  │ Storage  │    │
-│  │  (Documents)     │  │  (Live Updates)  │  │ (Files)  │    │
-│  └──────────────────┘  └──────────────────┘  └──────────┘    │
-│                        Google Analytics                        │
+│                      Firebase Backend                           │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────┐       │
+│  │    Firestore     │  │  Realtime DB     │  │ Storage  │       │
+│  │  (Documents)     │  │  (Live Updates)  │  │ (Files)  │       │
+│  └──────────────────┘  └──────────────────┘  └──────────┘       │
+│                        Google Analytics                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
